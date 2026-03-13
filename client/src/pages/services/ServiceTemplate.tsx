@@ -14,7 +14,8 @@ import {
   Shield,
   Clock,
   Lightbulb,
-  AlertCircle
+  AlertCircle,
+  TrendingUp
 } from "lucide-react";
 
 import abstractHero from "@/assets/images/abstract-hero.png";
