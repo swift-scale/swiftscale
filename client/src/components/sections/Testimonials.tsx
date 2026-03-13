@@ -1,26 +1,23 @@
 import { Quote } from "lucide-react";
-import avatar1 from "@/assets/images/avatar-1.png";
-import avatar2 from "@/assets/images/avatar-2.png";
-import avatar3 from "@/assets/images/avatar-3.png";
 
 const testimonials = [
   {
     quote: "Switching to Swiftscale halved our deployment times and significantly reduced our infrastructure overhead. The platform is phenomenally intuitive.",
     author: "Sarah Chen",
     role: "CTO, DataSync",
-    avatar: avatar1
+    avatar: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=2071&auto=format&fit=crop"
   },
   {
     quote: "The reliability is unmatched. We process millions of events daily and haven't experienced a single minute of downtime since migrating.",
     author: "Marcus Johnson",
     role: "VP Engineering, FlowState",
-    avatar: avatar2
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2070&auto=format&fit=crop"
   },
   {
     quote: "Swiftscale's edge network gave our application a global footprint instantly. The performance gains in APAC and EU regions were incredible.",
     author: "Elena Rodriguez",
     role: "Lead Architect, Nexus",
-    avatar: avatar3
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2070&auto=format&fit=crop"
   }
 ];
 

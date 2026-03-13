@@ -11,28 +11,41 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-background: hsl(var(--background));
-  --color-foreground: hsl(var(--foreground));
-  --color-card: hsl(var(--card));
-  --color-card-foreground: hsl(var(--card-foreground));
-  --color-popover: hsl(var(--popover));
-  --color-popover-foreground: hsl(var(--popover-foreground));
-  --color-primary: hsl(var(--primary));
-  --color-primary-foreground: hsl(var(--primary-foreground));
-  --color-secondary: hsl(var(--secondary));
-  --color-secondary-foreground: hsl(var(--secondary-foreground));
-  --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
-  --color-accent: hsl(var(--accent));
-  --color-accent-foreground: hsl(var(--accent-foreground));
-  --color-destructive: hsl(var(--destructive));
-  --color-destructive-foreground: hsl(var(--destructive-foreground));
-  --color-border: hsl(var(--border));
-  --color-primary-border: hsl(var(--primary-border));
-  --color-accent-border: hsl(var(--accent-border));
-  --color-card-border: hsl(var(--card-border));
-  --color-input: hsl(var(--input));
-  --color-ring: hsl(var(--ring));
+  
+  /* Distributing your 10-color "Ultramarine" palette across the UI layers */
+  --color-background: #0B1A30; /* 1. Base Dark Surface */
+  --color-foreground: #FAFBFC; /* 2. Primary High-Contrast Text */
+  
+  --color-card: #05035D;       /* 3. Secondary Surface (Cards) */
+  --color-card-foreground: #FAFBFC;
+  --color-popover: #05035D;
+  --color-popover-foreground: #FAFBFC;
+  
+  --color-primary: #241BEB;    /* 4. Primary Action Color (Buttons) */
+  --color-primary-foreground: #FAFBFC;
+  
+  --color-secondary: #6466F2;  /* 5. Interaction Pop (Hover States) */
+  --color-secondary-foreground: #ffffff;
+  
+  --color-muted: #0F0B9D;      /* 6. Deep UI elements (Overlays) */
+  --color-muted-foreground: #C9D1FD; /* 7. Muted/Secondary Text Label */
+  
+  --color-accent: #4C94D2;     /* 8. Modern Detail Accent (Icons) */
+  --color-accent-foreground: #0B1A30;
+  
+  --color-border: #0A0DB3;     /* 9. Structural Separation Lines */
+  --color-primary-border: #060AC5; /* 10. High-Energy Focus highlights */
+  --color-accent-border: #4C94D2;
+  --color-card-border: #0A0DB3;
+  --color-input: #0A0DB3;
+  --color-ring: #060AC5;
+
+  /* Sidebar integration for Admin Panels */
+  --color-sidebar: #05035D;
+  --color-sidebar-foreground: #FAFBFC;
+  --color-sidebar-border: #0A0DB3;
+  --color-sidebar-accent: #241BEB;
+  --color-sidebar-accent-foreground: #FAFBFC;
 
   --font-sans: 'Inter', sans-serif;
   --font-display: 'Poppins', sans-serif;
@@ -73,36 +86,91 @@
 }
 
 .dark {
-  /* Swiftscale Dark Theme (Primary) */
-  --background: 254 82% 5%;
-  --foreground: 0 0% 100%;
-  --border: 254 30% 15%;
+  /* Swiftscale Dark Theme (Ultramarine 10-Color) */
+  --background: 216 63% 12%; /* #0B1A30 */
+  --foreground: 210 20% 98%; /* #FAFBFC */
+  --border: 239 88% 37%; /* #0A0DB3 */
   
-  --card: 254 50% 8%;
-  --card-foreground: 0 0% 100%;
-  --card-border: 254 40% 15%;
+  --card: 242 94% 19%; /* #05035D */
+  --card-foreground: 210 20% 98%;
+  --card-border: 242 88% 25%;
 
-  --popover: 254 50% 8%;
-  --popover-foreground: 0 0% 100%;
-  --popover-border: 254 40% 15%;
+  --popover: 242 94% 19%;
+  --popover-foreground: 210 20% 98%;
+  --popover-border: 242 88% 25%;
 
-  --primary: 252 88% 23%;
-  --primary-foreground: 0 0% 100%;
+  --primary: 243 84% 52%; /* #241BEB */
+  --primary-foreground: 210 20% 98%;
   
-  --secondary: 244 75% 43%;
-  --secondary-foreground: 0 0% 100%;
+  --secondary: 239 85% 67%; /* #6466F2 */
+  --secondary-foreground: 210 20% 98%;
 
-  --muted: 254 30% 15%;
-  --muted-foreground: 220 15% 65%;
+  --muted: 242 87% 33%; /* #0F0B9D */
+  --muted-foreground: 231 92% 89%; /* #C9D1FD */
 
-  --accent: 211 100% 61%;
-  --accent-foreground: 0 0% 100%;
+  --accent: 208 61% 56%; /* #4C94D2 */
+  --accent-foreground: 216 63% 12%;
 
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 0 0% 100%;
 
-  --input: 254 30% 15%;
-  --ring: 211 100% 61%;
+  --input: 242 87% 33%;
+  --ring: 239 85% 67%;
+}
+
+.admin-theme {
+  --color-background: #FFFFFF;
+  --color-foreground: #008DDA;
+
+  --color-card: #F7EEDD;
+  --color-card-foreground: #008DDA;
+  --color-popover: #F7EEDD;
+  --color-popover-foreground: #008DDA;
+
+  --color-primary: #008DDA;
+  --color-primary-foreground: #FFFFFF;
+
+  --color-secondary: #41C9E2;
+  --color-secondary-foreground: #008DDA;
+
+  --color-muted: #ACE2E1;
+  --color-muted-foreground: #008DDA;
+
+  --color-accent: #41C9E2;
+  --color-accent-foreground: #008DDA;
+
+  --color-border: color-mix(in srgb, #008DDA 15%, #FFFFFF);
+  --color-input: color-mix(in srgb, #008DDA 15%, #FFFFFF);
+  --color-ring: #008DDA;
+
+  --color-sidebar: #FFFFFF;
+  --color-sidebar-foreground: #008DDA;
+  --color-sidebar-border: #ACE2E1;
+  --color-sidebar-accent: #ACE2E1;
+  --color-sidebar-accent-foreground: #008DDA;
+
+  --background: 0 0% 100%;
+  --foreground: 201 100% 43%;
+  --card: 39 62% 92%;
+  --card-foreground: 201 100% 43%;
+  --popover: 39 62% 92%;
+  --popover-foreground: 201 100% 43%;
+  --primary: 201 100% 43%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 189 74% 57%;
+  --secondary-foreground: 201 100% 43%;
+  --muted: 179 48% 78%;
+  --muted-foreground: 201 100% 43%;
+  --accent: 189 74% 57%;
+  --accent-foreground: 201 100% 43%;
+  --border: 179 48% 78%;
+  --input: 179 48% 78%;
+  --ring: 201 100% 43%;
+  --sidebar: 0 0% 100%;
+  --sidebar-foreground: 201 100% 43%;
+  --sidebar-border: 179 48% 78%;
+  --sidebar-accent: 179 48% 78%;
+  --sidebar-accent-foreground: 201 100% 43%;
 }
 
 @layer base {
@@ -118,26 +186,38 @@
 }
 
 .bg-gradient-hero {
-  background: linear-gradient(135deg, hsl(252 88% 23%) 0%, hsl(244 75% 43%) 100%);
+  /* Using 3 distinct blues for a complex, non-clumped hero gradient */
+  background: linear-gradient(135deg, #0B1A30 0%, #241BEB 55%, #6466F2 100%);
 }
 
 .bg-gradient-radial {
-  background: radial-gradient(circle at top right, hsl(244 75% 43% / 0.15) 0%, transparent 40%),
-              radial-gradient(circle at bottom left, hsl(211 100% 61% / 0.15) 0%, transparent 40%);
+  /* Spreading accent and highlight colors through soft background glows */
+  background: radial-gradient(circle at top right, rgba(76, 148, 210, 0.15) 0%, transparent 45%),
+              radial-gradient(circle at bottom left, rgba(6, 10, 197, 0.12) 0%, transparent 45%);
 }
 
 .glass-panel {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(201, 209, 253, 0.08); /* Using Ice Blue (#C9D1FD) for delicate borders */
 }
 
 .glow-effect {
-  box-shadow: 0 0 40px -10px hsl(211 100% 61% / 0.3);
+  box-shadow: 0 0 60px -10px rgba(100, 102, 242, 0.25);
 }
 
 .hover-glow:hover {
-  box-shadow: 0 0 30px -5px hsl(211 100% 61% / 0.5);
-  transform: translateY(-2px);
+  /* Royal Blue hover lift */
+  box-shadow: 0 0 45px -5px rgba(36, 27, 235, 0.4);
+  transform: translateY(-3px);
+  transition: all 0.3s ease-in-out;
+}
+@keyframes slow-zoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+.animate-slow-zoom {
+  animation: slow-zoom 20s ease-in-out infinite alternate;
 }

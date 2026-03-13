@@ -44,14 +44,14 @@ export default function ServiceTemplate({
   forWho 
 }: ServiceTemplateProps) {
   return (
-    <div className="min-h-screen bg-[#05050A] text-white selection:bg-accent selection:text-white font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-background text-white selection:bg-accent selection:text-white font-sans overflow-x-hidden">
       <Navbar />
       
       {/* 1. Epic Hero Section */}
       <section className="relative pt-40 pb-20 md:pt-52 md:pb-40 min-h-[90vh] flex flex-col justify-center border-b border-white/5">
         {/* Immersive Background */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#05050A]/80 to-[#05050A] z-10" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/80 to-background z-10" />
           <img 
             src={abstractHero} 
             alt="Abstract 3D Background" 
@@ -117,7 +117,7 @@ export default function ServiceTemplate({
               <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[120%] h-[120%] opacity-40 mix-blend-screen pointer-events-none transition-transform duration-1000 group-hover:scale-105 origin-right">
                 <img src={abstractOrb} alt="Glowing Orb" className="w-full h-full object-cover object-right" />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-r from-[#05050A] via-[#05050A]/80 to-transparent z-0" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent z-0" />
               
               <div className="relative z-10 flex flex-col h-full justify-between">
                 <div>
@@ -160,12 +160,12 @@ export default function ServiceTemplate({
       </section>
 
       {/* 3. High-End Features Grid */}
-      <section className="py-32 border-y border-white/5 bg-[#08080C] relative overflow-hidden">
+      <section className="py-32 border-y border-white/5 bg-background/50 relative overflow-hidden">
         {/* Glowing Grid Background */}
         <div className="absolute inset-0 opacity-20 pointer-events-none">
            <img src={abstractGrid} alt="Grid Background" className="w-full h-full object-cover mix-blend-screen" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#08080C] via-transparent to-[#08080C] pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none" />
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="text-center max-w-4xl mx-auto mb-20">
@@ -197,7 +197,7 @@ export default function ServiceTemplate({
       </section>
 
       {/* 4. Glassmorphism Process Timeline */}
-      <section className="py-32 bg-[#05050A] relative overflow-hidden">
+      <section className="py-32 bg-background relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/15 blur-[150px] rounded-full pointer-events-none" />
         
         <div className="container mx-auto px-6 relative z-10">

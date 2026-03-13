@@ -6,6 +6,7 @@ export function FinalCta() {
     <section className="py-32 relative overflow-hidden">
       {/* Dynamic Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-background" />
+      <div className="absolute inset-0 bg-[url('/are_u_ready.jpg')] bg-cover bg-center opacity-25 mix-blend-soft-light" />
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.apply/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[500px] bg-accent/30 blur-[120px] rounded-full pointer-events-none" />
       
@@ -18,10 +19,10 @@ export function FinalCta() {
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button size="lg" className="w-full sm:w-auto bg-white text-primary hover:bg-white/90 rounded-full px-10 h-14 font-semibold text-base shadow-[0_0_40px_-5px_rgba(255,255,255,0.3)] transition-all hover:scale-105">
+          <Button size="lg" className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-10 h-14 font-semibold text-base shadow-[0_0_40px_-5px_rgba(36,27,235,0.3)] transition-all hover:scale-105">
             Start Building Free
           </Button>
-          <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full px-10 h-14 font-semibold text-base border-white/20 hover:bg-white/10 text-white transition-all backdrop-blur-sm">
+          <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full px-10 h-14 font-semibold text-base border-border hover:bg-muted/30 text-white transition-all backdrop-blur-sm">
             Talk to Sales
             <ArrowRight className="w-4 h-4 ml-2" />
           </Button>

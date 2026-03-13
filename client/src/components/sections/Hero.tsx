@@ -20,7 +20,7 @@ export function Hero() {
             </div>
             
             <h1 className="text-5xl md:text-7xl font-display font-bold leading-[1.1] mb-6 tracking-tight text-white">
-              Scale Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-purple-400">Ambition</span> With Swiftscale
+              Scale Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-secondary">Ambition</span> With Swiftscale
             </h1>
             
             <p className="text-lg md:text-xl text-white/70 mb-10 leading-relaxed max-w-xl">
@@ -29,10 +29,10 @@ export function Hero() {
             </p>
             
             <div className="flex flex-col sm:flex-row items-center gap-4">
-              <Button size="lg" className="w-full sm:w-auto bg-white text-primary hover:bg-white/90 rounded-full px-8 h-14 font-semibold text-base shadow-[0_0_30px_-5px_rgba(255,255,255,0.4)] transition-all hover:scale-105">
+              <Button size="lg" className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 h-14 font-semibold text-base shadow-[0_0_30px_-5px_rgba(36,27,235,0.4)] transition-all hover:scale-105">
                 Start Building Free
               </Button>
-              <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full px-8 h-14 font-semibold text-base border-white/20 hover:bg-white/10 text-white transition-all">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full px-8 h-14 font-semibold text-base border-border hover:bg-muted/30 text-white transition-all">
                 Book Strategy Call
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
@@ -51,12 +51,15 @@ export function Hero() {
           </div>
           
           <div className="relative animate-in fade-in slide-in-from-right-12 duration-1000 delay-200 hidden lg:block">
-            <div className="absolute inset-0 bg-accent/20 blur-[100px] rounded-full" />
-            <img 
-              src={heroIllustration} 
-              alt="Swiftscale Platform Illustration" 
-              className="relative z-10 w-full h-auto object-contain transform hover:scale-[1.02] transition-transform duration-700 drop-shadow-2xl"
-            />
+            <div className="absolute -inset-10 bg-accent/20 blur-[120px] rounded-full animate-pulse" />
+            <div className="relative z-10 rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl group">
+              <img 
+                src="https://images.unsplash.com/photo-1549692402-4956e9c493bf?q=80&w=2070&auto=format&fit=crop" 
+                alt="Swiftscale Enterprise Infrastructure" 
+                className="w-full h-auto object-cover transform scale-110 group-hover:scale-100 transition-transform duration-1000"
+              />
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 to-transparent" />
+            </div>
           </div>
         </div>
       </div>

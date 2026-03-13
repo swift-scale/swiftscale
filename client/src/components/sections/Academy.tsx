@@ -4,7 +4,7 @@ import academyImg from "@/assets/images/academy.png";
 
 export function Academy() {
   return (
-    <section className="py-24 bg-card relative border-y border-white/5">
+    <section className="py-24 bg-card relative border-y border-border/50">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="order-2 lg:order-1 relative">
@@ -12,7 +12,7 @@ export function Academy() {
             <img 
               src={academyImg} 
               alt="Swiftscale Academy Team" 
-              className="relative z-10 rounded-2xl shadow-2xl border border-white/10 w-full object-cover"
+              className="relative z-10 rounded-2xl shadow-2xl border border-border/50 w-full object-cover"
             />
           </div>
           
@@ -21,7 +21,7 @@ export function Academy() {
               Learn & Grow
             </div>
             <h2 className="text-3xl md:text-5xl font-display font-bold mb-6 text-white">
-              Swiftscale <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-purple-400">Academy</span>
+              Swiftscale <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-secondary">Academy</span>
             </h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
               Master modern infrastructure with our comprehensive learning hub. From fundamental concepts to advanced deployment strategies, empower your team to build better software.
@@ -42,7 +42,7 @@ export function Academy() {
               </li>
             </ul>
             
-            <Button size="lg" className="rounded-full px-8 h-14 font-semibold text-base bg-accent hover:bg-accent/90 text-white shadow-[0_0_20px_-5px_rgba(58,154,255,0.4)]">
+            <Button size="lg" className="rounded-full px-8 h-14 font-semibold text-base bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_0_20px_-5px_rgba(36,27,235,0.4)]">
               Explore Academy
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>

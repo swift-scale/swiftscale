@@ -1,104 +1,240 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Menu, ChevronDown, GraduationCap, ShoppingCart, Monitor, Briefcase } from "lucide-react";
+import { 
+  Menu, 
+  ChevronDown, 
+  GraduationCap, 
+  ShoppingCart, 
+  Monitor, 
+  Briefcase, 
+  X,
+  Sparkles,
+  ArrowRight,
+  Code,
+  ShieldCheck,
+  Globe,
+  Zap,
+  BookOpen,
+  TrendingUp,
+  BarChart,
+  Activity
+} from "lucide-react";
+import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 
 export function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const serviceCategories = [
+    {
+      title: "Training",
+      icon: <GraduationCap className="w-5 h-5" />,
+      color: "from-blue-500 to-cyan-400",
+      services: [
+        { name: "BI Master Program", href: "/services/training/bi", desc: "Enterprise intelligence mastery." },
+        { name: "Full Stack Master", href: "/services/training/fullstack", desc: "High-velocity web engineering." },
+        { name: "UI/UX Master", href: "/services/training/uiux", desc: "Premium interface architecture." },
+        { name: "Data Science", href: "/services/training/datascience", desc: "Algorithmic decision framing." },
+      ]
+    },
+    {
+      title: "E-Commerce",
+      icon: <ShoppingCart className="w-5 h-5" />,
+      color: "from-purple-500 to-pink-500",
+      services: [
+        { name: "Registration", href: "/services/ecommerce/registration", desc: "Global merchant onboarding." },
+        { name: "Sponsored Ads", href: "/services/ecommerce/ads", desc: "Magnitude-driven marketing." },
+        { name: "Logistics", href: "/services/ecommerce/logistics", desc: "Autonomous supply chains." },
+        { name: "Warehousing", href: "/services/ecommerce/warehousing", desc: "Cloud-sync inventories." },
+      ]
+    },
+    {
+      title: "IT Services",
+      icon: <Monitor className="w-5 h-5" />,
+      color: "from-emerald-500 to-teal-400",
+      services: [
+        { name: "App/Web Dev", href: "/services/it/dev", desc: "Immutable tech foundations." },
+        { name: "Digital Marketing", href: "/services/it/marketing", desc: "Algorithmic growth systems." },
+        { name: "Cybersecurity", href: "/services/it/cyber", desc: "Hardened threat protection." },
+        { name: "Cloud & DevOps", href: "/services/it/cloud", desc: "Infinite scale engineering." },
+      ]
+    },
+    {
+      title: "Consulting",
+      icon: <Briefcase className="w-5 h-5" />,
+      color: "from-orange-500 to-yellow-500",
+      services: [
+        { name: "Payroll Management", href: "/services/consulting/payroll", desc: "Autonomous financial ops." },
+        { name: "Growth Strategy", href: "/services/consulting/strategy", desc: "Strategic blueprinting." },
+        { name: "IT Infra Roles", href: "/services/consulting/infra", desc: "Engineering talent scaling." },
+      ]
+    }
+  ];
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass-panel border-b-0 border-white/5 transition-all duration-300">
-      <div className="container mx-auto px-6 h-20 flex items-center justify-between">
+    <header className={cn(
+      "fixed left-0 right-0 z-50 flex justify-center px-4 md:px-6 pointer-events-none transition-all duration-500",
+      isScrolled ? "top-2 md:top-6" : "top-4 md:top-8"
+    )}>
+      <div className={cn(
+        "w-full max-w-7xl glass-panel rounded-full border border-white/10 shadow-2xl pointer-events-auto flex items-center justify-between px-4 md:px-8 bg-[#020205]/40 backdrop-blur-2xl transition-all duration-500 relative",
+        isScrolled ? "h-14 md:h-18" : "h-16 md:h-20"
+      )}>
+        {/* Logo */}
         <div className="flex items-center gap-2">
           <Link href="/">
-            <div className="flex items-center gap-2 cursor-pointer">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center font-bold text-white shadow-lg">
+            <div className="flex items-center gap-3 cursor-pointer group pointer-events-auto">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-accent to-secondary flex items-center justify-center font-black text-white shadow-lg transition-transform group-hover:scale-110">
                 S
               </div>
-              <span className="font-display font-bold text-xl tracking-tight text-white">Swiftscale</span>
+              <span className="font-display font-black text-xl tracking-tighter text-white">Swiftscale</span>
             </div>
           </Link>
         </div>
 
-        <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-white/80">
-          <Link href="/" className="hover:text-white transition-colors">Home</Link>
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-1 pointer-events-auto">
+          <Link href="/" className="px-4 py-2 hover:text-white text-white/50 transition-colors text-[11px] font-black uppercase tracking-[0.2em]">Home</Link>
           
-          <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1 hover:text-white transition-colors outline-none cursor-pointer">
-              Services <ChevronDown className="w-4 h-4" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-[800px] p-6 grid grid-cols-4 gap-6 bg-background/95 backdrop-blur-xl border-white/10 animate-in slide-in-from-top-2 duration-200">
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 text-accent font-semibold mb-2">
-                  <GraduationCap className="w-4 h-4" />
-                  <span>Training</span>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Link href="/services/training/bi" className="text-white/60 hover:text-white text-xs">BI Master Program</Link>
-                  <Link href="/services/training/fullstack" className="text-white/60 hover:text-white text-xs">Full Stack Master</Link>
-                  <Link href="/services/training/uiux" className="text-white/60 hover:text-white text-xs">UI/UX Master</Link>
-                  <Link href="/services/training/datascience" className="text-white/60 hover:text-white text-xs">Data Science</Link>
-                </div>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 text-accent font-semibold mb-2">
-                  <ShoppingCart className="w-4 h-4" />
-                  <span>E-Commerce</span>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Link href="/services/ecommerce/registration" className="text-white/60 hover:text-white text-xs">Registration</Link>
-                  <Link href="/services/ecommerce/ads" className="text-white/60 hover:text-white text-xs">Sponsored Ads</Link>
-                  <Link href="/services/ecommerce/logistics" className="text-white/60 hover:text-white text-xs">Logistics</Link>
-                  <Link href="/services/ecommerce/warehousing" className="text-white/60 hover:text-white text-xs">Warehousing</Link>
-                </div>
-              </div>
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuPrimitive.Trigger className="px-4 py-2 text-[11px] font-black uppercase tracking-[0.2em] text-white/50 hover:text-white transition-colors outline-none cursor-pointer">
+                  Services
+                </NavigationMenuPrimitive.Trigger>
+                <NavigationMenuContent>
+                  <div className="w-[calc(100vw-2rem)] max-w-4xl p-8 grid grid-cols-4 gap-8 bg-[#020205]/95 backdrop-blur-[40px] rounded-[2.5rem] shadow-[0_30px_100px_rgba(0,0,0,0.8)] animate-in fade-in slide-in-from-top-4 duration-500 !border-none">
+                    {serviceCategories.map((cat, i) => (
+                      <div key={i} className="space-y-6">
+                        <div className="flex items-center gap-3 pb-5 border-b border-white/5 relative">
+                          <div className={cn("w-10 h-10 rounded-xl bg-gradient-to-br flex items-center justify-center text-white shadow-xl transition-transform hover:scale-110", cat.color)}>
+                            {cat.icon}
+                          </div>
+                          <span className="text-[10px] font-black text-white uppercase tracking-[0.25em]">{cat.title}</span>
+                          <div className={cn("absolute bottom-0 left-0 h-[1.5px] w-10 bg-gradient-to-r", cat.color)} />
+                        </div>
+                        <div className="flex flex-col gap-5">
+                          {cat.services.map((service, j) => (
+                            <NavigationMenuLink asChild key={j}>
+                              <Link 
+                                href={service.href} 
+                                className="group/item flex flex-col gap-1.5 hover:translate-x-1.5 transition-all duration-300"
+                              >
+                                <span className="text-[13px] font-bold text-white/70 group-hover/item:text-primary transition-colors flex items-center gap-2">
+                                  {service.name}
+                                  <ArrowRight className="w-3 h-3 opacity-0 group-hover/item:opacity-100 -translate-x-2 group-hover/item:translate-x-0 transition-all duration-300" />
+                                </span>
+                                <span className="text-[10px] text-white/30 font-medium leading-relaxed group-hover/item:text-white/50">{service.desc}</span>
+                              </Link>
+                            </NavigationMenuLink>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
 
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 text-accent font-semibold mb-2">
-                  <Monitor className="w-4 h-4" />
-                  <span>IT Services</span>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Link href="/services/it/dev" className="text-white/60 hover:text-white text-xs">App/Web Dev</Link>
-                  <Link href="/services/it/marketing" className="text-white/60 hover:text-white text-xs">Digital Marketing</Link>
-                  <Link href="/services/it/cyber" className="text-white/60 hover:text-white text-xs">Cybersecurity</Link>
-                  <Link href="/services/it/cloud" className="text-white/60 hover:text-white text-xs">Cloud & DevOps</Link>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 text-accent font-semibold mb-2">
-                  <Briefcase className="w-4 h-4" />
-                  <span>Consulting</span>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Link href="/services/consulting/payroll" className="text-white/60 hover:text-white text-xs">Payroll Management</Link>
-                  <Link href="/services/consulting/strategy" className="text-white/60 hover:text-white text-xs">Growth Strategy</Link>
-                  <Link href="/services/consulting/infra" className="text-white/60 hover:text-white text-xs">IT Infra Roles</Link>
-                </div>
-              </div>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          <Link href="/about" className="hover:text-white transition-colors">About</Link>
-          <Link href="/partners" className="hover:text-white transition-colors">Clients & Partners</Link>
-          <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
+          <Link href="/about" className="px-4 py-2 hover:text-white text-white/50 transition-colors text-[11px] font-black uppercase tracking-[0.2em]">About</Link>
+          <Link href="/partners" className="px-4 py-2 hover:text-white text-white/50 transition-colors text-[11px] font-black uppercase tracking-[0.2em]">Clients</Link>
+          <Link href="/contact" className="px-4 py-2 hover:text-white text-white/50 transition-colors text-[11px] font-black uppercase tracking-[0.2em]">Contact</Link>
         </nav>
 
-        <div className="hidden md:flex items-center gap-4">
-          <Button className="bg-white text-primary hover:bg-white/90 rounded-full px-6 font-semibold shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] transition-all hover:scale-105">
-            Book Strategy Call
-          </Button>
-        </div>
+        {/* CTA & Mobile Toggle */}
+        <div className="flex items-center gap-2 md:gap-4 pointer-events-auto">
+          <div className="hidden md:flex items-center gap-6">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/5 bg-white/5">
+               <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+               <span className="text-[7.5px] font-black text-white/40 uppercase tracking-[0.3em] min-w-max">Global Status: Online</span>
+            </div>
+            <Link href="/contact">
+              <Button className="bg-white text-primary hover:bg-primary hover:text-white rounded-full px-6 font-black text-[9px] uppercase tracking-widest shadow-2xl transition-all duration-500 hover:scale-105 active:scale-95 h-10">
+                INITIATE PROTOCOL
+              </Button>
+            </Link>
+          </div>
 
-        <button className="lg:hidden text-white/80 hover:text-white">
-          <Menu className="w-6 h-6" />
-        </button>
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <button className="lg:hidden p-3 rounded-xl bg-white/5 text-white/80 hover:text-white transition-colors cursor-pointer group">
+                <Menu className="w-6 h-6 group-hover:scale-110 transition-transform" />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="right" className="bg-[#020205]/95 backdrop-blur-2xl border-white/10 text-white p-0 overflow-hidden w-full sm:max-w-md">
+              <div className="flex flex-col h-full bg-[radial-gradient(circle_at_top_right,_rgba(36,27,235,0.1)_0%,_transparent_50%)]">
+                <div className="p-8 border-b border-white/10 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center font-black text-white shadow-lg">
+                      S
+                    </div>
+                    <span className="font-display font-black text-xl tracking-tighter text-white">Swiftscale</span>
+                  </div>
+                  <button 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-3 rounded-xl bg-white/5 text-white/60 hover:text-white"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
+                
+                <nav className="flex-1 overflow-y-auto p-8 space-y-10">
+                  <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block text-4xl font-black tracking-tighter hover:text-primary transition-colors">Home</Link>
+                  
+                  <div className="space-y-6">
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white/30">Strategic Divisions</p>
+                    <div className="grid grid-cols-1 gap-8">
+                      {serviceCategories.map((cat, i) => (
+                        <div key={i} className="space-y-4">
+                          <div className="flex items-center gap-3 italic">
+                             <div className={cn("w-1 h-1 rounded-full", cat.color.replace('from-', 'bg-').split(' ')[0])} />
+                             <p className="font-black text-lg text-white/60 uppercase tracking-widest">{cat.title}</p>
+                          </div>
+                          <div className="grid grid-cols-1 gap-3 pl-4 border-l border-white/10">
+                            {cat.services.slice(0, 3).map((s, j) => (
+                              <Link key={j} href={s.href} className="text-sm font-bold text-white/40 hover:text-white transition-colors">{s.name}</Link>
+                            ))}
+                            <span className="text-[10px] font-black text-primary uppercase tracking-widest pt-2">View Division Blueprint →</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className="block text-4xl font-black tracking-tighter hover:text-primary transition-colors">About</Link>
+                  <Link href="/partners" onClick={() => setIsMobileMenuOpen(false)} className="block text-4xl font-black tracking-tighter hover:text-primary transition-colors text-accent">Partners</Link>
+                </nav>
+
+                <div className="p-8 border-t border-white/10 bg-white/5 backdrop-blur-xl">
+                  <Button className="w-full bg-white text-primary py-8 rounded-2xl font-black text-xl shadow-2xl transition-all active:scale-95">
+                    START EXPANSION
+                  </Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   );

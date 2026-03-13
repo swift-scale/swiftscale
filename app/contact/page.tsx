@@ -5,183 +5,231 @@ import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Mail, Phone, MapPin, MessageSquare, ArrowRight } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  ArrowRight,
+  Mail,
+  MapPin,
+  Phone,
+  Sparkles,
+  Zap,
+  Globe,
+  Cpu,
+  ShieldCheck,
+} from "lucide-react";
 import contactMapImage from "@/assets/images/contact-map.png";
 
 export default function Contact() {
   return (
-    <div className="min-h-screen bg-background text-white selection:bg-accent selection:text-white">
+    <div className="min-h-screen bg-[#020205] text-white selection:bg-primary selection:text-white overflow-hidden font-sans">
       <Navbar />
-      
-      {/* Hero Section */}
-      <section className="pt-40 pb-20 relative overflow-hidden bg-background">
-        {/* Abstract Background Shapes */}
-        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-accent/20 blur-[120px] rounded-full pointer-events-none" />
 
-        <div className="container mx-auto px-6 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-white/10 text-white/80 text-sm font-medium mb-8">
-            <MessageSquare className="w-4 h-4 text-accent" />
-            Get in touch
+      {/* SECTION 1: Get in Touch (Top - Dark Theme) */}
+      <section className="relative pt-44 pb-32 bg-[#020205]">
+        {/* Architectural Backdrop */}
+        <div
+          className="absolute inset-0 opacity-20 pointer-events-none bg-cover bg-center scale-105 animate-slow-zoom"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop')",
+          }}
+        />
+
+        <div className="container mx-auto px-6 relative z-10 w-full max-w-7xl font-sans">
+          {/* Headline Suite */}
+          <div className="mb-16 space-y-4 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full glass-panel border border-white/10 text-primary text-[10px] font-black uppercase tracking-[0.4em]">
+              <Sparkles className="w-4 h-4" /> Professional Solutions
+            </div>
+            <h1 className="text-6xl md:text-8xl font-display font-black leading-none tracking-tight text-white">
+              Let's build{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-secondary">
+                Extraordinary
+              </span>
+              <br />
+              things together.
+            </h1>
+            <p className="text-white/40 text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
+              Ready to take your project to the next level? Our team of experts
+              is standing by to help you scale and succeed.
+            </p>
           </div>
-          <h1 className="text-5xl md:text-7xl font-display font-bold mb-6 tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-700">
-            Let's build something <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">extraordinary</span>
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
-            Whether you need a custom software solution, enterprise training, or a complete digital transformation strategy, our team is ready to help you scale.
-          </p>
-        </div>
-      </section>
 
-      <section className="py-12 pb-24 relative z-20">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
-            
-            {/* Contact Info (Left Column) */}
-            <div className="lg:col-span-2 space-y-8">
-              <div className="glass-panel p-8 rounded-3xl border border-white/10 h-full relative overflow-hidden group">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent" />
-                
-                <h2 className="text-2xl font-display font-bold mb-8 text-white">Contact Information</h2>
-                
-                <div className="space-y-8">
-                  <div className="flex gap-5">
-                    <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent shrink-0 group-hover:scale-110 transition-transform duration-300">
-                      <Mail className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-medium text-muted-foreground mb-1">Email Us</h3>
-                      <a href="mailto:hello@swiftscale.tech" className="text-lg font-semibold text-white hover:text-accent transition-colors block">
-                        hello@swiftscale.tech
-                      </a>
-                      <a href="mailto:support@swiftscale.tech" className="text-sm text-white/70 hover:text-white transition-colors">
-                        support@swiftscale.tech
-                      </a>
-                    </div>
+          <div className="glass-panel rounded-[3.5rem] border border-white/15 overflow-hidden shadow-[0_50px_150px_rgba(0,0,0,0.8)] backdrop-blur-3xl animate-in fade-in zoom-in-95 duration-1000 delay-200">
+            <div className="grid grid-cols-1 lg:grid-cols-10">
+              {/* Left Side: Contact Methods (40%) */}
+              <div className="lg:col-span-4 p-12 lg:p-16 bg-white/5 border-b lg:border-b-0 lg:border-r border-white/10">
+                <div className="h-full flex flex-col justify-between space-y-12">
+                  <div className="space-y-6">
+                    <h2 className="text-3xl font-display font-black tracking-tight">
+                      Get in <span className="text-primary italic">Touch</span>
+                    </h2>
+                    <p className="text-white/40 text-sm font-medium leading-relaxed max-w-xs">
+                      Choose your preferred way to connect. We typically respond
+                      within 24 hours.
+                    </p>
                   </div>
-                  
-                  <div className="flex gap-5">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:scale-110 transition-transform duration-300 delay-75">
-                      <Phone className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-medium text-muted-foreground mb-1">Call Us</h3>
-                      <a href="tel:+1888SWIFTSCALE" className="text-lg font-semibold text-white hover:text-primary transition-colors block">
-                        +1 (888) SWIFT-SCALE
-                      </a>
-                      <p className="text-sm text-white/70">Mon-Fri, 9am - 6pm EST</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex gap-5">
-                    <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 shrink-0 group-hover:scale-110 transition-transform duration-300 delay-150">
-                      <MapPin className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-medium text-muted-foreground mb-1">Visit Us</h3>
-                      <p className="text-lg font-semibold text-white">
-                        101 Innovation Way
-                      </p>
-                      <p className="text-sm text-white/70">Tech District, San Francisco<br/>CA 94103</p>
-                    </div>
-                  </div>
-                </div>
 
-                {/* Map Image */}
-                <div className="mt-12 rounded-2xl overflow-hidden border border-white/10 h-[200px] relative">
-                  <img 
-                    src={contactMapImage} 
-                    alt="Office Location Map" 
-                    className="w-full h-full object-cover mix-blend-lighten opacity-80 hover:opacity-100 transition-opacity"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-                    <div className="w-3 h-3 bg-accent rounded-full shadow-[0_0_15px_rgba(var(--accent),0.8)] animate-pulse" />
-                    <Button size="sm" variant="outline" className="h-8 text-xs bg-black/50 backdrop-blur-md border-white/20 hover:bg-white/10 text-white">
-                      Get Directions
-                    </Button>
+                  <div className="space-y-4">
+                    {[
+                      {
+                        icon: <Mail />,
+                        title: "Email Address",
+                        data: "hello@swiftscale.tech",
+                        color: "primary",
+                      },
+                      {
+                        icon: <Phone />,
+                        title: "Phone Support",
+                        data: "+1 (888) SWIFT-SCALE",
+                        color: "accent",
+                      },
+                      {
+                        icon: <MapPin />,
+                        title: "Main Office",
+                        data: "San Francisco HQ",
+                        color: "secondary",
+                      },
+                    ].map((channel, i) => (
+                      <div
+                        key={i}
+                        className="group p-6 rounded-3xl bg-white/5 border border-white/5 hover:border-white/20 hover:bg-white/[0.08] transition-all duration-500 cursor-pointer"
+                      >
+                        <div className="flex items-center gap-6">
+                          <div
+                            className={`w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-${channel.color} group-hover:scale-110 transition-transform`}
+                          >
+                            {channel.icon}
+                          </div>
+                          <div>
+                            <p className="text-[9px] font-black uppercase tracking-widest text-white/30 mb-0.5">
+                              {channel.title}
+                            </p>
+                            <p className="text-sm font-bold text-white tracking-tight">
+                              {channel.data}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="pt-8 border-t border-white/10 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">
+                        Support: Online
+                      </span>
+                    </div>
+                    <div className="text-[10px] font-black text-white/20 uppercase tracking-widest">
+                      Global Support
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Contact Form (Right Column) */}
-            <div className="lg:col-span-3">
-              <div className="glass-panel p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl relative">
-                <h2 className="text-3xl font-display font-bold mb-2 text-white">Send a Message</h2>
-                <p className="text-muted-foreground mb-8">We usually respond within 24 hours.</p>
-                
-                <form className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                       <label className="text-sm font-medium text-white/80">First Name</label>
-                      <Input placeholder="John" className="bg-white/5 border-white/10 h-12 text-white focus:border-accent focus:ring-accent/20 transition-all" />
+              {/* Right Side: Message Form (60%) */}
+              <div className="lg:col-span-6 p-12 lg:p-16 relative bg-white/[0.02]">
+                <form className="space-y-8 max-w-lg mx-auto">
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div className="space-y-2.5">
+                        <Label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 ml-1">
+                          First Name
+                        </Label>
+                        <Input
+                          placeholder="John"
+                          className="h-14 bg-white/5 border-white/10 text-white placeholder:text-white/10 rounded-2xl focus:border-primary/50 focus:ring-primary/10 transition-all font-medium"
+                        />
+                      </div>
+                      <div className="space-y-2.5 pt-6 sm:pt-0">
+                        <Label className="hidden sm:block text-[9px] font-black uppercase tracking-[0.2em] text-white/30 ml-1 opacity-0">
+                          Spacer
+                        </Label>
+                        <Input
+                          placeholder="Doe"
+                          className="h-14 bg-white/5 border-white/10 text-white placeholder:text-white/10 rounded-2xl focus:border-primary/50 focus:ring-primary/10 transition-all font-medium"
+                        />
+                      </div>
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-white/80">Last Name</label>
-                      <Input placeholder="Doe" className="bg-white/5 border-white/10 h-12 text-white focus:border-accent focus:ring-accent/20 transition-all" />
+
+                    <div className="space-y-2.5">
+                      <Label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 ml-1">
+                        Email Address
+                      </Label>
+                      <Input
+                        type="email"
+                        placeholder="john@company.com"
+                        className="h-14 bg-white/5 border-white/10 text-white placeholder:text-white/10 rounded-2xl focus:border-primary/50 focus:ring-primary/10 transition-all font-medium"
+                      />
                     </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-white/80">Email Address</label>
-                      <Input type="email" placeholder="john@company.com" className="bg-white/5 border-white/10 h-12 text-white focus:border-accent focus:ring-accent/20 transition-all" />
+
+                    <div className="space-y-2.5">
+                      <Label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 ml-1">
+                        Service Required
+                      </Label>
+                      <Select>
+                        <SelectTrigger className="h-14 bg-white/5 border-white/10 text-white rounded-2xl focus:border-primary/50 focus:ring-primary/10 transition-all font-medium">
+                          <SelectValue placeholder="What can we help with?" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-black border-white/20 text-white backdrop-blur-xl">
+                          <SelectItem
+                            value="scaling"
+                            className="focus:bg-primary/20"
+                          >
+                            Scaling Strategy
+                          </SelectItem>
+                          <SelectItem
+                            value="infra"
+                            className="focus:bg-primary/20"
+                          >
+                            Infrastructure Audit
+                          </SelectItem>
+                          <SelectItem
+                            value="growth"
+                            className="focus:bg-primary/20"
+                          >
+                            Growth Consulting
+                          </SelectItem>
+                          <SelectItem
+                            value="partnership"
+                            className="focus:bg-primary/20"
+                          >
+                            Business Partnership
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-white/80">Phone Number</label>
-                      <Input type="tel" placeholder="+1 (555) 000-0000" className="bg-white/5 border-white/10 h-12 text-white focus:border-accent focus:ring-accent/20 transition-all" />
+
+                    <div className="space-y-2.5">
+                      <Label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 ml-1">
+                        Project Details
+                      </Label>
+                      <Textarea
+                        placeholder="Tell us about your project, goals, and timeline..."
+                        className="bg-white/5 border-white/10 min-h-[160px] text-white placeholder:text-white/10 rounded-[2rem] focus:border-primary/50 focus:ring-primary/10 transition-all font-medium resize-none p-6"
+                      />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-white/80">How can we help you?</label>
-                    <Select>
-                      <SelectTrigger className="bg-white/5 border-white/10 h-12 text-white focus:border-accent focus:ring-accent/20 transition-all">
-                        <SelectValue placeholder="Select a topic" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-zinc-900 border-white/10 text-white">
-                        <SelectItem value="training" className="focus:bg-white/10">Training & Certification</SelectItem>
-                        <SelectItem value="ecommerce" className="focus:bg-white/10">E-Commerce Solutions</SelectItem>
-                        <SelectItem value="it" className="focus:bg-white/10">IT Services & Development</SelectItem>
-                        <SelectItem value="consulting" className="focus:bg-white/10">Consulting & Strategy</SelectItem>
-                        <SelectItem value="other" className="focus:bg-white/10">Other Inquiry</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-white/80">Project Details</label>
-                    <Textarea 
-                      placeholder="Tell us about your project, timeline, and budget..." 
-                      className="bg-white/5 border-white/10 min-h-[150px] text-white focus:border-accent focus:ring-accent/20 transition-all resize-y" 
-                    />
-                  </div>
-                  
-                  <Button className="w-full h-14 bg-white text-primary hover:bg-white/90 font-bold rounded-xl flex items-center justify-center gap-2 group transition-all text-lg mt-4 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-                    Send Message
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <Button className="w-full h-16 bg-primary text-primary-foreground hover:bg-primary/95 font-black text-lg rounded-2xl transition-all group shadow-[0_20px_50px_rgba(36,27,235,0.4)] relative overflow-hidden">
+                    <div className="relative z-10 flex items-center justify-center gap-3">
+                      SEND MESSAGE{" "}
+                      <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%] animate-gradient opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Button>
-                  
-                  <p className="text-xs text-center text-muted-foreground mt-4">
-                    By submitting this form, you agree to our <a href="/privacy" className="text-white/70 hover:text-white underline underline-offset-2">Privacy Policy</a>.
-                  </p>
                 </form>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="py-24 bg-card border-t border-white/5">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-display font-bold mb-8 text-white">Ready for a deeper dive?</h2>
-          <Button size="lg" className="bg-white text-primary hover:bg-white/90 rounded-full px-10 h-14 font-bold">
-            Book Strategy Call
-          </Button>
         </div>
       </section>
 

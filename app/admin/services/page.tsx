@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Search, Plus, MoreHorizontal, LayoutList, CheckCircle2 } from "lucide-react";
+import { Search, Plus, MoreHorizontal, LayoutList, CheckCircle2, Sparkles, ShieldCheck, Eye } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -56,61 +56,91 @@ export default function ServicesPage() {
   );
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div className="space-y-8">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h2 className="text-3xl font-display font-bold tracking-tight text-white">Services Content</h2>
-          <p className="text-muted-foreground mt-1">
-            Manage the services shown on the website and navigation menu.
+          <p className="text-xs uppercase tracking-[0.25em] text-foreground/40">Content Management</p>
+          <h2 className="text-4xl font-display font-bold tracking-tight text-foreground">Services Library</h2>
+          <p className="text-muted-foreground mt-2 max-w-2xl">
+            Curate what appears on the website and keep every offer aligned with your growth roadmap.
           </p>
         </div>
-        <Button className="bg-accent hover:bg-accent/90 text-white font-semibold">
-          <Plus className="mr-2 h-4 w-4" /> Add Service
-        </Button>
+        <div className="flex flex-wrap gap-3">
+          <Button variant="outline" className="border-border/60 text-foreground hover:bg-card/60">
+            Review Visibility
+          </Button>
+          <Button className="bg-accent hover:bg-accent/90 text-foreground font-semibold">
+            <Plus className="mr-2 h-4 w-4" /> Add Service
+          </Button>
+        </div>
       </div>
 
-      <div className="flex items-center space-x-2">
-        <div className="relative flex-1 max-w-sm">
+      <div className="grid gap-4 md:grid-cols-3">
+        {[
+          { label: "Total Services", value: "15", icon: Sparkles, tone: "text-accent" },
+          { label: "Visible on Site", value: "15", icon: Eye, tone: "text-primary" },
+          { label: "Approval Ready", value: "12", icon: ShieldCheck, tone: "text-emerald-500" },
+        ].map((item) => (
+          <div key={item.label} className="glass-panel rounded-2xl border border-border p-4 flex items-center justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-[0.2em] text-foreground/40">{item.label}</p>
+              <p className="text-2xl font-display font-bold text-foreground mt-2">{item.value}</p>
+            </div>
+            <div className="w-10 h-10 rounded-xl bg-card/40 flex items-center justify-center">
+              <item.icon className={`h-5 w-5 ${item.tone}`} />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="relative w-full md:max-w-sm">
           <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search services..."
-            className="pl-10 bg-card border-white/5 text-white h-10 focus:border-accent focus:ring-accent/20"
+            className="pl-10 bg-card/60 border-border text-foreground h-10 focus:border-accent focus:ring-accent/20"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
+        <div className="flex flex-wrap gap-2">
+          <Button variant="outline" className="border-border/60 text-foreground hover:bg-card/60">All</Button>
+          <Button variant="outline" className="border-border/60 text-foreground/70 hover:text-foreground hover:bg-card/60">Training</Button>
+          <Button variant="outline" className="border-border/60 text-foreground/70 hover:text-foreground hover:bg-card/60">E-Commerce</Button>
+          <Button variant="outline" className="border-border/60 text-foreground/70 hover:text-foreground hover:bg-card/60">IT Services</Button>
+        </div>
       </div>
 
-      <div className="rounded-xl border border-white/5 bg-card overflow-hidden shadow-lg">
+      <div className="rounded-2xl border border-border/60 bg-card/60 overflow-hidden shadow-lg backdrop-blur">
         <Table>
-          <TableHeader className="bg-white/5">
-            <TableRow className="border-white/5 hover:bg-transparent">
-              <TableHead className="w-[50px] text-white/60"></TableHead>
-              <TableHead className="text-white/60 font-medium">Service Title</TableHead>
-              <TableHead className="text-white/60 font-medium">Category</TableHead>
-              <TableHead className="text-white/60 font-medium">Visibility</TableHead>
-              <TableHead className="text-white/60 font-medium">Status</TableHead>
-              <TableHead className="text-right text-white/60 font-medium">Actions</TableHead>
+          <TableHeader className="bg-card/40">
+            <TableRow className="border-border/60 hover:bg-transparent">
+              <TableHead className="w-[50px] text-foreground/60"></TableHead>
+              <TableHead className="text-foreground/60 font-medium">Service Title</TableHead>
+              <TableHead className="text-foreground/60 font-medium">Category</TableHead>
+              <TableHead className="text-foreground/60 font-medium">Visibility</TableHead>
+              <TableHead className="text-foreground/60 font-medium">Status</TableHead>
+              <TableHead className="text-right text-foreground/60 font-medium">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredServices.length === 0 ? (
-              <TableRow className="border-white/5">
+              <TableRow className="border-border/60">
                 <TableCell colSpan={6} className="text-center h-32 text-muted-foreground">
                   No services found matching your search.
                 </TableCell>
               </TableRow>
             ) : (
               filteredServices.map((service) => (
-                <TableRow key={service.id} className="border-white/5 hover:bg-white/[0.02] transition-colors">
+                <TableRow key={service.id} className="border-border/60 hover:bg-card/40 transition-colors">
                   <TableCell>
-                    <div className="h-8 w-8 rounded-lg bg-white/5 flex items-center justify-center">
-                      <LayoutList className="h-4 w-4 text-white/70" />
+                    <div className="h-8 w-8 rounded-lg bg-card/40 flex items-center justify-center">
+                      <LayoutList className="h-4 w-4 text-foreground/70" />
                     </div>
                   </TableCell>
-                  <TableCell className="font-semibold text-white">{service.title}</TableCell>
+                  <TableCell className="font-semibold text-foreground">{service.title}</TableCell>
                   <TableCell>
-                    <Badge variant="outline" className="bg-white/5 border-white/10 text-white/80 hover:bg-white/10">
+                    <Badge variant="outline" className="bg-card/40 border-border/60 text-foreground/80 hover:bg-card/60">
                       {service.category}
                     </Badge>
                   </TableCell>
@@ -121,7 +151,7 @@ export default function ServicesPage() {
                   <TableCell>
                     <Badge 
                       variant="outline"
-                      className={service.status === "Active" ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-white/5 border-white/10 text-white/60"}
+                      className={service.status === "Active" ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-card/40 border-border/60 text-foreground/60"}
                     >
                       {service.status}
                     </Badge>
@@ -129,16 +159,16 @@ export default function ServicesPage() {
                   <TableCell className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-white/10 text-white/70 hover:text-white">
+                        <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-card/60 text-foreground/70 hover:text-foreground">
                           <span className="sr-only">Open menu</span>
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-zinc-900 border-white/10 text-white">
-                        <DropdownMenuLabel className="text-white/60">Actions</DropdownMenuLabel>
-                        <DropdownMenuItem className="focus:bg-white/10 cursor-pointer">Edit Service</DropdownMenuItem>
-                        <DropdownMenuItem className="focus:bg-white/10 cursor-pointer">Hide from Menu</DropdownMenuItem>
-                        <DropdownMenuSeparator className="bg-white/10" />
+                      <DropdownMenuContent align="end" className="bg-card border-border/60 text-foreground">
+                        <DropdownMenuLabel className="text-foreground/60">Actions</DropdownMenuLabel>
+                        <DropdownMenuItem className="focus:bg-card/60 cursor-pointer">Edit Service</DropdownMenuItem>
+                        <DropdownMenuItem className="focus:bg-card/60 cursor-pointer">Hide from Menu</DropdownMenuItem>
+                        <DropdownMenuSeparator className="bg-card/60" />
                         <DropdownMenuItem className="focus:bg-red-500/20 text-red-400 cursor-pointer">Delete Service</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
