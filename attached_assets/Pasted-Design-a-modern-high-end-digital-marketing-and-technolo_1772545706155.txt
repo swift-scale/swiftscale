@@ -1,0 +1,319 @@
+Design a modern, high-end digital marketing and technology platform website for a company named "Swiftscale".
+
+Brand Colors:
+Primary: #1C0770
+Secondary: #261CC1
+Accent: #3A9AFF
+
+Style:
+
+Corporate + Tech
+
+Clean, structured, premium
+
+Dark gradient hero
+
+Minimal but bold
+
+Smooth animations
+
+Navigation Structure:
+
+Top Menu:
+Home
+Services (dropdown mega menu)
+About
+Contact
+
+Under Services dropdown:
+
+Training
+
+Business Intelligence Master Program
+
+Full Stack Master Program
+
+UI/UX Master Program
+
+Data Science Master Program
+
+Data Visualisation Master Program
+
+E-Commerce Services
+
+Account Registration
+
+Account Management
+
+Inventory Management
+
+Returns Management
+
+Sponsored Ads / Sales Boosting
+
+Payment Reconciliation
+
+Warehousing
+
+Photography
+
+Cataloguing
+
+Offline Store Launch + Distribution Network Launch
+
+Logistics
+
+IT Services
+
+App / Web Development
+
+Design
+
+Digital Marketing
+
+Data Analytics
+
+AI / BI
+
+Consulting / Payroll Management
+
+Data Analytics
+
+Software Development
+
+Cloud & DevOps
+
+Cybersecurity
+
+IT Support & Infra Roles
+
+Digital & Marketing Tech Roles
+
+Each sub-item must link to its own page layout template.
+
+Animations:
+
+Dropdown smooth slide
+
+Hover glow (#3A9AFF)
+
+Fade in on scroll
+
+Subtle card elevation
+
+Use Inter or Poppins font.
+Make it look like a funded tech startup.
+
+🏢 ABOUT PAGE PROMPT
+
+Paste in :
+
+Design an About page for Swiftscale, a Digital Marketing and Technology Platform.
+
+Sections Required:
+
+Hero Section
+Headline: “About Swiftscale”
+Subtext: We are a growth-focused digital marketing and technology platform helping businesses scale smarter.
+
+Vision & Mission Section
+Two-column layout:
+Vision
+Mission
+
+What We Do
+Explain:
+Digital Marketing
+E-Commerce Operations
+IT Solutions
+Training Programs
+
+Our Approach
+Step-based:
+Audit
+Strategy
+Execution
+Scale
+
+Why Swiftscale?
+4 value blocks:
+Technology-first
+Data-driven
+ROI focused
+End-to-end execution
+
+Final CTA Section
+Headline: Ready to Scale With Us?
+Button: Contact Us
+
+Keep layout minimal and corporate.
+
+📞 CONTACT PAGE PROMPT
+
+Design a professional Contact page for Swiftscale.
+
+Sections:
+
+Hero Section
+Headline: Let’s Build Your Growth Engine
+Subtext: Connect with our team to discuss your business goals.
+
+Contact Form
+Fields:
+Full Name
+Email
+Phone
+Service Interested In (Dropdown)
+Message
+Submit Button
+
+Contact Information
+Email
+Phone
+Office Address
+
+Map Section
+
+Final CTA Section
+Book Strategy Call button
+
+Keep it clean and high-conversion.
+
+🛠 COMPLETE SERVICE PAGE STRUCTURE (FOR ALL SERVICE TYPES)
+
+Every service page should follow this framework.
+
+🔷 MASTER SERVICE PAGE TEMPLATE
+
+Use this for ALL pages (Training, E-Commerce, IT, Consulting).
+
+1️⃣ Hero Section
+
+Headline:
+Clear service name
+
+Subheading:
+Short benefit-driven description
+
+CTA:
+Book Consultation / Enroll Now
+
+2️⃣ Problem Statement
+
+What challenges businesses face in this area.
+
+Example:
+Marketplace sellers struggle with visibility, catalog optimization, and operational efficiency.
+
+3️⃣ Our Solution
+
+Explain how Swiftscale solves it.
+
+Structured process
+
+Tools used
+
+Team expertise
+
+4️⃣ Our Process
+
+Step 1
+Step 2
+Step 3
+Step 4
+
+5️⃣ Benefits Section
+
+Increased Revenue
+
+Operational Efficiency
+
+Better Visibility
+
+Scalable Systems
+
+6️⃣ Who It’s For
+
+Startups
+
+D2C Brands
+
+Enterprises
+
+Professionals
+
+7️⃣ Case Example (Even Placeholder)
+
+Scenario
+Action
+Result
+
+8️⃣ CTA Section
+
+Strong close:
+Let’s Get Started
+Book Strategy Call
+
+🎓 TRAINING PAGE STRUCTURE (Example: BI Master Program)
+
+Sections:
+
+Program Overview
+
+Curriculum Breakdown
+
+Tools Covered (Power BI, SQL, Python)
+
+Duration
+
+Career Outcomes
+
+Enrollment CTA
+
+🛒 E-COMMERCE SERVICE PAGE STRUCTURE (Example: Sponsored Ads)
+
+Sections:
+
+Marketplace Growth Challenges
+
+Our Advertising Strategy
+
+Optimization Framework
+
+Reporting & ROI Tracking
+
+Case Scenario
+
+CTA
+
+💻 IT SERVICE PAGE STRUCTURE (Example: App Development)
+
+Sections:
+
+Product Vision
+
+Tech Stack
+
+UI/UX Process
+
+Development Lifecycle
+
+Deployment & Maintenance
+
+CTA
+
+🧠 CONSULTING PAGE STRUCTURE (Example: Cloud & DevOps)
+
+Sections:
+
+Infrastructure Challenges
+
+Cloud Migration Strategy
+
+DevOps Automation
+
+Security & Compliance
+
+Long-Term Scalability
+
+CTA
