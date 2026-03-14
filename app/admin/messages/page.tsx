@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,162 +17,198 @@ const MOCK_CONVERSATIONS = [
 
 export default function MessagesPage() {
   const [search, setSearch] = useState("");
-  const [selectedId, setSelectedId] = useState(MOCK_CONVERSATIONS[0].id);
+  const [messages, setMessages] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const filteredConversations = MOCK_CONVERSATIONS.filter(c => 
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const response = await fetch("/api/admin/messages");
+        const data = await response.json();
+        if (data.success) {
+          const mapped = data.data.map((m: any) => ({
+            id: m._id,
+            name: `${m.firstName} ${m.lastName}`,
+            lastMessage: m.details,
+            time: new Date(m.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            unread: m.status === 'new' ? 1 : 0,
+            email: m.email,
+            service: m.service
+          }));
+          setMessages(mapped);
+          if (mapped.length > 0) setSelectedId(mapped[0].id);
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchMessages();
+  }, []);
+
+  const filteredConversations = messages.filter(c => 
     c.name.toLowerCase().includes(search.toLowerCase())
   );
 
+  const selectedMessage = messages.find(m => m.id === selectedId);
+
   return (
-    <div className="space-y-8 flex flex-col">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <div>
-          <p className="text-xs uppercase tracking-[0.25em] text-foreground/40">Customer Inbox</p>
-          <h2 className="text-4xl font-display font-bold tracking-tight text-foreground">Messages</h2>
-          <p className="text-muted-foreground mt-2">
+    <div className="space-y-12 flex flex-col">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div className="space-y-2">
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Customer Relations</p>
+          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 leading-none">Inbound Console</h2>
+          <p className="text-slate-400 text-sm font-medium leading-relaxed">
             Prioritize and respond to high‑value conversations in real time.
           </p>
         </div>
-        <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+        <Button className="bg-primary text-white hover:bg-primary/90 rounded-2xl h-12 px-8 font-black text-[10px] uppercase tracking-widest shadow-[0_10px_30px_rgba(36,27,235,0.25)] transition-all">
           <MessageSquarePlus className="mr-2 h-4 w-4" /> New Message
         </Button>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-3">
         {[
-          { label: "Open Threads", value: "18", icon: MailWarning, tone: "text-amber-400" },
-          { label: "Resolved Today", value: "42", icon: MailCheck, tone: "text-emerald-500" },
-          { label: "Avg. Response", value: "14m", icon: Info, tone: "text-accent" },
+          { label: "Open Threads", value: messages.filter(m => m.unread > 0).length.toString(), icon: MailWarning, tone: "text-amber-500" },
+          { label: "Total Recieved", value: messages.length.toString(), icon: MailCheck, tone: "text-emerald-500" },
+          { label: "Avg. Response", value: "14m", icon: Info, tone: "text-primary" },
         ].map((item) => (
-          <div key={item.label} className="glass-panel rounded-2xl border border-border p-4 flex items-center justify-between">
+          <div key={item.label} className="bg-white rounded-[2rem] border border-slate-100 p-8 flex items-center justify-between shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)]">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-foreground/40">{item.label}</p>
-              <p className="text-2xl font-display font-bold text-foreground mt-2">{item.value}</p>
+              <p className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-400">{item.label}</p>
+              <p className="text-3xl font-black text-slate-900 mt-2">{item.value}</p>
             </div>
-            <div className="w-10 h-10 rounded-xl bg-card/40 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center">
               <item.icon className={`h-5 w-5 ${item.tone}`} />
             </div>
           </div>
         ))}
       </div>
 
-      <Card className="flex-1 flex overflow-hidden bg-card/60 border-border/60 shadow-xl backdrop-blur min-h-[520px]">
+      <Card className="flex-1 flex overflow-hidden bg-white border-slate-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] rounded-[3rem] min-h-[650px]">
         {/* Sidebar */}
-        <div className="w-full lg:w-1/3 border-r border-border/50 flex flex-col bg-background/70">
-          <div className="p-4 border-b border-border/50">
+        <div className="w-full lg:w-1/3 border-r border-slate-100 flex flex-col bg-slate-50/30">
+          <div className="p-8 border-b border-slate-100 bg-white">
             <div className="relative">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
               <Input
                 placeholder="Search messages..."
-                className="pl-10 bg-muted/50 border-border text-foreground focus:border-accent focus:ring-accent/20 h-10"
+                className="pl-12 bg-slate-50 border-transparent text-slate-900 h-12 rounded-2xl focus:bg-white focus:border-primary/20 transition-all font-medium"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
           </div>
           <ScrollArea className="flex-1">
-            <div className="p-3 space-y-2">
-              {filteredConversations.map((conv) => (
-                <button
-                  key={conv.id}
-                  onClick={() => setSelectedId(conv.id)}
-                  className={`w-full flex items-start gap-3 p-3 rounded-xl text-left transition-all duration-200 border ${
-                    selectedId === conv.id 
-                      ? "bg-card/60 border-border/60" 
-                      : "border-transparent hover:bg-card/40"
-                  }`}
-                >
-                  <Avatar className="h-10 w-10 border border-border">
-                    <AvatarFallback className="bg-muted/50 text-foreground/80 font-medium">
-                      {conv.name.split(" ").map(n => n[0]).join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1 overflow-hidden">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-semibold text-foreground truncate">{conv.name}</span>
-                      <span className="text-xs text-foreground/40 whitespace-nowrap ml-2">{conv.time}</span>
+            <div className="p-4 space-y-2">
+              {isLoading ? (
+                <div className="p-8 text-center text-slate-400 font-bold uppercase tracking-widest text-[10px]">Loading Messages...</div>
+              ) : filteredConversations.length === 0 ? (
+                <div className="p-8 text-center text-slate-400 font-bold uppercase tracking-widest text-[10px]">No Messages Found</div>
+              ) : (
+                filteredConversations.map((conv) => (
+                  <button
+                    key={conv.id}
+                    onClick={() => setSelectedId(conv.id)}
+                    className={`w-full flex items-start gap-4 p-5 rounded-[2rem] text-left transition-all duration-300 group ${
+                      selectedId === conv.id 
+                        ? "bg-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.1)] border border-slate-100" 
+                        : "border-transparent hover:bg-white hover:shadow-lg"
+                    }`}
+                  >
+                    <Avatar className="h-12 w-12 rounded-2xl border-none">
+                      <AvatarFallback className="bg-primary/10 text-primary font-black text-xs rounded-2xl">
+                        {conv.name.split(" ").map((n: string) => n[0]).join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-[11px] font-black text-slate-900 uppercase tracking-widest truncate">{conv.name}</span>
+                        <span className="text-[9px] font-black text-slate-300 uppercase tracking-widest ml-2">{conv.time}</span>
+                      </div>
+                      <p className={`text-[11px] font-medium leading-relaxed truncate ${conv.unread > 0 ? "text-slate-600 font-bold" : "text-slate-400"}`}>
+                        {conv.lastMessage}
+                      </p>
                     </div>
-                    <p className={`text-sm truncate ${conv.unread > 0 ? "text-foreground/80 font-medium" : "text-muted-foreground"}`}>
-                      {conv.lastMessage}
-                    </p>
-                  </div>
-                  {conv.unread > 0 && (
-                    <div className="h-5 w-5 rounded-full bg-accent text-foreground text-[10px] flex items-center justify-center font-bold shrink-0 mt-0.5 shadow-[0_0_10px_rgba(var(--accent),0.5)]">
-                      {conv.unread}
-                    </div>
-                  )}
-                </button>
-              ))}
+                    {conv.unread > 0 && (
+                      <div className="h-2 w-2 rounded-full bg-primary mt-2 group-hover:animate-ping" />
+                    )}
+                  </button>
+                ))
+              )}
             </div>
           </ScrollArea>
         </div>
 
         {/* Chat Area */}
-        <div className="flex-1 flex flex-col bg-background/30">
-          {/* Chat Header */}
-          <div className="h-16 px-6 border-b border-border/50 flex items-center justify-between bg-card backdrop-blur-sm">
-            <div className="flex items-center gap-3">
-              <Avatar className="h-9 w-9 border border-border">
-                <AvatarFallback className="bg-muted text-foreground font-medium">
-                  {MOCK_CONVERSATIONS.find(c => c.id === selectedId)?.name.split(" ").map(n => n[0]).join("")}
-                </AvatarFallback>
-              </Avatar>
-              <div>
-                <h3 className="font-semibold text-foreground leading-tight">
-                  {MOCK_CONVERSATIONS.find(c => c.id === selectedId)?.name}
-                </h3>
-                <div className="flex items-center gap-1.5 mt-0.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  <p className="text-[11px] text-foreground/50 font-medium uppercase tracking-wider">Online</p>
+        <div className="flex-1 flex flex-col bg-white">
+          {selectedMessage ? (
+            <>
+              {/* Chat Header */}
+              <div className="h-24 px-10 border-b border-slate-50 flex items-center justify-between bg-white">
+                <div className="flex items-center gap-4">
+                  <Avatar className="h-12 w-12 rounded-2xl">
+                    <AvatarFallback className="bg-slate-50 text-slate-900 font-black text-xs rounded-2xl">
+                      {selectedMessage.name.split(" ").map((n: string) => n[0]).join("")}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="min-w-0">
+                    <h3 className="text-sm font-black text-slate-900 tracking-tight truncate">
+                      {selectedMessage.name}
+                    </h3>
+                    <div className="flex items-center gap-2 mt-1">
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                      <p className="text-[9px] text-slate-400 font-black uppercase tracking-[0.2em]">{selectedMessage.service}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                   <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest">{selectedMessage.email}</p>
+                   <Button variant="ghost" size="icon" className="text-slate-300 hover:text-primary hover:bg-slate-50 rounded-2xl h-12 w-12">
+                     <Info className="w-5 h-5" />
+                   </Button>
                 </div>
               </div>
+
+              {/* Messages */}
+              <ScrollArea className="flex-1 p-10 bg-slate-50/20">
+                <div className="space-y-10">
+                  <div className="flex flex-col gap-2 max-w-[70%]">
+                    <div className="bg-white border border-slate-100 text-slate-600 p-6 rounded-[2rem] rounded-tl-none text-xs font-medium leading-relaxed shadow-sm">
+                      {selectedMessage.lastMessage}
+                    </div>
+                    <span className="text-[9px] font-black text-slate-300 uppercase tracking-widest ml-4">{selectedMessage.time}</span>
+                  </div>
+                </div>
+              </ScrollArea>
+
+              {/* Input Area */}
+              <div className="p-8 border-t border-slate-100 bg-white">
+                <form className="flex items-center gap-4 bg-slate-50 border border-slate-100 rounded-[2rem] p-3 text-slate-900 focus-within:bg-white focus-within:border-primary/20 focus-within:shadow-xl transition-all duration-500" onSubmit={(e) => e.preventDefault()}>
+                  <Input 
+                    placeholder="Secure message response..." 
+                    className="flex-1 border-0 bg-transparent focus-visible:ring-0 text-xs font-black placeholder:text-slate-300 h-12 px-6" 
+                  />
+                  <Button size="icon" type="submit" className="bg-primary hover:bg-primary/90 text-white rounded-2xl h-12 w-12 shrink-0 shadow-[0_10px_20px_rgba(36,27,235,0.25)]">
+                    <Send className="h-5 w-5" />
+                    <span className="sr-only">Send message</span>
+                  </Button>
+                </form>
+              </div>
+            </>
+          ) : (
+            <div className="flex-1 flex flex-col items-center justify-center text-center p-12 space-y-6">
+              <div className="w-20 h-20 bg-slate-50 rounded-[2.5rem] flex items-center justify-center text-slate-200">
+                <MessageSquarePlus className="w-10 h-10" />
+              </div>
+              <p className="text-[10px] uppercase font-black tracking-[0.3em] text-slate-300">Select a transmission to view details</p>
             </div>
-            <Button variant="ghost" size="icon" className="text-foreground/50 hover:text-foreground hover:bg-card/40 rounded-full">
-              <Info className="w-5 h-5" />
-            </Button>
-          </div>
-
-          {/* Messages */}
-          <ScrollArea className="flex-1 p-6">
-            <div className="space-y-6">
-              <div className="flex flex-col gap-1 max-w-[75%]">
-                <div className="bg-card/40 border border-border/60 text-foreground/90 p-4 rounded-2xl rounded-tl-sm text-sm shadow-sm">
-                  Hi, I have a question about my recent order. The tracking says delivered but I haven't received it.
-                </div>
-                <span className="text-[11px] text-foreground/40 ml-1 mt-1 font-medium">10:25 AM</span>
-              </div>
-              
-              <div className="flex flex-col gap-1 max-w-[75%] self-end items-end ml-auto">
-                <div className="bg-accent text-foreground p-4 rounded-2xl rounded-tr-sm text-sm shadow-[0_4px_15px_rgba(var(--accent),0.2)]">
-                  Hello! I'm sorry to hear that. Could you please provide your order number so I can check the status for you?
-                </div>
-                <span className="text-[11px] text-foreground/40 mr-1 mt-1 font-medium">10:28 AM</span>
-              </div>
-
-              <div className="flex flex-col gap-1 max-w-[75%]">
-                <div className="bg-card/40 border border-border/60 text-foreground/90 p-4 rounded-2xl rounded-tl-sm text-sm shadow-sm">
-                  Yes, it's ORD-7352.
-                </div>
-                <span className="text-[11px] text-foreground/40 ml-1 mt-1 font-medium">10:30 AM</span>
-              </div>
-            </div>
-          </ScrollArea>
-
-          {/* Input Area */}
-          <div className="p-4 border-t border-border/50 bg-card backdrop-blur-sm">
-            <form className="flex items-center gap-3 bg-background border border-border rounded-2xl p-2 pr-2 shadow-inner focus-within:border-primary transition-colors" onSubmit={(e) => e.preventDefault()}>
-              <Input 
-                placeholder="Type your message..." 
-                className="flex-1 border-0 bg-transparent focus-visible:ring-0 text-foreground h-10 px-3 placeholder:text-muted-foreground/70" 
-              />
-              <Button size="icon" type="submit" className="bg-primary hover:bg-primary/90 text-foreground rounded-xl h-10 w-10 shrink-0">
-                <Send className="h-4 w-4 ml-0.5" />
-                <span className="sr-only">Send message</span>
-              </Button>
-            </form>
-          </div>
+          )}
         </div>
       </Card>
     </div>
   );
 }
+

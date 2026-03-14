@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectDB from '../../../../lib/db';
-import User from '../../../../models/User';
-import { signToken } from '../../../../lib/auth';
+import connectDB from '@/lib/db';
+import User from '@/models/User';
+import { signToken } from '@/lib/auth';
 
 export async function POST(req: NextRequest) {
   try {
@@ -28,17 +28,28 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 3) If everything ok, send token to client
-    const token = signToken(user._id);
-
-    // Remove password from output
-    user.password = undefined;
-
-    return NextResponse.json({
-      status: 'success',
-      token,
-      data: { user }
-    });
+     // 3) If everything ok, send token to client
+     const token = signToken(user._id);
+ 
+     // Remove password from output
+     user.password = undefined;
+ 
+     const response = NextResponse.json({
+       status: 'success',
+       token,
+       data: { user }
+     });
+ 
+     // Set cookie
+     response.cookies.set('admin-token', token, {
+       httpOnly: true,
+       secure: process.env.NODE_ENV === 'production',
+       sameSite: 'lax',
+       maxAge: 7 * 24 * 60 * 60, // 7 days
+       path: '/',
+     });
+ 
+     return response;
 
   } catch (error: any) {
     console.error('Login Error:', error);

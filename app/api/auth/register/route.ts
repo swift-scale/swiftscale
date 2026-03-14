@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectDB from '../../../../lib/db';
-import User from '../../../../models/User';
-import { signToken } from '../../../../lib/auth';
-import sendEmail from '../../../../lib/mailer';
+import connectDB from '@/lib/db';
+import User from '@/models/User';
+import { signToken } from '@/lib/auth';
+import sendEmail from '@/lib/mailer';
 
 export async function POST(req: NextRequest) {
   try {

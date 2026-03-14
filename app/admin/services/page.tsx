@@ -1,18 +1,27 @@
 "use client";
 
-import { useState } from "react";
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
+import { useState, useEffect } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Search, Plus, MoreHorizontal, LayoutList, CheckCircle2, Sparkles, ShieldCheck, Eye } from "lucide-react";
+import {
+  Search,
+  Plus,
+  MoreHorizontal,
+  LayoutList,
+  CheckCircle2,
+  Sparkles,
+  ShieldCheck,
+  Eye,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,160 +33,310 @@ import {
 
 const MOCK_SERVICES = [
   // Training
-  { id: "1", title: "BI Master Program", category: "Training", status: "Active", visiblity: "Website & Menu" },
-  { id: "2", title: "Full Stack Master", category: "Training", status: "Active", visiblity: "Website & Menu" },
-  { id: "3", title: "UI/UX Master", category: "Training", status: "Active", visiblity: "Website & Menu" },
-  { id: "4", title: "Data Science", category: "Training", status: "Active", visiblity: "Website & Menu" },
-  
+  {
+    id: "1",
+    title: "BI Master Program",
+    category: "Training",
+    status: "Active",
+    visiblity: "Website & Menu",
+  },
+  {
+    id: "2",
+    title: "Full Stack Master",
+    category: "Training",
+    status: "Active",
+    visiblity: "Website & Menu",
+  },
+  {
+    id: "3",
+    title: "UI/UX Master",
+    category: "Training",
+    status: "Active",
+    visiblity: "Website & Menu",
+  },
+  {
+    id: "4",
+    title: "Data Science",
+    category: "Training",
+    status: "Active",
+    visiblity: "Website & Menu",
+  },
+
   // E-Commerce
-  { id: "5", title: "Registration", category: "E-Commerce", status: "Active", visiblity: "Website & Menu" },
-  { id: "6", title: "Sponsored Ads", category: "E-Commerce", status: "Active", visiblity: "Website & Menu" },
-  { id: "7", title: "Logistics", category: "E-Commerce", status: "Active", visiblity: "Website & Menu" },
-  { id: "8", title: "Warehousing", category: "E-Commerce", status: "Active", visiblity: "Website & Menu" },
-  
+  {
+    id: "5",
+    title: "Registration",
+    category: "E-Commerce",
+    status: "Active",
+    visiblity: "Website & Menu",
+  },
+  {
+    id: "6",
+    title: "Sponsored Ads",
+    category: "E-Commerce",
+    status: "Active",
+    visiblity: "Website & Menu",
+  },
+  {
+    id: "7",
+    title: "Logistics",
+    category: "E-Commerce",
+    status: "Active",
+    visiblity: "Website & Menu",
+  },
+  {
+    id: "8",
+    title: "Warehousing",
+    category: "E-Commerce",
+    status: "Active",
+    visiblity: "Website & Menu",
+  },
+
   // IT Services
-  { id: "9", title: "App/Web Dev", category: "IT Services", status: "Active", visiblity: "Website & Menu" },
-  { id: "10", title: "Digital Marketing", category: "IT Services", status: "Active", visiblity: "Website & Menu" },
-  { id: "11", title: "Cybersecurity", category: "IT Services", status: "Active", visiblity: "Website & Menu" },
-  { id: "12", title: "Cloud & DevOps", category: "IT Services", status: "Active", visiblity: "Website & Menu" },
-  
+  {
+    id: "9",
+    title: "App/Web Dev",
+    category: "IT Services",
+    status: "Active",
+    visiblity: "Website & Menu",
+  },
+  {
+    id: "10",
+    title: "Digital Marketing",
+    category: "IT Services",
+    status: "Active",
+    visiblity: "Website & Menu",
+  },
+  {
+    id: "11",
+    title: "Cybersecurity",
+    category: "IT Services",
+    status: "Active",
+    visibility: "Website & Menu",
+  },
+  {
+    id: "12",
+    title: "Cloud & DevOps",
+    category: "IT Services",
+    status: "Active",
+    visibility: "Website & Menu",
+  },
+
   // Consulting
-  { id: "13", title: "Payroll Management", category: "Consulting", status: "Active", visiblity: "Website & Menu" },
-  { id: "14", title: "Growth Strategy", category: "Consulting", status: "Active", visiblity: "Website & Menu" },
-  { id: "15", title: "IT Infra Roles", category: "Consulting", status: "Active", visiblity: "Website & Menu" },
+  {
+    id: "13",
+    title: "Payroll Management",
+    category: "Consulting",
+    status: "Active",
+    visibility: "Website & Menu",
+  },
+  {
+    id: "14",
+    title: "Growth Strategy",
+    category: "Consulting",
+    status: "Active",
+    visibility: "Website & Menu",
+  },
+  {
+    id: "15",
+    title: "IT Infra Roles",
+    category: "Consulting",
+    status: "Active",
+    visibility: "Website & Menu",
+  },
 ];
 
 export default function ServicesPage() {
   const [search, setSearch] = useState("");
-  
-  const filteredServices = MOCK_SERVICES.filter(service => 
-    service.title.toLowerCase().includes(search.toLowerCase()) || 
-    service.category.toLowerCase().includes(search.toLowerCase())
+  const [services, setServices] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetch("/api/admin/services");
+        const data = await response.json();
+        if (data.success) {
+          setServices(data.data);
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchServices();
+  }, []);
+
+  const filteredServices = services.filter(
+    (service) =>
+      service.title.toLowerCase().includes(search.toLowerCase()) ||
+      service.category.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <div>
-          <p className="text-xs uppercase tracking-[0.25em] text-foreground/40">Content Management</p>
-          <h2 className="text-4xl font-display font-bold tracking-tight text-foreground">Services Library</h2>
-          <p className="text-muted-foreground mt-2 max-w-2xl">
-            Curate what appears on the website and keep every offer aligned with your growth roadmap.
+    <div className="space-y-12">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div className="space-y-2">
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Content Management</p>
+          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 leading-none">Services Portfolio</h2>
+          <p className="text-slate-400 text-sm font-medium max-w-xl">
+            Curate what appears on the website and keep every vertical aligned with your roadmap.
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
-          <Button variant="outline" className="border-border/60 text-foreground hover:bg-card/60">
+          <Button variant="outline" className="h-10 px-6 rounded-xl border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition-all">
             Review Visibility
           </Button>
-          <Button className="bg-accent hover:bg-accent/90 text-foreground font-semibold">
+          <Button className="bg-primary text-white hover:bg-primary/90 rounded-xl h-10 px-6 font-black text-[10px] uppercase tracking-widest shadow-[0_10px_30px_rgba(36,27,235,0.25)] transition-all">
             <Plus className="mr-2 h-4 w-4" /> Add Service
           </Button>
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-3">
         {[
-          { label: "Total Services", value: "15", icon: Sparkles, tone: "text-accent" },
+          { label: "Total Services", value: "15", icon: Sparkles, tone: "text-primary" },
           { label: "Visible on Site", value: "15", icon: Eye, tone: "text-primary" },
           { label: "Approval Ready", value: "12", icon: ShieldCheck, tone: "text-emerald-500" },
         ].map((item) => (
-          <div key={item.label} className="glass-panel rounded-2xl border border-border p-4 flex items-center justify-between">
+          <div key={item.label} className="bg-white rounded-[2rem] border border-slate-100 p-8 flex items-center justify-between shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)]">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-foreground/40">{item.label}</p>
-              <p className="text-2xl font-display font-bold text-foreground mt-2">{item.value}</p>
+              <p className="text-[10px] uppercase tracking-[0.2em] font-black text-slate-400">{item.label}</p>
+              <p className="text-3xl font-black text-slate-900 mt-2">{item.value}</p>
             </div>
-            <div className="w-10 h-10 rounded-xl bg-card/40 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center">
               <item.icon className={`h-5 w-5 ${item.tone}`} />
             </div>
           </div>
         ))}
       </div>
 
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div className="relative w-full md:max-w-sm">
-          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search services..."
-            className="pl-10 bg-card/60 border-border text-foreground h-10 focus:border-accent focus:ring-accent/20"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+      <div className="space-y-8">
+        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="relative w-full md:max-w-md">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Input
+              placeholder="Search services..."
+              className="pl-12 bg-slate-50 border-transparent text-slate-900 h-14 rounded-2xl focus:bg-white focus:border-primary/20 transition-all font-bold placeholder:text-slate-300"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {["All", "Training", "E-Commerce", "IT Services"].map((cat) => (
+              <Button
+                key={cat}
+                variant="ghost"
+                className={`h-10 px-6 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                  cat === "All" 
+                    ? "bg-slate-900 text-white shadow-lg" 
+                    : "text-slate-400 hover:text-slate-900 hover:bg-slate-50"
+                }`}
+              >
+                {cat}
+              </Button>
+            ))}
+          </div>
         </div>
-        <div className="flex flex-wrap gap-2">
-          <Button variant="outline" className="border-border/60 text-foreground hover:bg-card/60">All</Button>
-          <Button variant="outline" className="border-border/60 text-foreground/70 hover:text-foreground hover:bg-card/60">Training</Button>
-          <Button variant="outline" className="border-border/60 text-foreground/70 hover:text-foreground hover:bg-card/60">E-Commerce</Button>
-          <Button variant="outline" className="border-border/60 text-foreground/70 hover:text-foreground hover:bg-card/60">IT Services</Button>
-        </div>
-      </div>
 
-      <div className="rounded-2xl border border-border/60 bg-card/60 overflow-hidden shadow-lg backdrop-blur">
-        <Table>
-          <TableHeader className="bg-card/40">
-            <TableRow className="border-border/60 hover:bg-transparent">
-              <TableHead className="w-[50px] text-foreground/60"></TableHead>
-              <TableHead className="text-foreground/60 font-medium">Service Title</TableHead>
-              <TableHead className="text-foreground/60 font-medium">Category</TableHead>
-              <TableHead className="text-foreground/60 font-medium">Visibility</TableHead>
-              <TableHead className="text-foreground/60 font-medium">Status</TableHead>
-              <TableHead className="text-right text-foreground/60 font-medium">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {filteredServices.length === 0 ? (
-              <TableRow className="border-border/60">
-                <TableCell colSpan={6} className="text-center h-32 text-muted-foreground">
-                  No services found matching your search.
-                </TableCell>
+        <div className="bg-white rounded-[3rem] border border-slate-100 overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)]">
+          <Table>
+            <TableHeader className="bg-slate-50/50">
+              <TableRow className="border-slate-50 hover:bg-transparent h-16">
+                <TableHead className="w-[80px]"></TableHead>
+                <TableHead className="text-[10px] font-black uppercase tracking-widest text-slate-400">Service Title</TableHead>
+                <TableHead className="text-[10px] font-black uppercase tracking-widest text-slate-400">Category</TableHead>
+                <TableHead className="text-[10px] font-black uppercase tracking-widest text-slate-400">Visibility</TableHead>
+                <TableHead className="text-[10px] font-black uppercase tracking-widest text-slate-400">Status</TableHead>
+                <TableHead className="text-right text-[10px] font-black uppercase tracking-widest text-slate-400 pr-10">Actions</TableHead>
               </TableRow>
-            ) : (
-              filteredServices.map((service) => (
-                <TableRow key={service.id} className="border-border/60 hover:bg-card/40 transition-colors">
-                  <TableCell>
-                    <div className="h-8 w-8 rounded-lg bg-card/40 flex items-center justify-center">
-                      <LayoutList className="h-4 w-4 text-foreground/70" />
-                    </div>
-                  </TableCell>
-                  <TableCell className="font-semibold text-foreground">{service.title}</TableCell>
-                  <TableCell>
-                    <Badge variant="outline" className="bg-card/40 border-border/60 text-foreground/80 hover:bg-card/60">
-                      {service.category}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-muted-foreground text-sm flex items-center gap-2">
-                    <CheckCircle2 className="w-3 h-3 text-emerald-500" />
-                    {service.visiblity}
-                  </TableCell>
-                  <TableCell>
-                    <Badge 
-                      variant="outline"
-                      className={service.status === "Active" ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-card/40 border-border/60 text-foreground/60"}
-                    >
-                      {service.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-card/60 text-foreground/70 hover:text-foreground">
-                          <span className="sr-only">Open menu</span>
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-card border-border/60 text-foreground">
-                        <DropdownMenuLabel className="text-foreground/60">Actions</DropdownMenuLabel>
-                        <DropdownMenuItem className="focus:bg-card/60 cursor-pointer">Edit Service</DropdownMenuItem>
-                        <DropdownMenuItem className="focus:bg-card/60 cursor-pointer">Hide from Menu</DropdownMenuItem>
-                        <DropdownMenuSeparator className="bg-card/60" />
-                        <DropdownMenuItem className="focus:bg-red-500/20 text-red-400 cursor-pointer">Delete Service</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+            </TableHeader>
+            <TableBody>
+              {filteredServices.length === 0 ? (
+                <TableRow key="empty">
+                  <TableCell
+                    colSpan={6}
+                    className="text-center h-48 text-slate-400 font-medium"
+                  >
+                    No services discovered in the current scope.
                   </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
+              ) : (
+                filteredServices.map((service) => (
+                  <TableRow
+                    key={service._id || service.id}
+                    className="border-slate-50 hover:bg-slate-50/30 transition-colors h-24"
+                  >
+                    <TableCell className="pl-6">
+                      <div className="h-12 w-12 rounded-2xl bg-slate-50 flex items-center justify-center group-hover:bg-white transition-colors">
+                        <LayoutList className="h-5 w-5 text-primary" />
+                      </div>
+                    </TableCell>
+                    <TableCell className="font-black text-slate-900 text-base">
+                      {service.title}
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant="outline"
+                        className="bg-slate-50 text-slate-900 border border-slate-100 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest"
+                      >
+                        {service.category}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2 text-slate-400 text-[11px] font-bold">
+                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        {service.visibility}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant="outline"
+                        className={
+                          service.status === "Active"
+                            ? "bg-emerald-500/5 text-emerald-500 border-none px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest"
+                            : "bg-slate-50 text-slate-400 border-none px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest"
+                        }
+                      >
+                        {service.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right pr-10">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            className="h-10 w-10 p-0 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-900"
+                          >
+                            <span className="sr-only">Open menu</span>
+                            <MoreHorizontal className="h-5 w-5" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent
+                          align="end"
+                          className="w-48 bg-white border-slate-100 rounded-2xl shadow-xl p-2"
+                        >
+                          <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 px-4 py-3">Operations</DropdownMenuLabel>
+                          <DropdownMenuItem className="rounded-xl px-4 py-3 text-xs font-bold text-slate-600 focus:bg-slate-50 focus:text-primary cursor-pointer">
+                            Edit Service
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="rounded-xl px-4 py-3 text-xs font-bold text-slate-600 focus:bg-slate-50 focus:text-primary cursor-pointer">
+                            Hide from Menu
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator className="bg-slate-50 my-2 mx-2" />
+                          <DropdownMenuItem className="rounded-xl px-4 py-3 text-xs font-bold text-rose-500 focus:bg-rose-50 cursor-pointer">
+                            Delete Service
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </div>
   );

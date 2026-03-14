@@ -37,6 +37,12 @@
       "vite/client"
     ],
     "paths": {
+      "@/lib/*": [
+        "./lib/*"
+      ],
+      "@/models/*": [
+        "./models/*"
+      ],
       "@/*": [
         "./*",
         "./client/src/*",

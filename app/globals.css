@@ -120,57 +120,58 @@
 
 .admin-theme {
   --color-background: #FFFFFF;
-  --color-foreground: #008DDA;
+  --color-foreground: #020617; /* Dark slate for high contrast */
 
   --color-card: #FFFFFF;
-  --color-card-foreground: #008DDA;
+  --color-card-foreground: #020617;
   --color-popover: #FFFFFF;
-  --color-popover-foreground: #008DDA;
+  --color-popover-foreground: #020617;
 
-  --color-primary: #008DDA;
+  --color-primary: #241BEB; /* Official Swiftscale Brand Blue */
   --color-primary-foreground: #FFFFFF;
 
-  --color-secondary: #41C9E2;
-  --color-secondary-foreground: #008DDA;
+  --color-secondary: #F1F5F9;
+  --color-secondary-foreground: #241BEB;
 
-  --color-muted: #F7EEDD;
-  --color-muted-foreground: #008DDA;
+  --color-muted: #F8FAFC;
+  --color-muted-foreground: #64748B;
 
-  --color-accent: #41C9E2;
-  --color-accent-foreground: #008DDA;
+  --color-accent: #241BEB;
+  --color-accent-foreground: #FFFFFF;
 
-  --color-border: #ACE2E1;
-  --color-input: #ACE2E1;
-  --color-ring: #008DDA;
+  --color-border: #E2E8F0;
+  --color-input: #E2E8F0;
+  --color-ring: #241BEB;
 
   --color-sidebar: #FFFFFF;
-  --color-sidebar-foreground: #008DDA;
-  --color-sidebar-border: #ACE2E1;
-  --color-sidebar-accent: #ACE2E1;
-  --color-sidebar-accent-foreground: #008DDA;
+  --color-sidebar-foreground: #64748B;
+  --color-sidebar-border: #F1F5F9;
+  --color-sidebar-accent: #F1F5F9;
+  --color-sidebar-accent-foreground: #241BEB;
 
+  /* HSL Fallbacks for UI Components */
   --background: 0 0% 100%;
-  --foreground: 201 100% 43%;
+  --foreground: 222 47% 11%;
   --card: 0 0% 100%;
-  --card-foreground: 201 100% 43%;
+  --card-foreground: 222 47% 11%;
   --popover: 0 0% 100%;
-  --popover-foreground: 201 100% 43%;
-  --primary: 201 100% 43%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 189 74% 57%;
-  --secondary-foreground: 201 100% 43%;
-  --muted: 39 62% 92%;
-  --muted-foreground: 201 100% 43%;
-  --accent: 189 74% 57%;
-  --accent-foreground: 201 100% 43%;
-  --border: 179 48% 78%;
-  --input: 179 48% 78%;
-  --ring: 201 100% 43%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 243 84% 52%;
+  --primary-foreground: 210 20% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 243 84% 52%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 243 84% 52%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 243 84% 52%;
   --sidebar: 0 0% 100%;
-  --sidebar-foreground: 201 100% 43%;
-  --sidebar-border: 179 48% 78%;
-  --sidebar-accent: 179 48% 78%;
-  --sidebar-accent-foreground: 201 100% 43%;
+  --sidebar-foreground: 215 16% 47%;
+  --sidebar-border: 210 40% 96%;
+  --sidebar-accent: 210 40% 96%;
+  --sidebar-accent-foreground: 243 84% 52%;
 }
 
 @layer base {

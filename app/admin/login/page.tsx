@@ -8,26 +8,51 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff, Lock, Mail, ArrowRight, ShieldCheck, Cpu, Globe, Zap } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 export default function AdminLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
-    setTimeout(() => {
-      setIsLoading(false);
-      toast({
-        title: "Access Granted",
+    // Get form data
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Authentication failed");
+      }
+
+      toast.success("Access Granted", {
         description: "Welcome back, Administrator.",
       });
+      
       router.push("/admin");
-    }, 1500);
+      router.refresh(); // Refresh to update middleware state
+    } catch (error: any) {
+      toast.error("Access Denied", {
+        description: error.message || "Invalid credentials. Please try again.",
+      });
+    } finally {
+      setIsLoading(true); // Keep loading true during redirect for better UX
+      setTimeout(() => setIsLoading(false), 2000);
+    }
   };
 
   return (
@@ -113,6 +138,7 @@ export default function AdminLogin() {
                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-foreground/30 group-focus-within/input:text-primary transition-colors" />
                         <Input 
                           id="email" 
+                          name="email"
                           type="email" 
                           placeholder="admin@swiftscale.com" 
                           className="pl-12 h-14 bg-card/40 border-border/60 text-foreground placeholder:text-foreground/20 focus:border-primary/50 focus:ring-primary/10 rounded-2xl transition-all"
@@ -134,6 +160,7 @@ export default function AdminLogin() {
                         <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-foreground/30 group-focus-within/input:text-primary transition-colors" />
                         <Input 
                           id="password" 
+                          name="password"
                           type={showPassword ? "text" : "password"} 
                           placeholder="••••••••" 
                           className="pl-12 pr-12 h-14 bg-card/40 border-border/60 text-foreground placeholder:text-foreground/20 focus:border-primary/50 focus:ring-primary/10 rounded-2xl transition-all"

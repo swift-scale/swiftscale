@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   Settings,
@@ -12,9 +12,8 @@ import {
   LayoutList,
   Bell,
   Search,
-  Plus,
   UserCircle,
-  Sparkles
+  ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -23,18 +22,29 @@ import {
   Sheet, 
   SheetContent, 
 } from "@/components/ui/sheet";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const SIDEBAR_ITEMS = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
   { icon: LayoutList, label: "Services", href: "/admin/services" },
-  { icon: MessageSquare, label: "Messages", href: "/admin/messages" },
+  { icon: MessageSquare, label: "Messages", href: "/admin/messages", badge: 32 },
   { icon: BarChart, label: "Analytics", href: "/admin/analytics" },
   { icon: Settings, label: "Settings", href: "/admin/settings" },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   const pathname = usePathname();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const isAuthPage = pathname === "/admin/login" || 
                     pathname === "/admin/forgot-password" || 
@@ -44,117 +54,165 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return <>{children}</>;
   }
 
-  const SidebarContent = () => (
-    <div className="flex h-full flex-col bg-sidebar border-r border-sidebar-border text-sidebar-foreground">
-      <div className="p-6 border-b border-sidebar-border">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center font-bold text-sidebar-foreground shadow-[0_0_20px_rgba(36,27,235,0.4)]">
-            S
-          </div>
-          <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-sidebar-foreground/50">Swiftscale</p>
-            <h2 className="text-lg font-semibold tracking-tight">Admin Console</h2>
-          </div>
-        </div>
-      </div>
-      
-      <div className="flex-1 overflow-auto py-2">
-        <nav className="grid gap-1 px-4">
-          {SIDEBAR_ITEMS.map((item) => {
-            const isActive = pathname === item.href || (item.href !== "/admin" && pathname?.startsWith(item.href));
-            return (
-              <Link key={item.href} href={item.href}>
-                <span
-                  className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground cursor-pointer ${
-                    isActive ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-[0_8px_20px_rgba(36,27,235,0.2)]" : "text-sidebar-foreground/70"
-                  }`}
-                >
-                  <item.icon className="h-4 w-4" />
-                  {item.label}
-                </span>
-              </Link>
-            );
-          })}
-        </nav>
-      </div>
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("/api/auth/logout", {
+        method: "POST",
+      });
+      if (response.ok) {
+        router.push("/admin/login");
+        router.refresh();
+      }
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
 
-      <div className="px-4 pb-4">
-        <div className="rounded-2xl border border-sidebar-border bg-sidebar/60 p-4">
-          <div className="flex items-center gap-2 text-xs text-sidebar-foreground/60 uppercase tracking-[0.2em]">
-            <Sparkles className="h-3.5 w-3.5 text-accent" />
-            Live Status
+  const SidebarContent = ({ collapsed = false }: { collapsed?: boolean }) => (
+    <div className={`flex h-full flex-col relative transition-all duration-500 overflow-hidden ${
+      collapsed 
+        ? "w-24 bg-[#F0F9FF]/40 p-4 border-r border-blue-50/50 backdrop-blur-md" 
+        : "w-72 bg-white/20 border-r border-blue-50/50 backdrop-blur-md"
+    }`}>
+      {/* Background Decor */}
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-blue-50/30 to-transparent pointer-events-none" />
+      
+      <div className={`relative z-10 ${collapsed ? "space-y-4" : "p-6"}`}>
+        <div className={`flex items-center justify-between ${collapsed ? "flex-col gap-4" : "mb-8"}`}>
+          <div className={`flex items-center gap-3 group/logo transition-all ${collapsed ? "w-12 h-12 bg-white rounded-2xl shadow-[0_8px_30px_rgba(186,230,253,0.15)] border border-blue-50 justify-center p-2" : ""}`}>
+            <div className={`rounded-xl bg-primary flex items-center justify-center font-black text-white shadow-[0_10px_20px_rgba(36,27,235,0.2)] transition-all ${collapsed ? "w-8 h-8" : "w-10 h-10"}`}>
+              S
+            </div>
+            {!collapsed && <h2 className="text-lg font-black tracking-tight text-slate-900 animate-in fade-in duration-500">Swiftscale</h2>}
           </div>
-          <p className="mt-3 text-sm text-sidebar-foreground/80">All systems operational.</p>
-          <p className="text-xs text-sidebar-foreground/50">Last check: 2 minutes ago</p>
+        </div>
+
+        <div className={collapsed ? "space-y-3" : "space-y-6"}>
+          <div>
+            {!collapsed && <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-4 px-4 animate-in fade-in duration-500">Main Menu</p>}
+            <nav className={`grid ${collapsed ? "gap-3 justify-center" : "gap-1"}`}>
+              {SIDEBAR_ITEMS.map((item) => {
+                const isActive = pathname === item.href || (item.href !== "/admin" && pathname?.startsWith(item.href));
+                return (
+                  <Link key={item.href} href={item.href}>
+                    <span
+                      title={collapsed ? item.label : ""}
+                      className={`flex items-center transition-all duration-300 cursor-pointer group ${
+                        collapsed 
+                          ? `w-12 h-12 rounded-2xl justify-center shadow-[0_8px_30px_rgba(186,230,253,0.15)] border border-blue-50 ${isActive ? "bg-slate-900 text-white shadow-lg border-slate-900" : "bg-white text-slate-400 hover:bg-blue-50 hover:text-primary"}` 
+                          : `gap-3 rounded-2xl px-4 py-3.5 ${isActive ? "bg-primary text-white shadow-[0_10px_25px_rgba(36,27,235,0.25)] scale-[1.02]" : "text-slate-400 hover:text-primary hover:bg-blue-50"}`
+                      }`}
+                    >
+                      <item.icon className={`h-4 w-4 transition-colors ${isActive ? "text-white" : "group-hover:text-slate-900"}`} />
+                      {!collapsed && <span className="flex-1 text-xs font-black uppercase tracking-widest animate-in fade-in duration-500">{item.label}</span>}
+                      {!collapsed && item.badge && (
+                        <span className={`px-1.5 py-0.5 rounded-lg text-[8px] font-black ${isActive ? 'bg-white text-primary' : 'bg-rose-500 text-white shadow-[0_2px_10px_rgba(244,63,94,0.3)]'}`}>
+                          {item.badge}
+                        </span>
+                      )}
+                      {!collapsed && isActive && !item.badge && <ChevronRight className="h-3 w-3 opacity-50" />}
+                    </span>
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
         </div>
       </div>
       
-      <div className="p-4 mt-auto border-t border-sidebar-border">
-        <Link href="/">
-          <span className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground cursor-pointer">
-            <LogOut className="h-4 w-4" />
-            Back to Site
-          </span>
-        </Link>
+      <div className={`mt-auto ${collapsed ? "p-0" : "p-6"}`}>
+        {/* Settings and Sign out moved to Navbar Profile */}
       </div>
     </div>
   );
 
   return (
-    <div className="admin-theme flex min-h-screen w-full bg-background text-foreground">
-      {/* Desktop Sidebar */}
-      <aside className="hidden w-64 md:block">
-        <SidebarContent />
+    <div className="admin-theme flex h-screen w-full bg-gradient-to-br from-[#F0F9FF] via-white to-[#E0F2FE] text-foreground overflow-hidden">
+      {/* Desktop Sidebar with Hover Interaction */}
+      <aside 
+        onMouseEnter={() => setIsCollapsed(false)}
+        onMouseLeave={() => setIsCollapsed(true)}
+        className={`hidden md:block transition-all duration-500 ease-in-out h-screen sticky top-0 z-40 ${isCollapsed ? "w-24" : "w-72"}`}
+      >
+        <SidebarContent collapsed={isCollapsed} />
       </aside>
 
       {/* Mobile Sidebar */}
       <Sheet open={isMobileOpen} onOpenChange={setIsMobileOpen}>
-        <SheetContent side="left" className="p-0 w-64">
+        <SheetContent side="left" className="p-0 w-72">
           <SidebarContent />
         </SheetContent>
       </Sheet>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <header className="sticky top-0 z-30 border-b border-border/60 bg-card/60 backdrop-blur-xl">
-          <div className="flex flex-col gap-4 px-4 py-4 md:flex-row md:items-center md:justify-between md:px-8">
-            <div className="flex items-center gap-3">
+      <main className="flex-1 flex flex-col min-w-0 overflow-hidden bg-transparent">
+        <header className="sticky top-0 z-30 bg-white/40 backdrop-blur-xl border-b border-blue-50/20">
+          <div className="flex flex-col gap-6 px-6 py-6 md:flex-row md:items-center md:justify-between md:px-10">
+            <div className="flex items-center gap-4">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsMobileOpen(true)}
-                className="md:hidden"
+                className="md:hidden text-slate-400"
               >
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Toggle menu</span>
               </Button>
-              <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-foreground/60">Swiftscale Admin</p>
-                <h1 className="text-lg font-semibold tracking-tight">Command Center</h1>
+              <div className="space-y-1">
+                <h1 className="text-3xl font-black tracking-tight text-slate-900">Swiftscale Admin</h1>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Global Administrative Gateway</p>
               </div>
             </div>
 
-            <div className="flex flex-1 items-center gap-3 md:justify-end">
-              <div className="relative hidden md:block w-full max-w-md">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-foreground/40" />
+            <div className="flex flex-1 items-center gap-4 md:justify-end">
+              <div className="relative hidden md:block w-full max-w-sm">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                 <Input
                   placeholder="Search anything..."
-                  className="pl-10 bg-muted/60 border-border text-foreground focus:border-accent focus:ring-accent/20 h-10"
+                  className="pl-12 bg-slate-50 border-transparent text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-primary/20 h-14 rounded-2xl transition-all font-bold"
                 />
               </div>
-              <Button variant="outline" className="border-border/60 bg-transparent text-foreground hover:bg-foreground/10">
-                <Plus className="mr-2 h-4 w-4" /> New Task
-              </Button>
-              <Button variant="ghost" size="icon" className="text-foreground/60 hover:text-foreground hover:bg-foreground/10">
-                <Bell className="h-5 w-5" />
-              </Button>
-              <div className="hidden sm:flex items-center gap-2 rounded-full border border-border/60 bg-card/60 px-3 py-1.5">
-                <UserCircle className="h-5 w-5 text-foreground/70" />
-                <div className="text-xs">
-                  <p className="font-semibold text-foreground">Admin</p>
-                  <p className="text-foreground/60">Root Access</p>
-                </div>
+              
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="icon" className="text-slate-400 hover:text-primary hover:bg-slate-50 rounded-2xl h-14 w-14 border border-slate-100">
+                  <Bell className="h-5 w-5" />
+                </Button>
               </div>
+
+              {/* Navbar Profile Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <div className="flex items-center p-1 bg-white rounded-2xl border border-blue-50 shadow-[0_10px_30px_rgba(186,230,253,0.15)] transition-all hover:shadow-[0_10px_40px_rgba(186,230,253,0.25)] cursor-pointer hover:scale-[1.05] active:scale-95 group">
+                    <Avatar className="h-11 w-11 border-2 border-blue-50 ring-2 ring-primary/5 transition-all group-hover:ring-primary/10">
+                      <AvatarImage src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256&h=256" />
+                      <AvatarFallback className="bg-primary/10 text-primary font-black text-xs">AD</AvatarFallback>
+                    </Avatar>
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-64 p-3 bg-white/80 backdrop-blur-xl border border-blue-50 shadow-[0_20px_50px_rgba(186,230,253,0.3)] rounded-[2rem] mt-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <DropdownMenuLabel className="p-4">
+                    <div className="flex flex-col gap-1">
+                      <p className="text-sm font-black text-slate-900 leading-none">Sista Silala</p>
+                      <p className="text-[10px] font-black text-blue-400 mt-1 uppercase tracking-widest leading-none">Administrator</p>
+                      <p className="text-[10px] font-medium text-slate-400 mt-1">sistasilala@gmail.com</p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator className="bg-blue-50/50 mx-2" />
+                  <div className="p-2 space-y-1">
+                    <DropdownMenuItem className="flex items-center gap-3 rounded-xl px-4 py-3 text-xs font-black uppercase tracking-widest text-slate-600 hover:text-primary hover:bg-blue-50 cursor-pointer transition-all outline-none">
+                      <UserCircle className="h-4 w-4" />
+                      Profile Settings
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={handleLogout}
+                      className="flex items-center gap-3 rounded-xl px-4 py-3 text-xs font-black uppercase tracking-widest text-rose-500 hover:bg-rose-50 cursor-pointer transition-all outline-none"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </div>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </header>
