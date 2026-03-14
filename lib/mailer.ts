@@ -277,3 +277,24 @@ export function buildAdminNotificationEmail({
   </body>
 </html>`;
 }
+
+// ─── Main sendEmail Utility ──────────────────────────────────────────────────
+export default async function sendEmail({
+  email,
+  subject,
+  message,
+  html,
+}: {
+  email: string;
+  subject: string;
+  message?: string;
+  html?: string;
+}) {
+  return await transporter.sendMail({
+    from: process.env.EMAIL_FROM || '"Swiftscale" <connect@swiftscaleinc.com>',
+    to: email,
+    subject: subject,
+    text: message,
+    html: html,
+  });
+}
