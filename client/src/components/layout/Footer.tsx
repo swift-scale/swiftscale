@@ -11,6 +11,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Newsletter } from "@/client/src/components/sections/Newsletter";
 
 export function Footer() {
   const [pathname, setPathname] = useState("/");
@@ -25,26 +26,27 @@ export function Footer() {
     () => ({
       ecommerce: [
         { label: "Marketplace Setup", href: "/services/ecommerce/registration" },
-        { label: "Account Management", href: "/services/ecommerce/ads" },
+        { label: "Account Management", href: "/services/ecommerce/management" },
         { label: "Inventory & Returns", href: "/services/ecommerce/logistics" },
-        { label: "Sales Acceleration", href: "/services/ecommerce/warehousing" },
+        { label: "Ads & Sales Boosting", href: "/services/ecommerce/ads" },
       ],
       it: [
         { label: "App & Web Dev", href: "/services/it/dev" },
-        { label: "UI/UX Design", href: "/services/it/marketing" },
-        { label: "Performance Mktg", href: "/services/it/cyber" },
-        { label: "AI & Business Intel", href: "/services/it/cloud" },
+        { label: "UI/UX Design", href: "/services/it/design" },
+        { label: "AI & BI Systems", href: "/services/it/ai" },
+        { label: "Data Analytics", href: "/services/it/analytics" },
       ],
       training: [
         { label: "BI Master Program", href: "/services/training/bi" },
         { label: "Full Stack Master", href: "/services/training/fullstack" },
-        { label: "UI/UX Master", href: "/services/training/uiux" },
+        { label: "UI/UX Master Program", href: "/services/training/uiux" },
         { label: "Data Science Master", href: "/services/training/datascience" },
       ],
       consulting: [
-        { label: "Payroll Management", href: "/services/consulting/payroll" },
-        { label: "Cloud & DevOps", href: "/services/consulting/strategy" },
-        { label: "Cybersecurity", href: "/services/consulting/infra" },
+        { label: "Software Development", href: "/services/consulting/dev" },
+        { label: "Cloud & DevOps", href: "/services/consulting/cloud" },
+        { label: "Cybersecurity", href: "/services/consulting/cyber" },
+        { label: "IT Support & Infra", href: "/services/consulting/infra" },
       ],
     }),
     [],
@@ -170,21 +172,10 @@ export function Footer() {
             <h4 className="font-display font-semibold text-lg mb-6">
               Stay Updated
             </h4>
-            <p className="text-muted-foreground text-sm mb-4">
+            <p className="text-muted-foreground text-sm mb-6">
               Subscribe to our newsletter for the latest tech insights.
             </p>
-            <div className="flex gap-2">
-              <Input
-                placeholder="Enter your email"
-                className="bg-muted/50 border-border text-white placeholder:text-white/40 focus-visible:ring-accent"
-              />
-              <Button
-                size="icon"
-                className="bg-accent hover:bg-accent/90 shrink-0"
-              >
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </div>
+            <Newsletter variant="footer" source="footer" />
           </div>
         </div>
 

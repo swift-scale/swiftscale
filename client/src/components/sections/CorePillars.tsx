@@ -25,7 +25,7 @@ const pillars = [
 
 export function CorePillars() {
   return (
-    <section className="py-24 bg-background relative z-20">
+    <section className="py-24 bg-[#020205] relative z-20">
       <div className="container mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">

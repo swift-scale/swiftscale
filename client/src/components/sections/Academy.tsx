@@ -1,6 +1,5 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import academyImg from "@/assets/images/academy.png";
 
 export function Academy() {
   return (
@@ -10,7 +9,7 @@ export function Academy() {
           <div className="order-2 lg:order-1 relative">
             <div className="absolute -inset-4 bg-accent/10 blur-2xl rounded-3xl" />
             <img 
-              src={academyImg} 
+              src="/images/academy.png" 
               alt="Swiftscale Academy Team" 
               className="relative z-10 rounded-2xl shadow-2xl border border-border/50 w-full object-cover"
             />
@@ -42,7 +41,11 @@ export function Academy() {
               </li>
               <li className="flex items-center gap-3 text-white/80">
                 <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                Data Science & Visualization
+                Data Science Master Program
+              </li>
+              <li className="flex items-center gap-3 text-white/80">
+                <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                Data Visualisation Master Program
               </li>
             </ul>
             

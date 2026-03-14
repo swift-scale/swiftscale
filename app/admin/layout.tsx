@@ -14,6 +14,7 @@ import {
   Search,
   UserCircle,
   ChevronRight,
+  Mail,
 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -36,6 +37,7 @@ const SIDEBAR_ITEMS = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
   { icon: LayoutList, label: "Services", href: "/admin/services" },
   { icon: MessageSquare, label: "Messages", href: "/admin/messages", badge: 32 },
+  { icon: Mail, label: "Subscribers", href: "/admin/subscribers" },
   { icon: BarChart, label: "Analytics", href: "/admin/analytics" },
   { icon: Settings, label: "Settings", href: "/admin/settings" },
 ];

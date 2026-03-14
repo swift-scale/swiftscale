@@ -12,6 +12,8 @@ import { Academy } from "@/components/sections/Academy";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { FinalCta } from "@/components/sections/FinalCta";
 
+import { NewsletterSection } from "@/components/sections/Newsletter";
+
 type MotionVariant = {
   initial: { opacity: number; y?: number; x?: number; scale?: number };
   animate: { opacity: number; y?: number; x?: number; scale?: number };
@@ -26,6 +28,7 @@ const sectionVariants: MotionVariant[] = [
   { initial: { opacity: 0, y: 18, scale: 0.99 }, animate: { opacity: 1, y: 0, scale: 1 }, transition: { duration: 0.46, ease: [0.2, 0.8, 0.2, 1] } },
   { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.4, ease: [0.2, 0.7, 0.2, 1] } },
   { initial: { opacity: 0, x: -12, scale: 0.99 }, animate: { opacity: 1, x: 0, scale: 1 }, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } },
+  { initial: { opacity: 0, y: 14 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.44, ease: [0.2, 0.8, 0.2, 1] } },
   { initial: { opacity: 0, y: 14 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.44, ease: [0.2, 0.8, 0.2, 1] } },
 ];
 
@@ -78,6 +81,9 @@ export default function Home() {
           <Testimonials />
         </MotionSection>
         <MotionSection variant={sectionVariants[7]}>
+          <NewsletterSection />
+        </MotionSection>
+        <MotionSection variant={sectionVariants[8]}>
           <FinalCta />
         </MotionSection>
       </main>
@@ -85,3 +91,4 @@ export default function Home() {
     </div>
   );
 }
+

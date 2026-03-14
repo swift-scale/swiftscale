@@ -155,7 +155,7 @@ export default function Contact() {
                 href="tel:+1888SWIFTSCALE"
                 className="text-sm font-semibold text-white hover:text-primary transition-colors"
               >
-                +1 (888) SWIFT-SCALE
+                +91 81976 32024
               </a>
             </div>
 
@@ -366,7 +366,7 @@ export default function Contact() {
         {/* Depth & Background Effects */}
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(36,27,235,0.1)_0%,_transparent_70%)] pointer-events-none" />
-        
+
         {/* Floating Architectural Elements */}
         <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[15%] h-[1px] bg-gradient-to-r from-transparent to-white/10 hidden lg:block" />
         <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[15%] h-[1px] bg-gradient-to-l from-transparent to-white/10 hidden lg:block" />
@@ -376,45 +376,58 @@ export default function Contact() {
             <div className="glass-panel p-12 md:p-24 rounded-[3.5rem] border border-white/10 text-center relative overflow-hidden group">
               {/* Subtle Animated Glow */}
               <div className="absolute -inset-1 bg-gradient-to-r from-primary/10 to-accent/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-              
+
               <div className="relative z-10 space-y-10">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-accent text-[10px] font-black uppercase tracking-[0.3em]">
                   <Sparkles className="w-4 h-4" /> Strategic Partnership
                 </div>
-                
+
                 <h2 className="text-4xl md:text-7xl font-display font-extrabold text-white leading-tight tracking-tight">
-                  Ready for a <br/>
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent italic">deeper dive?</span>
+                  Ready for a <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent italic">
+                    deeper dive?
+                  </span>
                 </h2>
-                
+
                 <p className="text-white/40 text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
-                  Schedule a private session with our senior architects to map your technical scaling strategy and success metrics.
+                  Schedule a private session with our senior architects to map
+                  your technical scaling strategy and success metrics.
                 </p>
-                
+
                 <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-8">
                   <Button
                     size="lg"
                     className="h-16 px-12 bg-white text-primary hover:bg-white/90 rounded-2xl font-black text-lg transition-all shadow-[0_20px_50px_rgba(255,255,255,0.1)] group/btn relative overflow-hidden active:scale-95"
                   >
                     <span className="relative z-10 flex items-center gap-3">
-                      BOOK STRATEGY CALL <ArrowRight className="w-6 h-6 group-hover/btn:translate-x-1 transition-transform" />
+                      BOOK STRATEGY CALL{" "}
+                      <ArrowRight className="w-6 h-6 group-hover/btn:translate-x-1 transition-transform" />
                     </span>
                   </Button>
-                  
+
                   <div className="flex items-center gap-4">
                     <div className="flex -space-x-3">
                       {[1, 2, 3].map((i) => (
-                        <div key={i} className="w-12 h-12 rounded-full border-4 border-[#020205] bg-slate-800 overflow-hidden relative group/avatar">
-                           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20" />
-                           <div className="w-full h-full flex items-center justify-center text-[10px] font-black text-white/40">ARCH</div>
+                        <div
+                          key={i}
+                          className="w-12 h-12 rounded-full border-4 border-[#020205] bg-slate-800 overflow-hidden relative group/avatar"
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20" />
+                          <div className="w-full h-full flex items-center justify-center text-[10px] font-black text-white/40">
+                            ARCH
+                          </div>
                         </div>
                       ))}
                     </div>
                     <div className="text-left">
-                      <p className="text-[10px] font-black text-white leading-none uppercase tracking-[0.2em] mb-1">Architects Live</p>
+                      <p className="text-[10px] font-black text-white leading-none uppercase tracking-[0.2em] mb-1">
+                        Architects Live
+                      </p>
                       <div className="flex items-center gap-1.5">
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                        <p className="text-[9px] text-emerald-400 font-black uppercase tracking-widest">Line Frequency Optimal</p>
+                        <p className="text-[9px] text-emerald-400 font-black uppercase tracking-widest">
+                          Line Frequency Optimal
+                        </p>
                       </div>
                     </div>
                   </div>

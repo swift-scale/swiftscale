@@ -33,7 +33,7 @@ export default function Contact() {
     lastName: "",
     email: "",
     service: "",
-    details: ""
+    details: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -50,9 +50,16 @@ export default function Contact() {
 
       if (response.ok) {
         setSuccess(true);
-        setFormData({ firstName: "", lastName: "", email: "", service: "", details: "" });
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          service: "",
+          details: "",
+        });
         toast.success("Message Sent", {
-          description: "We've received your transmission and we'll be in touch soon.",
+          description:
+            "We've received your transmission and we'll be in touch soon.",
         });
       } else {
         toast.error("Submission Failed", {
@@ -130,13 +137,13 @@ export default function Contact() {
                       {
                         icon: <Phone />,
                         title: "Phone Support",
-                        data: "+1 (888) SWIFT-SCALE",
+                        data: "+91 81976-32024",
                         color: "accent",
                       },
                       {
                         icon: <MapPin />,
                         title: "Main Office",
-                        data: "San Francisco HQ",
+                        data: "Bengaluru, Karnataka, India.",
                         color: "secondary",
                       },
                     ].map((channel, i) => (
@@ -185,15 +192,26 @@ export default function Contact() {
                       <Sparkles className="w-10 h-10" />
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-3xl font-black tracking-tight">Transmission Received</h3>
-                      <p className="text-white/40 font-medium">Our team has been notified. We'll reach out shortly.</p>
+                      <h3 className="text-3xl font-black tracking-tight">
+                        Transmission Received
+                      </h3>
+                      <p className="text-white/40 font-medium">
+                        Our team has been notified. We'll reach out shortly.
+                      </p>
                     </div>
-                    <Button onClick={() => setSuccess(false)} variant="outline" className="border-white/10 rounded-2xl h-14 px-10 font-bold hover:bg-white/5">
+                    <Button
+                      onClick={() => setSuccess(false)}
+                      variant="outline"
+                      className="border-white/10 rounded-2xl h-14 px-10 font-bold hover:bg-white/5"
+                    >
                       Send Another Message
                     </Button>
                   </div>
                 ) : (
-                  <form className="space-y-8 max-w-lg mx-auto" onSubmit={handleSubmit}>
+                  <form
+                    className="space-y-8 max-w-lg mx-auto"
+                    onSubmit={handleSubmit}
+                  >
                     <div className="space-y-6">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2.5">
@@ -201,11 +219,16 @@ export default function Contact() {
                             First Name
                           </Label>
                           <Input
-                            placeholder="John"
+                            placeholder="First name"
                             required
                             value={formData.firstName}
-                            onChange={(e) => setFormData({...formData, firstName: e.target.value})}
-                            className="h-14 bg-white/5 border-white/10 text-white placeholder:text-white/10 rounded-2xl focus:border-primary/50 focus:ring-primary/10 transition-all font-medium"
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                firstName: e.target.value,
+                              })
+                            }
+                            className="h-14 bg-white/5 border-white/10 text-white placeholder:text-white/20 rounded-2xl focus:border-primary/50 focus:ring-primary/10 transition-all font-medium"
                           />
                         </div>
                         <div className="space-y-2.5 pt-6 sm:pt-0">
@@ -213,11 +236,16 @@ export default function Contact() {
                             Spacer
                           </Label>
                           <Input
-                            placeholder="Doe"
+                            placeholder="Last name"
                             required
                             value={formData.lastName}
-                            onChange={(e) => setFormData({...formData, lastName: e.target.value})}
-                            className="h-14 bg-white/5 border-white/10 text-white placeholder:text-white/10 rounded-2xl focus:border-primary/50 focus:ring-primary/10 transition-all font-medium"
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                lastName: e.target.value,
+                              })
+                            }
+                            className="h-14 bg-white/5 border-white/10 text-white placeholder:text-white/20 rounded-2xl focus:border-primary/50 focus:ring-primary/10 transition-all font-medium"
                           />
                         </div>
                       </div>
@@ -228,11 +256,13 @@ export default function Contact() {
                         </Label>
                         <Input
                           type="email"
-                          placeholder="john@company.com"
+                          placeholder="Email address"
                           required
                           value={formData.email}
-                          onChange={(e) => setFormData({...formData, email: e.target.value})}
-                          className="h-14 bg-white/5 border-white/10 text-white placeholder:text-white/10 rounded-2xl focus:border-primary/50 focus:ring-primary/10 transition-all font-medium"
+                          onChange={(e) =>
+                            setFormData({ ...formData, email: e.target.value })
+                          }
+                          className="h-14 bg-white/5 border-white/10 text-white placeholder:text-white/20 rounded-2xl focus:border-primary/50 focus:ring-primary/10 transition-all font-medium"
                         />
                       </div>
 
@@ -240,15 +270,46 @@ export default function Contact() {
                         <Label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 ml-1">
                           Service Required
                         </Label>
-                        <Select onValueChange={(val) => setFormData({...formData, service: val})} required>
+                        <Select
+                          onValueChange={(val) =>
+                            setFormData({ ...formData, service: val })
+                          }
+                          required
+                        >
                           <SelectTrigger className="h-14 bg-white/5 border-white/10 text-white rounded-2xl focus:border-primary/50 focus:ring-primary/10 transition-all font-medium">
                             <SelectValue placeholder="What can we help with?" />
                           </SelectTrigger>
-                          <SelectContent className="bg-black border-white/20 text-white backdrop-blur-xl">
-                            <SelectItem value="scaling" className="focus:bg-primary/20">Scaling Strategy</SelectItem>
-                            <SelectItem value="infra" className="focus:bg-primary/20">Infrastructure Audit</SelectItem>
-                            <SelectItem value="growth" className="focus:bg-primary/20">Growth Consulting</SelectItem>
-                            <SelectItem value="partnership" className="focus:bg-primary/20">Business Partnership</SelectItem>
+                          <SelectContent className="bg-[#0b1430] border border-white/20 text-white backdrop-blur-xl rounded-2xl shadow-2xl p-1">
+                            <SelectItem
+                              value="ecommerce"
+                              className="text-white/80 hover:text-white focus:bg-primary/30 focus:text-white rounded-xl cursor-pointer py-3 px-4 font-medium"
+                            >
+                              E-Commerce Services
+                            </SelectItem>
+                            <SelectItem
+                              value="it"
+                              className="text-white/80 hover:text-white focus:bg-primary/30 focus:text-white rounded-xl cursor-pointer py-3 px-4 font-medium"
+                            >
+                              IT Services
+                            </SelectItem>
+                            <SelectItem
+                              value="training"
+                              className="text-white/80 hover:text-white focus:bg-primary/30 focus:text-white rounded-xl cursor-pointer py-3 px-4 font-medium"
+                            >
+                              Training Programs
+                            </SelectItem>
+                            <SelectItem
+                              value="consulting"
+                              className="text-white/80 hover:text-white focus:bg-primary/30 focus:text-white rounded-xl cursor-pointer py-3 px-4 font-medium"
+                            >
+                              Consulting &amp; Payroll
+                            </SelectItem>
+                            <SelectItem
+                              value="other"
+                              className="text-white/80 hover:text-white focus:bg-primary/30 focus:text-white rounded-xl cursor-pointer py-3 px-4 font-medium"
+                            >
+                              Other / General Inquiry
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
@@ -258,23 +319,30 @@ export default function Contact() {
                           Project Details
                         </Label>
                         <Textarea
-                          placeholder="Tell us about your project, goals, and timeline..."
+                          placeholder="Describe your requirements..."
                           required
                           value={formData.details}
-                          onChange={(e) => setFormData({...formData, details: e.target.value})}
-                          className="bg-white/5 border-white/10 min-h-[160px] text-white placeholder:text-white/10 rounded-[2rem] focus:border-primary/50 focus:ring-primary/10 transition-all font-medium resize-none p-6"
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              details: e.target.value,
+                            })
+                          }
+                          className="bg-white/5 border-white/10 min-h-[160px] text-white placeholder:text-white/20 rounded-[2rem] focus:border-primary/50 focus:ring-primary/10 transition-all font-medium resize-none p-6"
                         />
                       </div>
                     </div>
 
-                    <Button 
-                      type="submit" 
+                    <Button
+                      type="submit"
                       disabled={isSubmitting}
                       className="w-full h-16 bg-primary text-primary-foreground hover:bg-primary/95 font-black text-lg rounded-2xl transition-all group shadow-[0_20px_50px_rgba(36,27,235,0.4)] relative overflow-hidden"
                     >
                       <div className="relative z-10 flex items-center justify-center gap-3">
                         {isSubmitting ? "SENDING..." : "SEND MESSAGE"}{" "}
-                        {!isSubmitting && <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />}
+                        {!isSubmitting && (
+                          <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                        )}
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%] animate-gradient opacity-0 group-hover:opacity-100 transition-opacity" />
                     </Button>
