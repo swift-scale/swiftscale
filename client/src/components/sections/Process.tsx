@@ -1,23 +1,23 @@
 const steps = [
   {
     num: "01",
-    title: "Connect",
-    desc: "Link your repository with a single click. We automatically detect your framework and configuration."
+    title: "Strategy",
+    desc: "We analyze your business objectives to design bespoke digital and technology roadmaps tailored for scale."
   },
   {
     num: "02",
-    title: "Configure",
-    desc: "Set your environment variables and deployment preferences through our intuitive dashboard."
+    title: "Implementation",
+    desc: "Our engineering squad deploys high-performance e-commerce platforms and robust digital infrastructure."
   },
   {
     num: "03",
-    title: "Deploy",
-    desc: "Push your code and watch as it's built, optimized, and deployed globally in seconds."
+    title: "Optimization",
+    desc: "Continuous performance audits and data-driven refinements ensure your systems operate at peak efficiency."
   },
   {
     num: "04",
-    title: "Scale",
-    desc: "As traffic grows, our elastic infrastructure automatically scales to handle any load."
+    title: "Growth",
+    desc: "We accelerate your market expansion through advanced digital marketing and operational scaling strategies."
   }
 ];
 

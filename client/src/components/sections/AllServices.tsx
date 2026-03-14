@@ -3,9 +3,31 @@ import Link from "next/link";
 
 const serviceCategories = [
   {
+    title: "E-Commerce",
+    icon: <ShoppingCart className="w-8 h-8" />,
+    description: "Launch, manage, and scale your online marketplace dominance.",
+    services: [
+      { name: "Account Mgmt", href: "/services/ecommerce/registration" },
+      { name: "Inventory & Logistics", href: "/services/ecommerce/logistics" },
+      { name: "Sponsored Ads", href: "/services/ecommerce/ads" },
+      { name: "Product Design", href: "/services/ecommerce/photography" },
+    ]
+  },
+  {
+    title: "IT Services",
+    icon: <Monitor className="w-8 h-8" />,
+    description: "Modern technology platforms tailored to your business needs.",
+    services: [
+      { name: "App & Web Dev", href: "/services/it/dev" },
+      { name: "AI & Intelligence", href: "/services/it/ai" },
+      { name: "Digital Marketing", href: "/services/it/marketing" },
+      { name: "Data Analytics", href: "/services/it/data" },
+    ]
+  },
+  {
     title: "Training",
     icon: <GraduationCap className="w-8 h-8" />,
-    description: "Master industry-leading skills with our comprehensive programs.",
+    description: "Master high-demand fields through expert-led tech programs.",
     services: [
       { name: "BI Master Program", href: "/services/training/bi" },
       { name: "Full Stack Master", href: "/services/training/fullstack" },
@@ -14,35 +36,14 @@ const serviceCategories = [
     ]
   },
   {
-    title: "E-Commerce",
-    icon: <ShoppingCart className="w-8 h-8" />,
-    description: "End-to-end solutions to launch and scale your online business.",
-    services: [
-      { name: "Registration", href: "/services/ecommerce/registration" },
-      { name: "Sponsored Ads", href: "/services/ecommerce/ads" },
-      { name: "Logistics", href: "/services/ecommerce/logistics" },
-      { name: "Warehousing", href: "/services/ecommerce/warehousing" },
-    ]
-  },
-  {
-    title: "IT Services",
-    icon: <Monitor className="w-8 h-8" />,
-    description: "Robust technology solutions to drive your digital transformation.",
-    services: [
-      { name: "App/Web Dev", href: "/services/it/dev" },
-      { name: "Digital Marketing", href: "/services/it/marketing" },
-      { name: "Cybersecurity", href: "/services/it/cyber" },
-      { name: "Cloud & DevOps", href: "/services/it/cloud" },
-    ]
-  },
-  {
     title: "Consulting",
     icon: <Briefcase className="w-8 h-8" />,
-    description: "Strategic guidance to optimize operations and accelerate growth.",
+    description: "Strategic workforce and operational efficiency solutions.",
     services: [
-      { name: "Payroll Management", href: "/services/consulting/payroll" },
+      { name: "Payroll Services", href: "/services/consulting/payroll" },
       { name: "Growth Strategy", href: "/services/consulting/strategy" },
-      { name: "IT Infra Roles", href: "/services/consulting/infra" },
+      { name: "Cloud & DevOps", href: "/services/consulting/cloud" },
+      { name: "Cybersecurity", href: "/services/consulting/cyber" },
     ]
   }
 ];

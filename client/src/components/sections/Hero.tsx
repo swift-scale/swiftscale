@@ -16,16 +16,15 @@ export function Hero() {
           <div className="max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel text-accent text-sm font-medium mb-8">
               <Sparkles className="w-4 h-4" />
-              <span>Next-Gen SaaS Platform</span>
+              <span>Start Smart, Scale Swift.</span>
             </div>
             
             <h1 className="text-5xl md:text-7xl font-display font-bold leading-[1.1] mb-6 tracking-tight text-white">
-              Scale Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-secondary">Ambition</span> With Swiftscale
+              Elevating <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-secondary">Digital Commerce</span> & IT Infrastructure
             </h1>
             
             <p className="text-lg md:text-xl text-white/70 mb-10 leading-relaxed max-w-xl">
-              The enterprise-grade platform built for technology-driven companies. 
-              Accelerate your growth, streamline operations, and build the future faster.
+              We empower brands and enterprises to build, launch, and dominate in the digital economy through end-to-end marketplace management and scalable technology solutions.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center gap-4">

@@ -51,10 +51,10 @@ export function Navbar() {
       icon: <ShoppingCart className="w-5 h-5" />,
       color: "from-purple-500 to-pink-500",
       services: [
-        { name: "Registration", href: "/services/ecommerce/registration", desc: "Global merchant onboarding." },
-        { name: "Sponsored Ads", href: "/services/ecommerce/ads", desc: "Magnitude-driven marketing." },
-        { name: "Logistics", href: "/services/ecommerce/logistics", desc: "Autonomous supply chains." },
-        { name: "Warehousing", href: "/services/ecommerce/warehousing", desc: "Cloud-sync inventories." },
+        { name: "Marketplace Setup", href: "/services/ecommerce/registration", desc: "Expert seller onboarding." },
+        { name: "Account Management", href: "/services/ecommerce/ads", desc: "Daily performance ops." },
+        { name: "Inventory & Returns", href: "/services/ecommerce/logistics", desc: "Smart fulfillment systems." },
+        { name: "Sales Acceleration", href: "/services/ecommerce/warehousing", desc: "Ads & conversion focus." },
       ]
     },
     {
@@ -62,10 +62,10 @@ export function Navbar() {
       icon: <Monitor className="w-5 h-5" />,
       color: "from-emerald-500 to-teal-400",
       services: [
-        { name: "App/Web Dev", href: "/services/it/dev", desc: "Immutable tech foundations." },
-        { name: "Digital Marketing", href: "/services/it/marketing", desc: "Algorithmic growth systems." },
-        { name: "Cybersecurity", href: "/services/it/cyber", desc: "Hardened threat protection." },
-        { name: "Cloud & DevOps", href: "/services/it/cloud", desc: "Infinite scale engineering." },
+        { name: "App & Web Dev", href: "/services/it/dev", desc: "Scalable product engineering." },
+        { name: "UI/UX Design", href: "/services/it/marketing", desc: "Engaging digital experiences." },
+        { name: "Performance Mktg", href: "/services/it/cyber", desc: "Data-driven brand growth." },
+        { name: "AI & Business Intel", href: "/services/it/cloud", desc: "Automated insight engines." },
       ]
     },
     {
@@ -73,10 +73,10 @@ export function Navbar() {
       icon: <GraduationCap className="w-5 h-5" />,
       color: "from-blue-500 to-cyan-400",
       services: [
-        { name: "BI Master Program", href: "/services/training/bi", desc: "Enterprise intelligence mastery." },
-        { name: "Full Stack Master", href: "/services/training/fullstack", desc: "High-velocity web engineering." },
-        { name: "UI/UX Master", href: "/services/training/uiux", desc: "Premium interface architecture." },
-        { name: "Data Science", href: "/services/training/datascience", desc: "Algorithmic decision framing." },
+        { name: "BI Master Program", href: "/services/training/bi", desc: "Data & visualization mastery." },
+        { name: "Full Stack Master", href: "/services/training/fullstack", desc: "End-to-end dev training." },
+        { name: "UI/UX Master", href: "/services/training/uiux", desc: "Modern design excellence." },
+        { name: "Data Science Master", href: "/services/training/datascience", desc: "Advanced predictive analytics." },
       ]
     },
     {
@@ -84,9 +84,9 @@ export function Navbar() {
       icon: <Briefcase className="w-5 h-5" />,
       color: "from-orange-500 to-yellow-500",
       services: [
-        { name: "Payroll Management", href: "/services/consulting/payroll", desc: "Autonomous financial ops." },
-        { name: "Growth Strategy", href: "/services/consulting/strategy", desc: "Strategic blueprinting." },
-        { name: "IT Infra Roles", href: "/services/consulting/infra", desc: "Engineering talent scaling." },
+        { name: "Payroll Management", href: "/services/consulting/payroll", desc: "Seamless workforce ops." },
+        { name: "Cloud & DevOps", href: "/services/consulting/strategy", desc: "Secure infra scaling." },
+        { name: "Cybersecurity", href: "/services/consulting/infra", desc: "Military-grade protection." },
       ]
     }
   ];

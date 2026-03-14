@@ -67,20 +67,18 @@ export default function About() {
         <div className="container mx-auto px-6 relative z-10 w-full max-w-7xl">
           <div className="max-w-4xl space-y-8 mb-20">
             <motion.div variants={itemVariants} className="inline-flex items-center gap-3 px-4 py-2 rounded-full glass-panel border border-white/10 text-primary text-[10px] font-black uppercase tracking-[0.4em]">
-              <Sparkles className="w-4 h-4" /> Architecting the Future
+              <Sparkles className="w-4 h-4" /> Start Smart, Scale Swift
             </motion.div>
             <motion.h1 variants={itemVariants} className="text-6xl md:text-9xl font-display font-black leading-none tracking-tight text-white">
-              We build <br />
+              Powering <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-secondary">
-                Extraordinary
+                Commerce
               </span>
               <br />
-              Infrastructures.
+              & Tech.
             </motion.h1>
             <motion.p variants={itemVariants} className="text-white/40 text-xl md:text-2xl font-medium max-w-3xl leading-relaxed">
-              Swiftscale is more than an agency. We are a high-performance
-              architectural collective dedicated to mapping the fastest, safest
-              path for enterprise growth.
+              SwiftScale is a technology-driven company specializing in E-Commerce enablement and IT solutions that help businesses build, launch, and scale in the digital economy.
             </motion.p>
           </div>
 
@@ -163,18 +161,18 @@ export default function About() {
               <motion.div variants={itemVariants} className="space-y-8">
                 <div className="w-16 h-1 bg-primary rounded-full" />
                 <h2 className="text-5xl md:text-7xl font-display font-black leading-tight tracking-tight text-white">
-                  Engineered for <br/>
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent italic">Global Magnitude</span>.
+                  Strategizing for <br/>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent italic">Digital Success</span>.
                 </h2>
                 <p className="text-white/40 text-xl leading-relaxed font-medium">
-                  We don't just build websites; we architect ecosystems. Our vision is to empower the next generation of global giants with technical foundations that cannot be broken.
+                  We combine technical proficiency with digital commerce agility to build platforms that accelerate growth and maximize operational efficiency. Our vision is to become the leading partner for businesses scaling through innovation and data.
                 </p>
               </motion.div>
 
               <div className="grid grid-cols-1 gap-10">
                 {[
-                  { title: "The Mission", text: "To eliminate the friction of scaling by providing enterprise-grade infrastructure to emerging leaders.", icon: <Target className="text-primary" /> },
-                  { title: "The Vision", text: "A world where technical limitations never stifle human ambition or business velocity.", icon: <Zap className="text-accent" /> }
+                  { title: "Our Mission", text: "To empower businesses and professionals through end-to-end e-commerce solutions, scalable technology platforms, and industry-ready talent development.", icon: <Target className="text-primary" /> },
+                  { title: "Our Core Vision", text: "To be the engine behind digital transformation, helping organizations transform bold ideas into successful ventures through innovation and data.", icon: <Zap className="text-accent" /> }
                 ].map((item, i) => (
                   <motion.div key={i} variants={itemVariants} className="flex gap-8 group">
                     <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500">

@@ -1,25 +1,25 @@
-import { Cpu, Zap, Shield, Globe } from "lucide-react";
+import { GraduationCap, ShoppingCart, Monitor, Briefcase } from "lucide-react";
 
 const pillars = [
   {
-    icon: <Zap className="w-6 h-6" />,
-    title: "Lightning Fast",
-    description: "Built on edge infrastructure to deliver sub-50ms response times globally. Speed is our foundation."
+    icon: <ShoppingCart className="w-6 h-6" />,
+    title: "E-Commerce Services",
+    description: "Comprehensive enablement from marketplace onboarding to supply chain and growth optimization."
   },
   {
-    icon: <Shield className="w-6 h-6" />,
-    title: "Enterprise Security",
-    description: "Bank-grade encryption, SOC2 compliance, and continuous threat monitoring keep your data safe."
+    icon: <Monitor className="w-6 h-6" />,
+    title: "IT & Tech Solutions",
+    description: "Innovative software development and digital infrastructure built for enterprise-grade scalability."
   },
   {
-    icon: <Cpu className="w-6 h-6" />,
-    title: "AI-Powered Core",
-    description: "Intelligent automation and predictive analytics built directly into the heart of the platform."
+    icon: <GraduationCap className="w-6 h-6" />,
+    title: "Professional Training",
+    description: "Industry-focused master programs designed to build job-ready technology talent."
   },
   {
-    icon: <Globe className="w-6 h-6" />,
-    title: "Infinite Scale",
-    description: "From your first 100 users to your next 10 million, our architecture scales elastically with you."
+    icon: <Briefcase className="w-6 h-6" />,
+    title: "Consulting & Payroll",
+    description: "Strategic consulting and workforce management solutions that streamline operational efficiency."
   }
 ];
 
@@ -29,10 +29,10 @@ export function CorePillars() {
       <div className="container mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
-            The Foundation of <span className="text-accent">Scale</span>
+            Our Core <span className="text-accent">Specializations</span>
           </h2>
           <p className="text-muted-foreground text-lg">
-            Four core pillars designed to provide maximum velocity and reliability for modern technology stacks.
+            We bridge the gap between technology expertise, digital commerce experience, and strategic business impact.
           </p>
         </div>
 

@@ -24,27 +24,27 @@ export function Footer() {
   const serviceCatalog = useMemo(
     () => ({
       ecommerce: [
-        { label: "Platform Registration", href: "/services/ecommerce/registration" },
-        { label: "Sponsored Ads", href: "/services/ecommerce/ads" },
-        { label: "Logistics Solutions", href: "/services/ecommerce/logistics" },
-        { label: "Warehousing", href: "/services/ecommerce/warehousing" },
+        { label: "Marketplace Setup", href: "/services/ecommerce/registration" },
+        { label: "Account Management", href: "/services/ecommerce/ads" },
+        { label: "Inventory & Returns", href: "/services/ecommerce/logistics" },
+        { label: "Sales Acceleration", href: "/services/ecommerce/warehousing" },
       ],
       it: [
-        { label: "App/Web Dev", href: "/services/it/dev" },
-        { label: "Digital Marketing", href: "/services/it/marketing" },
-        { label: "Cybersecurity", href: "/services/it/security" },
-        { label: "Cloud & DevOps", href: "/services/it/cloud" },
+        { label: "App & Web Dev", href: "/services/it/dev" },
+        { label: "UI/UX Design", href: "/services/it/marketing" },
+        { label: "Performance Mktg", href: "/services/it/cyber" },
+        { label: "AI & Business Intel", href: "/services/it/cloud" },
       ],
       training: [
         { label: "BI Master Program", href: "/services/training/bi" },
         { label: "Full Stack Master", href: "/services/training/fullstack" },
         { label: "UI/UX Master", href: "/services/training/uiux" },
-        { label: "Data Science", href: "/services/training/datascience" },
+        { label: "Data Science Master", href: "/services/training/datascience" },
       ],
       consulting: [
         { label: "Payroll Management", href: "/services/consulting/payroll" },
-        { label: "Growth Strategy", href: "/services/consulting/strategy" },
-        { label: "IT Infra Roles", href: "/services/consulting/infra" },
+        { label: "Cloud & DevOps", href: "/services/consulting/strategy" },
+        { label: "Cybersecurity", href: "/services/consulting/infra" },
       ],
     }),
     [],
@@ -93,8 +93,8 @@ export function Footer() {
               </span>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              Building the next generation of scalable SaaS solutions for
-              forward-thinking technology companies worldwide.
+              Start Smart, Scale Swift. Empowering businesses to build, launch,
+              and scale in the digital economy through technology and commerce solutions.
             </p>
             <div className="flex items-center gap-4">
               <a

@@ -24,21 +24,25 @@ export function Academy() {
               Swiftscale <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-secondary">Academy</span>
             </h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Master modern infrastructure with our comprehensive learning hub. From fundamental concepts to advanced deployment strategies, empower your team to build better software.
+              We offer industry-focused technology training programs designed to build job-ready professionals in high-demand fields. Master the skills needed for the modern digital economy.
             </p>
             
             <ul className="space-y-4 mb-10">
               <li className="flex items-center gap-3 text-white/80">
                 <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                Expert-led video courses
+                Business Intelligence Master Program
               </li>
               <li className="flex items-center gap-3 text-white/80">
                 <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                Interactive coding environments
+                Full Stack Development Master Program
               </li>
               <li className="flex items-center gap-3 text-white/80">
                 <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                Official certifications
+                UI/UX Design Master Program
+              </li>
+              <li className="flex items-center gap-3 text-white/80">
+                <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                Data Science & Visualization
               </li>
             </ul>
             

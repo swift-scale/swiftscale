@@ -1,12 +1,12 @@
 import { CheckCircle2 } from "lucide-react";
 
 const features = [
-  "Zero-configuration deployment pipelines",
-  "Automated global edge caching",
-  "Real-time collaborative workspaces",
-  "Granular role-based access control",
-  "Integrated observability and logging",
-  "Custom domain management with auto-SSL"
+  "End-to-end e-commerce solutions and enablement",
+  "Innovative and scalable technology platforms",
+  "Industry-ready talent development programs",
+  "Tailored consulting and workforce transitions",
+  "Data-driven performance and growth audits",
+  "End-to-end logistics and marketplace management"
 ];
 
 export function WhyChooseUs() {
@@ -16,10 +16,10 @@ export function WhyChooseUs() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
-              Why Forward-Thinking Teams Choose <span className="text-accent">Swiftscale</span>
+              Empowering Success in the <span className="text-accent">Digital World</span>
             </h2>
             <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-              We eliminated the complexity of modern cloud infrastructure so your team can focus on what matters: building incredible products that users love.
+              At SwiftScale, we partner with businesses at every stage of their journey—from strategic blueprinting to operational scaling and global market expansion.
             </p>
             
             <ul className="space-y-4 mb-10">
