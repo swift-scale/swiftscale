@@ -1,5 +1,4 @@
-"use client";
-
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -22,15 +21,32 @@ import {
   Workflow
 } from "lucide-react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 export default function About() {
-  const itemVariants = {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Scroll to top on load
+    window.scrollTo(0, 0);
+
+    // Preload tech background
+    const img = new Image();
+    img.src = "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop";
+    img.onload = () => {
+      setTimeout(() => setIsLoaded(true), 1000);
+    };
+
+    const timer = setTimeout(() => setIsLoaded(true), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
   };
 
-  const staggerContainer = {
+  const staggerContainer: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -41,8 +57,31 @@ export default function About() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020205] text-white selection:bg-primary selection:text-white overflow-x-hidden font-sans">
-      <Navbar />
+    <>
+      {/* Premium Loader */}
+      {!isLoaded && (
+        <div className="fixed inset-0 z-[100] bg-[#020205] flex flex-col items-center justify-center transition-opacity duration-700">
+          <div className="relative">
+            <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-primary via-accent to-secondary animate-spin blur-xl opacity-20" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center font-black text-white shadow-2xl animate-pulse">
+                S
+              </div>
+            </div>
+          </div>
+          <div className="mt-10 flex flex-col items-center gap-4">
+            <div className="text-white/40 text-xs font-black uppercase tracking-[0.4em] animate-pulse">
+              Syncing Methodology
+            </div>
+            <div className="w-48 h-1 bg-white/5 rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-primary to-accent animate-shimmer" style={{ width: '60%' }} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className={`min-h-screen bg-[#020205] text-white selection:bg-primary selection:text-white overflow-x-hidden font-sans transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <Navbar />
       
       {/* SECTION 1: THE MANIFESTO (Midnight Black) */}
       <motion.section 
@@ -329,6 +368,7 @@ export default function About() {
       </motion.section>
 
       <Footer />
-    </div>
+      </div>
+    </>
   );
 }

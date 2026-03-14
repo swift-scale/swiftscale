@@ -5,52 +5,44 @@ const serviceCategories = [
   {
     title: "E-Commerce",
     icon: <ShoppingCart className="w-8 h-8" />,
-    description: "End-to-end solutions for dominant marketplace presence and operational excellence.",
+    description: "End-to-end solutions for marketplace presence and operational excellence.",
     services: [
-      { name: "Account Registration & Management", href: "/services/ecommerce/registration" },
-      { name: "Inventory & Returns Management", href: "/services/ecommerce/logistics" },
-      { name: "Sponsored Ads & Sales Boosting", href: "/services/ecommerce/ads" },
-      { name: "Payment Reconciliation", href: "/services/ecommerce/payments" },
-      { name: "Warehousing & Logistics", href: "/services/ecommerce/warehousing" },
-      { name: "Photography & Cataloguing", href: "/services/ecommerce/photography" },
-      { name: "Distribution Network Launch", href: "/services/ecommerce/offline" },
+      { name: "Registration", href: "/services/ecommerce/registration" },
+      { name: "Sponsored Ads", href: "/services/ecommerce/ads" },
+      { name: "Logistics", href: "/services/ecommerce/logistics" },
+      { name: "Warehousing", href: "/services/ecommerce/warehousing" },
     ]
   },
   {
     title: "IT Services",
     icon: <Monitor className="w-8 h-8" />,
-    description: "High-performance technology stacks engineered for speed and scalability.",
+    description: "Modern technology platforms tailored to your business needs.",
     services: [
-      { name: "App & Web Development", href: "/services/it/dev" },
-      { name: "UI/UX Design", href: "/services/it/design" },
+      { name: "App/Web Dev", href: "/services/it/dev" },
       { name: "Digital Marketing", href: "/services/it/marketing" },
-      { name: "Data Analytics", href: "/services/it/analytics" },
-      { name: "AI & BI Systems", href: "/services/it/ai" },
+      { name: "Cybersecurity", href: "/services/consulting/cyber" },
+      { name: "Cloud & DevOps", href: "/services/consulting/devops" },
     ]
   },
   {
     title: "Training",
     icon: <GraduationCap className="w-8 h-8" />,
-    description: "Industry-leading master programs for the next generation of tech leaders.",
+    description: "Master high-demand fields through expert-led master programs.",
     services: [
       { name: "BI Master Program", href: "/services/training/bi" },
-      { name: "Full Stack Master Program", href: "/services/training/fullstack" },
-      { name: "UI/UX Master Program", href: "/services/training/uiux" },
-      { name: "Data Science Master", href: "/services/training/datascience" },
-      { name: "Data Visualisation", href: "/services/training/visualisation" },
+      { name: "Full Stack Master", href: "/services/training/fullstack" },
+      { name: "UI/UX Master", href: "/services/training/uiux" },
+      { name: "Data Science", href: "/services/training/datascience" },
     ]
   },
   {
-    title: "Consulting",
+    title: "Consulting & Payroll",
     icon: <Briefcase className="w-8 h-8" />,
-    description: "Strategic workforce management and specialized technical role placement.",
+    description: "Strategic workforce and operational efficiency solutions.",
     services: [
-      { name: "Cloud & DevOps", href: "/services/consulting/cloud" },
-      { name: "Software Development", href: "/services/consulting/dev" },
-      { name: "Cybersecurity", href: "/services/consulting/cyber" },
-      { name: "IT Support & Infra", href: "/services/consulting/infra" },
-      { name: "Digital & Marketing Tech", href: "/services/consulting/marketing" },
-      { name: "Data Analytics Placement", href: "/services/consulting/analytics" },
+      { name: "Payroll Management", href: "/services/consulting/payroll" },
+      { name: "Growth Strategy", href: "/services/consulting/dev" },
+      { name: "IT Infra Roles", href: "/services/consulting/infra" },
     ]
   }
 ];

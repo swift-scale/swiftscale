@@ -1,5 +1,4 @@
-"use client";
-
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Quote, Star, ArrowRight, Building2, TrendingUp, Users } from "lucide-react";
@@ -52,9 +51,65 @@ const DETAILED_TESTIMONIALS = [
 ];
 
 export default function Partners() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Scroll to top on load
+    window.scrollTo(0, 0);
+
+    // Preload avatars
+    const getSrc = (img: any) => typeof img === "string" ? img : img.src;
+    const imagesToPreload = [avatar1, avatar2, avatar3].map(getSrc);
+    let loadedCount = 0;
+
+    imagesToPreload.forEach(src => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount === imagesToPreload.length) {
+          setTimeout(() => setIsLoaded(true), 1000);
+        }
+      };
+      img.onerror = () => {
+        loadedCount++;
+        if (loadedCount === imagesToPreload.length) {
+          setIsLoaded(true);
+        }
+      };
+    });
+
+    // Fallback
+    const timer = setTimeout(() => setIsLoaded(true), 3500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-background text-white selection:bg-accent selection:text-white">
-      <Navbar />
+    <>
+      {/* Premium Loader */}
+      {!isLoaded && (
+        <div className="fixed inset-0 z-[100] bg-[#020205] flex flex-col items-center justify-center transition-opacity duration-700">
+          <div className="relative">
+            <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-primary via-accent to-secondary animate-spin blur-xl opacity-20" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center font-black text-white shadow-2xl animate-pulse">
+                S
+              </div>
+            </div>
+          </div>
+          <div className="mt-10 flex flex-col items-center gap-4">
+            <div className="text-white/40 text-xs font-black uppercase tracking-[0.4em] animate-pulse">
+              Syncing Partner Ecosystem
+            </div>
+            <div className="w-48 h-1 bg-white/5 rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-primary to-accent animate-shimmer" style={{ width: '60%' }} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className={`min-h-screen bg-background text-white selection:bg-accent selection:text-white transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <Navbar />
       
       {/* Hero Section */}
       <section className="pt-40 pb-20 relative overflow-hidden bg-background">
@@ -147,7 +202,7 @@ export default function Partners() {
                 
                 <div className="flex items-center gap-4 mt-auto pt-6 border-t border-white/10">
                   <img 
-                    src={t.avatar.src || t.avatar} 
+                    src={typeof t.avatar === "string" ? t.avatar : t.avatar.src} 
                     alt={t.author} 
                     className="w-14 h-14 rounded-full object-cover border-2 border-white/10 group-hover:border-accent transition-colors"
                   />
@@ -179,6 +234,7 @@ export default function Partners() {
       </section>
 
       <Footer />
-    </div>
+      </div>
+    </>
   );
 }

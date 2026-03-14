@@ -41,11 +41,7 @@ export function Academy() {
               </li>
               <li className="flex items-center gap-3 text-white/80">
                 <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                Data Science Master Program
-              </li>
-              <li className="flex items-center gap-3 text-white/80">
-                <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                Data Visualisation Master Program
+                Data Science & Visualization
               </li>
             </ul>
             

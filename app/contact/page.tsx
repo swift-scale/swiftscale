@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -37,6 +35,22 @@ export default function Contact() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Scroll to top on load
+    window.scrollTo(0, 0);
+
+    // Preload architectural background
+    const img = new Image();
+    img.src = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop";
+    img.onload = () => {
+      setTimeout(() => setIsLoaded(true), 800);
+    };
+
+    const timer = setTimeout(() => setIsLoaded(true), 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,8 +91,31 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020205] text-white selection:bg-primary selection:text-white overflow-hidden font-sans">
-      <Navbar />
+    <>
+      {/* Premium Loader */}
+      {!isLoaded && (
+        <div className="fixed inset-0 z-[100] bg-[#020205] flex flex-col items-center justify-center transition-opacity duration-700">
+          <div className="relative">
+            <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-primary via-accent to-secondary animate-spin blur-xl opacity-20" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center font-black text-white shadow-2xl animate-pulse">
+                S
+              </div>
+            </div>
+          </div>
+          <div className="mt-10 flex flex-col items-center gap-4">
+            <div className="text-white/40 text-xs font-black uppercase tracking-[0.4em] animate-pulse">
+              Initializing Secure Link
+            </div>
+            <div className="w-48 h-1 bg-white/5 rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-primary to-accent animate-shimmer" style={{ width: '60%' }} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className={`min-h-screen bg-[#020205] text-white selection:bg-primary selection:text-white overflow-hidden font-sans transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <Navbar />
 
       {/* SECTION 1: Get in Touch (Top - Dark Theme) */}
       <section className="relative pt-44 pb-32 bg-[#020205]">
@@ -355,6 +392,7 @@ export default function Contact() {
       </section>
 
       <Footer />
-    </div>
+      </div>
+    </>
   );
 }

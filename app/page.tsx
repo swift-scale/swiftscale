@@ -1,5 +1,4 @@
-"use client";
-
+import { useState, useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -55,9 +54,49 @@ function MotionSection({
 }
 
 export default function Home() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Scroll to top on load
+    window.scrollTo(0, 0);
+
+    // Preload hero illustration
+    const img = new Image();
+    img.src = "/images/hero-illustration.png";
+    img.onload = () => {
+      setTimeout(() => setIsLoaded(true), 1200);
+    };
+
+    const timer = setTimeout(() => setIsLoaded(true), 3500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-background font-sans selection:bg-accent selection:text-white">
-      <Navbar />
+    <>
+      {/* Premium Loader */}
+      {!isLoaded && (
+        <div className="fixed inset-0 z-[100] bg-[#020205] flex flex-col items-center justify-center transition-opacity duration-700">
+          <div className="relative">
+            <div className="w-32 h-32 rounded-3xl bg-gradient-to-br from-primary via-accent to-secondary animate-spin blur-2xl opacity-10" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center font-black text-2xl text-white shadow-2xl animate-pulse">
+                S
+              </div>
+            </div>
+          </div>
+          <div className="mt-12 flex flex-col items-center gap-5">
+            <div className="text-white/30 text-[10px] font-black uppercase tracking-[0.6em] animate-pulse">
+              Calibrating Infrastructure
+            </div>
+            <div className="w-56 h-[2px] bg-white/5 rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-primary to-accent animate-shimmer" style={{ width: '40%' }} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className={`min-h-screen bg-background font-sans selection:bg-accent selection:text-white transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <Navbar />
       <main>
         <MotionSection variant={sectionVariants[0]}>
           <Hero />
@@ -88,7 +127,8 @@ export default function Home() {
         </MotionSection>
       </main>
       <Footer />
-    </div>
+      </div>
+    </>
   );
 }
 
