@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { 
@@ -47,17 +47,6 @@ export function Navbar() {
 
   const serviceCategories = [
     {
-      title: "Training",
-      icon: <GraduationCap className="w-5 h-5" />,
-      color: "from-blue-500 to-cyan-400",
-      services: [
-        { name: "BI Master Program", href: "/services/training/bi", desc: "Enterprise intelligence mastery." },
-        { name: "Full Stack Master", href: "/services/training/fullstack", desc: "High-velocity web engineering." },
-        { name: "UI/UX Master", href: "/services/training/uiux", desc: "Premium interface architecture." },
-        { name: "Data Science", href: "/services/training/datascience", desc: "Algorithmic decision framing." },
-      ]
-    },
-    {
       title: "E-Commerce",
       icon: <ShoppingCart className="w-5 h-5" />,
       color: "from-purple-500 to-pink-500",
@@ -77,6 +66,17 @@ export function Navbar() {
         { name: "Digital Marketing", href: "/services/it/marketing", desc: "Algorithmic growth systems." },
         { name: "Cybersecurity", href: "/services/it/cyber", desc: "Hardened threat protection." },
         { name: "Cloud & DevOps", href: "/services/it/cloud", desc: "Infinite scale engineering." },
+      ]
+    },
+    {
+      title: "Training",
+      icon: <GraduationCap className="w-5 h-5" />,
+      color: "from-blue-500 to-cyan-400",
+      services: [
+        { name: "BI Master Program", href: "/services/training/bi", desc: "Enterprise intelligence mastery." },
+        { name: "Full Stack Master", href: "/services/training/fullstack", desc: "High-velocity web engineering." },
+        { name: "UI/UX Master", href: "/services/training/uiux", desc: "Premium interface architecture." },
+        { name: "Data Science", href: "/services/training/datascience", desc: "Algorithmic decision framing." },
       ]
     },
     {
@@ -122,29 +122,29 @@ export function Navbar() {
                 <NavigationMenuPrimitive.Trigger className="px-4 py-2 text-[11px] font-black uppercase tracking-[0.2em] text-white/50 hover:text-white transition-colors outline-none cursor-pointer">
                   Services
                 </NavigationMenuPrimitive.Trigger>
-                <NavigationMenuContent>
-                  <div className="w-[calc(100vw-2rem)] max-w-4xl p-8 grid grid-cols-4 gap-8 bg-[#020205]/95 backdrop-blur-[40px] rounded-[2.5rem] shadow-[0_30px_100px_rgba(0,0,0,0.8)] animate-in fade-in slide-in-from-top-4 duration-500 !border-none">
+                <NavigationMenuContent className="!bg-transparent">
+                  <div className="w-[calc(100vw-2rem)] max-w-3xl p-6 grid grid-cols-4 gap-6 bg-[#020205]/95 backdrop-blur-[40px] rounded-[2.5rem] shadow-[0_30px_100px_rgba(0,0,0,0.8)] animate-in fade-in slide-in-from-top-4 duration-500 !border-none">
                     {serviceCategories.map((cat, i) => (
-                      <div key={i} className="space-y-6">
-                        <div className="flex items-center gap-3 pb-5 border-b border-white/5 relative">
-                          <div className={cn("w-10 h-10 rounded-xl bg-gradient-to-br flex items-center justify-center text-white shadow-xl transition-transform hover:scale-110", cat.color)}>
-                            {cat.icon}
+                      <div key={i} className="space-y-5">
+                        <div className="flex items-center gap-3 pb-4 border-b border-white/5 relative">
+                          <div className={cn("w-8 h-8 rounded-[10px] bg-gradient-to-br flex items-center justify-center text-white shadow-xl transition-transform hover:scale-110", cat.color)}>
+                            {React.cloneElement(cat.icon as React.ReactElement<{ className?: string }>, { className: "w-4 h-4" })}
                           </div>
-                          <span className="text-[10px] font-black text-white uppercase tracking-[0.25em]">{cat.title}</span>
-                          <div className={cn("absolute bottom-0 left-0 h-[1.5px] w-10 bg-gradient-to-r", cat.color)} />
+                          <span className="text-[9px] font-black text-white uppercase tracking-[0.2em]">{cat.title}</span>
+                          <div className={cn("absolute bottom-0 left-0 h-[1.5px] w-8 bg-gradient-to-r", cat.color)} />
                         </div>
-                        <div className="flex flex-col gap-5">
+                        <div className="flex flex-col gap-4">
                           {cat.services.map((service, j) => (
                             <NavigationMenuLink asChild key={j}>
                               <Link 
                                 href={service.href} 
-                                className="group/item flex flex-col gap-1.5 hover:translate-x-1.5 transition-all duration-300"
+                                className="group/item flex flex-col gap-1 hover:translate-x-1.5 transition-all duration-300"
                               >
-                                <span className="text-[13px] font-bold text-white/70 group-hover/item:text-primary transition-colors flex items-center gap-2">
+                                <span className="text-xs font-bold text-white/70 group-hover/item:text-blue-400 transition-colors flex items-center gap-1.5">
                                   {service.name}
-                                  <ArrowRight className="w-3 h-3 opacity-0 group-hover/item:opacity-100 -translate-x-2 group-hover/item:translate-x-0 transition-all duration-300" />
+                                  <ArrowRight className="w-2.5 h-2.5 opacity-0 group-hover/item:opacity-100 -translate-x-2 group-hover/item:translate-x-0 transition-all duration-300" />
                                 </span>
-                                <span className="text-[10px] text-white/30 font-medium leading-relaxed group-hover/item:text-white/50">{service.desc}</span>
+                                <span className="text-[9px] text-white/30 font-medium leading-relaxed group-hover/item:text-white/50">{service.desc}</span>
                               </Link>
                             </NavigationMenuLink>
                           ))}
@@ -165,10 +165,6 @@ export function Navbar() {
         {/* CTA & Mobile Toggle */}
         <div className="flex items-center gap-2 md:gap-4 pointer-events-auto">
           <div className="hidden md:flex items-center gap-6">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/5 bg-white/5">
-               <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
-               <span className="text-[7.5px] font-black text-white/40 uppercase tracking-[0.3em] min-w-max">Global Status: Online</span>
-            </div>
             <Link href="/contact">
               <Button className="bg-white text-primary hover:bg-primary hover:text-white rounded-full px-6 font-black text-[9px] uppercase tracking-widest shadow-2xl transition-all duration-500 hover:scale-105 active:scale-95 h-10">
                 INITIATE PROTOCOL

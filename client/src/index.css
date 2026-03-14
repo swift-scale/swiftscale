@@ -119,9 +119,9 @@
   --color-background: #FFFFFF;
   --color-foreground: #008DDA;
 
-  --color-card: #F7EEDD;
+  --color-card: #FFFFFF;
   --color-card-foreground: #008DDA;
-  --color-popover: #F7EEDD;
+  --color-popover: #FFFFFF;
   --color-popover-foreground: #008DDA;
 
   --color-primary: #008DDA;
@@ -130,14 +130,14 @@
   --color-secondary: #41C9E2;
   --color-secondary-foreground: #008DDA;
 
-  --color-muted: #ACE2E1;
+  --color-muted: #F7EEDD;
   --color-muted-foreground: #008DDA;
 
   --color-accent: #41C9E2;
   --color-accent-foreground: #008DDA;
 
-  --color-border: color-mix(in srgb, #008DDA 15%, #FFFFFF);
-  --color-input: color-mix(in srgb, #008DDA 15%, #FFFFFF);
+  --color-border: #ACE2E1;
+  --color-input: #ACE2E1;
   --color-ring: #008DDA;
 
   --color-sidebar: #FFFFFF;
@@ -148,15 +148,15 @@
 
   --background: 0 0% 100%;
   --foreground: 201 100% 43%;
-  --card: 39 62% 92%;
+  --card: 0 0% 100%;
   --card-foreground: 201 100% 43%;
-  --popover: 39 62% 92%;
+  --popover: 0 0% 100%;
   --popover-foreground: 201 100% 43%;
   --primary: 201 100% 43%;
   --primary-foreground: 0 0% 100%;
   --secondary: 189 74% 57%;
   --secondary-foreground: 201 100% 43%;
-  --muted: 179 48% 78%;
+  --muted: 39 62% 92%;
   --muted-foreground: 201 100% 43%;
   --accent: 189 74% 57%;
   --accent-foreground: 201 100% 43%;

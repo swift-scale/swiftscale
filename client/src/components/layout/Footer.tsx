@@ -1,3 +1,5 @@
+ "use client";
+
 import Link from "next/link";
 import {
   Facebook,
@@ -6,10 +8,77 @@ import {
   Instagram,
   ArrowRight,
 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export function Footer() {
+  const [pathname, setPathname] = useState("/");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setPathname(window.location.pathname || "/");
+    }
+  }, []);
+
+  const serviceCatalog = useMemo(
+    () => ({
+      ecommerce: [
+        { label: "Platform Registration", href: "/services/ecommerce/registration" },
+        { label: "Sponsored Ads", href: "/services/ecommerce/ads" },
+        { label: "Logistics Solutions", href: "/services/ecommerce/logistics" },
+        { label: "Warehousing", href: "/services/ecommerce/warehousing" },
+      ],
+      it: [
+        { label: "App/Web Dev", href: "/services/it/dev" },
+        { label: "Digital Marketing", href: "/services/it/marketing" },
+        { label: "Cybersecurity", href: "/services/it/security" },
+        { label: "Cloud & DevOps", href: "/services/it/cloud" },
+      ],
+      training: [
+        { label: "BI Master Program", href: "/services/training/bi" },
+        { label: "Full Stack Master", href: "/services/training/fullstack" },
+        { label: "UI/UX Master", href: "/services/training/uiux" },
+        { label: "Data Science", href: "/services/training/datascience" },
+      ],
+      consulting: [
+        { label: "Payroll Management", href: "/services/consulting/payroll" },
+        { label: "Growth Strategy", href: "/services/consulting/strategy" },
+        { label: "IT Infra Roles", href: "/services/consulting/infra" },
+      ],
+    }),
+    [],
+  );
+
+  const allServices = useMemo(
+    () => [
+      ...serviceCatalog.ecommerce,
+      ...serviceCatalog.it,
+      ...serviceCatalog.training,
+      ...serviceCatalog.consulting,
+    ],
+    [serviceCatalog],
+  );
+
+  const servicesSection = useMemo(() => {
+    if (pathname === "/" || pathname === "/home") {
+      return { title: "E-Commerce", items: serviceCatalog.ecommerce };
+    }
+    if (pathname.startsWith("/services/ecommerce")) {
+      return { title: "Services", items: allServices };
+    }
+    if (pathname.startsWith("/services/it")) {
+      return { title: "Training", items: serviceCatalog.training };
+    }
+    if (pathname.startsWith("/services/training")) {
+      return { title: "Consulting", items: serviceCatalog.consulting };
+    }
+    if (pathname.startsWith("/services/consulting")) {
+      return { title: "E-Commerce", items: serviceCatalog.ecommerce };
+    }
+    return { title: "E-Commerce", items: serviceCatalog.ecommerce };
+  }, [allServices, pathname, serviceCatalog]);
+
   return (
     <footer className="bg-background border-t border-white/10 border-border pt-20 pb-10">
       <div className="container mx-auto px-6">
@@ -51,49 +120,19 @@ export function Footer() {
 
           <div>
             <h4 className="font-display font-semibold text-lg mb-6">
-              Platform
+              {servicesSection.title}
             </h4>
             <ul className="space-y-4">
-              <li>
-                <Link
-                  href="#"
-                  className="text-muted-foreground hover:text-white transition-colors text-sm"
-                >
-                  Overview
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-muted-foreground hover:text-white transition-colors text-sm"
-                >
-                  Features
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-muted-foreground hover:text-white transition-colors text-sm"
-                >
-                  Integrations
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-muted-foreground hover:text-white transition-colors text-sm"
-                >
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/admin/login"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm font-bold uppercase tracking-widest"
-                >
-                  Admin Terminal
-                </Link>
-              </li>
+              {servicesSection.items.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-muted-foreground hover:text-white transition-colors text-sm"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -106,22 +145,6 @@ export function Footer() {
                   className="text-muted-foreground hover:text-white transition-colors text-sm"
                 >
                   About Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-muted-foreground hover:text-white transition-colors text-sm"
-                >
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-muted-foreground hover:text-white transition-colors text-sm"
-                >
-                  Blog
                 </Link>
               </li>
               <li>

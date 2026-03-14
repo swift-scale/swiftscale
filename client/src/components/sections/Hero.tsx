@@ -37,26 +37,15 @@ export function Hero() {
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
-            
-            <div className="mt-12 flex items-center gap-8 text-sm text-white/60">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                No credit card required
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-accent" />
-                14-day free trial
-              </div>
-            </div>
           </div>
           
-          <div className="relative animate-in fade-in slide-in-from-right-12 duration-1000 delay-200 hidden lg:block">
+          <div className="relative animate-in fade-in slide-in-from-right-12 duration-1000 delay-200 hidden lg:block scale-90 lg:scale-[0.85] origin-right ml-auto">
             <div className="absolute -inset-10 bg-accent/20 blur-[120px] rounded-full animate-pulse" />
-            <div className="relative z-10 rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl group">
+            <div className="relative z-10 rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl group aspect-[4/3]">
               <img 
                 src="https://images.unsplash.com/photo-1549692402-4956e9c493bf?q=80&w=2070&auto=format&fit=crop" 
                 alt="Swiftscale Enterprise Infrastructure" 
-                className="w-full h-auto object-cover transform scale-110 group-hover:scale-100 transition-transform duration-1000"
+                className="w-full h-full object-cover transform scale-110 group-hover:scale-100 transition-transform duration-1000"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 to-transparent" />
             </div>
