@@ -8,19 +8,14 @@ import {
   Instagram,
   ArrowRight,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Newsletter } from "@/client/src/components/sections/Newsletter";
+import { Newsletter } from "@/components/sections/Newsletter";
 
 export function Footer() {
-  const [pathname, setPathname] = useState("/");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setPathname(window.location.pathname || "/");
-    }
-  }, []);
+  const pathname = usePathname();
 
   const serviceCatalog = useMemo(
     () => ({
@@ -62,23 +57,25 @@ export function Footer() {
   );
 
   const servicesSection = useMemo(() => {
+    if (!pathname) return { title: "E-Commerce", items: serviceCatalog.ecommerce };
+
     if (pathname === "/" || pathname === "/home") {
       return { title: "E-Commerce", items: serviceCatalog.ecommerce };
     }
     if (pathname.startsWith("/services/ecommerce")) {
-      return { title: "Services", items: allServices };
-    }
-    if (pathname.startsWith("/services/it")) {
-      return { title: "Training", items: serviceCatalog.training };
-    }
-    if (pathname.startsWith("/services/training")) {
-      return { title: "Consulting", items: serviceCatalog.consulting };
-    }
-    if (pathname.startsWith("/services/consulting")) {
       return { title: "E-Commerce", items: serviceCatalog.ecommerce };
     }
+    if (pathname.startsWith("/services/it")) {
+      return { title: "IT Services", items: serviceCatalog.it };
+    }
+    if (pathname.startsWith("/services/training")) {
+      return { title: "Training", items: serviceCatalog.training };
+    }
+    if (pathname.startsWith("/services/consulting")) {
+      return { title: "Consulting", items: serviceCatalog.consulting };
+    }
     return { title: "E-Commerce", items: serviceCatalog.ecommerce };
-  }, [allServices, pathname, serviceCatalog]);
+  }, [pathname, serviceCatalog]);
 
   return (
     <footer className="bg-background border-t border-white/10 border-border pt-20 pb-10">

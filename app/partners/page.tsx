@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -202,7 +204,7 @@ export default function Partners() {
                 
                 <div className="flex items-center gap-4 mt-auto pt-6 border-t border-white/10">
                   <img 
-                    src={typeof t.avatar === "string" ? t.avatar : t.avatar.src} 
+                    src={typeof t.avatar === "string" ? t.avatar : (t.avatar as any).src} 
                     alt={t.author} 
                     className="w-14 h-14 rounded-full object-cover border-2 border-white/10 group-hover:border-accent transition-colors"
                   />
