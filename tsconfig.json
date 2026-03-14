@@ -4,6 +4,8 @@
     "shared/**/*",
     "server/**/*",
     "app/**/*",
+    "lib/**/*",
+    "models/**/*",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
@@ -36,6 +38,7 @@
     ],
     "paths": {
       "@/*": [
+        "./*",
         "./client/src/*",
         "./app/*"
       ],

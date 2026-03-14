@@ -82,7 +82,7 @@ export default function Contact() {
                       {
                         icon: <Mail />,
                         title: "Email Address",
-                        data: "hello@swiftscale.tech",
+                        data: "contact@swiftscaleinc.com",
                         color: "primary",
                       },
                       {
