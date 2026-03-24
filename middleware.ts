@@ -21,8 +21,9 @@ export function middleware(request: NextRequest) {
     // For now, we'll verify existence to ensure basic protection.
   }
 
-  // If already logged in, don't show login page
-  if (pathname === '/admin/login' && token) {
+  // If already logged in, don't show login or recovery pages
+  const recoveryPages = ['/admin/login', '/admin/forgot-password', '/admin/reset-password'];
+  if (recoveryPages.includes(pathname) && token) {
     return NextResponse.redirect(new URL('/admin', request.url));
   }
 

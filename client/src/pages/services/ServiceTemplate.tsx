@@ -22,6 +22,28 @@ import {
 import abstractHero from "@/assets/images/abstract-hero.png";
 import abstractOrb from "@/assets/images/abstract-orb.png";
 import abstractGrid from "@/assets/images/abstract-grid.png";
+import { LazySection } from "@/components/ui/lazy-section";
+import { motion, Variants } from "framer-motion";
+
+const staggerContainer: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1
+    }
+  }
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { type: "spring", stiffness: 100, damping: 15 } 
+  }
+};
 
 interface ServiceTemplateProps {
   title: string;
@@ -90,11 +112,11 @@ export default function ServiceTemplate({
         </div>
       )}
 
-      <div className={`min-h-screen bg-background text-white selection:bg-accent selection:text-white font-sans overflow-x-hidden transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <div className={`min-h-screen bg-background text-white selection:bg-accent selection:text-white font-sans transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <Navbar />
         
         {/* 1. Epic Hero Section */}
-        <section className="relative pt-40 pb-20 md:pt-52 md:pb-40 min-h-[90vh] flex flex-col justify-center border-b border-white/5 overflow-hidden">
+        <section className="relative pt-40 pb-20 md:pt-52 md:pb-40 min-h-[90vh] flex flex-col justify-center border-b border-white/5 overflow-hidden -mt-16 md:-mt-20">
           {/* Immersive Background */}
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background z-10" />
@@ -137,12 +159,22 @@ export default function ServiceTemplate({
         </section>
 
         {/* 2. Visual Bento Grid: Challenge & Solution */}
+        <LazySection minHeight="60vh">
         <section className="py-32 relative z-10">
           <div className="container mx-auto px-6">
-            <div className="grid lg:grid-cols-12 gap-8 max-w-7xl mx-auto text-left">
+            <motion.div 
+              className="grid lg:grid-cols-12 gap-8 max-w-7xl mx-auto text-left"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={staggerContainer}
+            >
               
               {/* The Challenge */}
-              <div className="lg:col-span-5 bg-gradient-to-br from-white/[0.05] to-white/[0.01] border border-white/10 rounded-[2.5rem] p-10 lg:p-14 relative overflow-hidden group hover:border-white/20 transition-all duration-500 shadow-2xl flex flex-col justify-between">
+              <motion.div 
+                variants={itemVariants}
+                className="lg:col-span-5 bg-gradient-to-br from-white/[0.05] to-white/[0.01] border border-white/10 rounded-[2.5rem] p-10 lg:p-14 relative overflow-hidden group hover:border-white/20 transition-all duration-500 shadow-2xl flex flex-col justify-between"
+              >
                 <div className="absolute top-0 right-0 w-64 h-64 bg-rose-500/10 blur-[100px] rounded-full pointer-events-none group-hover:bg-rose-500/20 transition-colors duration-700" />
                 
                 <div className="relative z-10">
@@ -156,10 +188,13 @@ export default function ServiceTemplate({
                     {problem}
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* The Solution */}
-              <div className="lg:col-span-7 bg-gradient-to-br from-primary/20 to-accent/10 border border-primary/30 rounded-[2.5rem] p-10 lg:p-14 relative overflow-hidden group hover:border-primary/50 transition-all duration-500 shadow-[0_0_50px_rgba(var(--primary-rgb),0.1)]">
+              <motion.div 
+                variants={itemVariants}
+                className="lg:col-span-7 bg-gradient-to-br from-primary/20 to-accent/10 border border-primary/30 rounded-[2.5rem] p-10 lg:p-14 relative overflow-hidden group hover:border-primary/50 transition-all duration-500 shadow-[0_0_50px_rgba(var(--primary-rgb),0.1)]"
+              >
                 {/* Background Image Mask */}
                 <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[120%] h-[120%] opacity-40 mix-blend-screen pointer-events-none transition-transform duration-1000 group-hover:scale-105 origin-right">
                   <img src={abstractOrb} alt="Glowing Orb" className="w-full h-full object-cover object-right" />
@@ -200,13 +235,15 @@ export default function ServiceTemplate({
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-            </div>
+            </motion.div>
           </div>
         </section>
+        </LazySection>
 
         {/* 3. High-End Features Grid */}
+        <LazySection minHeight="60vh">
         <section className="py-32 border-y border-white/5 bg-background/50 relative overflow-hidden">
           {/* Glowing Grid Background */}
           <div className="absolute inset-0 opacity-20 pointer-events-none">
@@ -215,18 +252,34 @@ export default function ServiceTemplate({
           <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none" />
 
           <div className="container mx-auto px-6 relative z-10 text-center">
-            <div className="text-center max-w-4xl mx-auto mb-20">
+            <motion.div 
+              className="text-center max-w-4xl mx-auto mb-20"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
               <h2 className="text-5xl md:text-6xl font-display font-bold tracking-tight mb-8 text-white">
                 Unmatched Advantages
               </h2>
               <p className="text-xl text-white/50 font-light leading-relaxed">
                 Unlock the full potential of your operations with strategic implementation designed specifically for high-growth enterprises.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            <motion.div 
+              className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={staggerContainer}
+            >
               {benefits.map((benefit, i) => (
-                <div key={i} className="group p-10 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all duration-300 backdrop-blur-xl hover:-translate-y-2 flex flex-col items-center text-center shadow-lg hover:shadow-2xl">
+                <motion.div 
+                  key={i} 
+                  variants={itemVariants}
+                  className="group p-10 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all duration-300 backdrop-blur-xl hover:-translate-y-2 flex flex-col items-center text-center shadow-lg hover:shadow-2xl"
+                >
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center text-white mb-8 group-hover:from-primary group-hover:to-accent group-hover:border-primary/50 transition-all shadow-lg shadow-black/50">
                     {i % 4 === 0 && <BarChart3 className="w-8 h-8" />}
                     {i % 4 === 1 && <Shield className="w-8 h-8" />}
@@ -237,13 +290,15 @@ export default function ServiceTemplate({
                   <p className="text-base text-white/60 font-light leading-relaxed">
                     Streamline processes and achieve measurable ROI through targeted execution.
                   </p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
+        </LazySection>
 
         {/* 4. Glassmorphism Process Timeline */}
+        <LazySection minHeight="80vh">
         <section className="py-32 bg-background relative overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/15 blur-[150px] rounded-full pointer-events-none" />
           
@@ -260,9 +315,24 @@ export default function ServiceTemplate({
               </div>
 
               <div className="lg:w-2/3 w-full">
-                <div className="space-y-6 text-left">
+                <motion.div 
+                  className="space-y-6 text-left"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.1 }}
+                  variants={{
+                    visible: { transition: { staggerChildren: 0.2 } }
+                  }}
+                >
                   {process.map((step, i) => (
-                    <div key={i} className="flex gap-6 md:gap-8 group">
+                    <motion.div 
+                      key={i} 
+                      variants={{
+                        hidden: { opacity: 0, x: 20 },
+                        visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 100 } }
+                      }}
+                      className="flex gap-6 md:gap-8 group"
+                    >
                       <div className="flex flex-col items-center">
                         <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-2xl md:text-3xl font-display font-bold text-white/40 group-hover:text-accent group-hover:border-accent/50 group-hover:bg-accent/10 transition-all shrink-0 shadow-lg">
                           {i + 1}
@@ -277,33 +347,47 @@ export default function ServiceTemplate({
                           Comprehensive planning and execution tailored precisely to your specific requirements, ensuring zero downtime and maximum efficiency.
                         </p>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>
         </section>
+        </LazySection>
 
         {/* 5. Target Audience Cards */}
+        <LazySection minHeight="40vh">
         <section className="py-32 border-t border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent">
           <div className="container mx-auto px-6 text-center">
             <h2 className="text-4xl md:text-6xl font-display font-bold mb-16 tracking-tight text-white">
               Built for High-Growth Teams
             </h2>
             
-            <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
+            <motion.div 
+              className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+            >
               {forWho.map((target, i) => (
-                <div key={i} className="px-8 py-5 rounded-2xl bg-white/[0.03] border border-white/10 text-white text-lg font-medium hover:bg-white/10 hover:border-white/20 hover:-translate-y-1 transition-all cursor-default shadow-lg flex items-center gap-4">
+                <motion.div 
+                  key={i} 
+                  variants={itemVariants}
+                  className="px-8 py-5 rounded-2xl bg-white/[0.03] border border-white/10 text-white text-lg font-medium hover:bg-white/10 hover:border-white/20 hover:-translate-y-1 transition-all cursor-default shadow-lg flex items-center gap-4"
+                >
                   <CheckCircle2 className="w-6 h-6 text-emerald-400" />
                   {target}
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
+        </LazySection>
 
         {/* 6. Massive CTA */}
+        <LazySection minHeight="60vh">
         <section className="py-40 relative overflow-hidden border-t border-white/5">
           <div className="absolute inset-0 z-0 text-left">
             <img 
@@ -315,30 +399,40 @@ export default function ServiceTemplate({
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(var(--accent-rgb),0.2),transparent_70%)]" />
           </div>
           
-          <div className="container mx-auto px-6 text-center relative z-10">
-            <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-primary to-accent border border-white/20 text-white mb-12 shadow-[0_0_60px_rgba(var(--accent-rgb),0.5)]">
+          <motion.div 
+            className="container mx-auto px-6 text-center relative z-10"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+          >
+            <motion.div 
+              variants={itemVariants}
+              className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-primary to-accent border border-white/20 text-white mb-12 shadow-[0_0_60px_rgba(var(--accent-rgb),0.5)]"
+            >
               <Zap className="w-12 h-12" />
-            </div>
+            </motion.div>
             
-            <h2 className="text-5xl md:text-7xl lg:text-[6rem] font-display font-bold mb-10 tracking-tighter max-w-5xl mx-auto leading-[1.05] text-white">
+            <motion.h2 variants={itemVariants} className="text-5xl md:text-7xl lg:text-[6rem] font-display font-bold mb-10 tracking-tighter max-w-5xl mx-auto leading-[1.05] text-white">
               Ready to transform your <br className="hidden md:block" />
               <span className="bg-gradient-to-r from-accent via-primary to-accent bg-clip-text text-transparent animate-gradient-x">{title.toLowerCase()}?</span>
-            </h2>
+            </motion.h2>
             
-            <p className="text-xl md:text-2xl text-white/50 font-light max-w-3xl mx-auto mb-14">
+            <motion.p variants={itemVariants} className="text-xl md:text-2xl text-white/50 font-light max-w-3xl mx-auto mb-14">
               Join the hundreds of forward-thinking businesses accelerating their growth with Swiftscale today.
-            </p>
+            </motion.p>
             
-            <div className="flex flex-col sm:flex-row justify-center gap-6">
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row justify-center gap-6">
               <Button size="lg" className="bg-accent hover:bg-accent/90 text-white rounded-full px-14 h-16 text-xl font-bold transition-all shadow-[0_0_40px_rgba(var(--accent-rgb),0.3)] hover:scale-105 text-left">
                 Start Your Project
               </Button>
               <Button size="lg" variant="outline" className="rounded-full px-14 h-16 text-xl font-medium border-white/20 bg-white/[0.05] text-white hover:bg-white/10 hover:text-white backdrop-blur-md transition-all hover:scale-105 text-left">
                 Contact Sales
               </Button>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </section>
+        </LazySection>
 
         <Footer />
       </div>

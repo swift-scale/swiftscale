@@ -119,7 +119,7 @@
 }
 
 .admin-theme {
-  --color-background: #FFFFFF;
+  --color-background: #eef6ff;
   --color-foreground: #020617; /* Dark slate for high contrast */
 
   --color-card: #FFFFFF;
@@ -150,7 +150,7 @@
   --color-sidebar-accent-foreground: #241BEB;
 
   /* HSL Fallbacks for UI Components */
-  --background: 0 0% 100%;
+  --background: 210 100% 97%;
   --foreground: 222 47% 11%;
   --card: 0 0% 100%;
   --card-foreground: 222 47% 11%;

@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useState, useEffect, useRef, ReactNode } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
@@ -12,46 +11,36 @@ import { Process } from "@/components/sections/Process";
 import { Academy } from "@/components/sections/Academy";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { FinalCta } from "@/components/sections/FinalCta";
-
 import { NewsletterSection } from "@/components/sections/Newsletter";
 
-type MotionVariant = {
-  initial: { opacity: number; y?: number; x?: number; scale?: number };
-  animate: { opacity: number; y?: number; x?: number; scale?: number };
-  transition: { duration: number; ease: [number, number, number, number] };
-};
+/**
+ * LazySection — mounts children only when they are ~300px away from the viewport.
+ * Once mounted, the section stays rendered (never unmounts).
+ * `minHeight` keeps a placeholder so the scroll-bar height feels natural.
+ */
+function LazySection({ children, minHeight = "60vh" }: { children: ReactNode; minHeight?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [shouldRender, setShouldRender] = useState(false);
 
-const sectionVariants: MotionVariant[] = [
-  { initial: { opacity: 0, y: 22 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.45, ease: [0.2, 0.8, 0.2, 1] } },
-  { initial: { opacity: 0, y: 12, scale: 0.98 }, animate: { opacity: 1, y: 0, scale: 1 }, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
-  { initial: { opacity: 0, x: -18 }, animate: { opacity: 1, x: 0 }, transition: { duration: 0.42, ease: [0.22, 1, 0.36, 1] } },
-  { initial: { opacity: 0, x: 18 }, animate: { opacity: 1, x: 0 }, transition: { duration: 0.42, ease: [0.22, 1, 0.36, 1] } },
-  { initial: { opacity: 0, y: 18, scale: 0.99 }, animate: { opacity: 1, y: 0, scale: 1 }, transition: { duration: 0.46, ease: [0.2, 0.8, 0.2, 1] } },
-  { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.4, ease: [0.2, 0.7, 0.2, 1] } },
-  { initial: { opacity: 0, x: -12, scale: 0.99 }, animate: { opacity: 1, x: 0, scale: 1 }, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } },
-  { initial: { opacity: 0, y: 14 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.44, ease: [0.2, 0.8, 0.2, 1] } },
-  { initial: { opacity: 0, y: 14 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.44, ease: [0.2, 0.8, 0.2, 1] } },
-];
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldRender(true);
+          observer.disconnect(); // stop observing once rendered
+        }
+      },
+      { rootMargin: "300px 0px" } // start loading 300px before entering viewport
+    );
 
-function MotionSection({
-  children,
-  variant,
-}: {
-  children: React.ReactNode;
-  variant: MotionVariant;
-}) {
-  const shouldReduceMotion = useReducedMotion();
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.section
-      initial={shouldReduceMotion ? false : variant.initial}
-      whileInView={shouldReduceMotion ? { opacity: 1 } : variant.animate}
-      transition={variant.transition}
-      viewport={{ once: false, amount: 0.4 }}
-      style={{ willChange: "transform, opacity" }}
-    >
-      {children}
-    </motion.section>
+    <div ref={ref}>
+      {shouldRender ? children : <div style={{ minHeight }} />}
+    </div>
   );
 }
 
@@ -59,10 +48,8 @@ export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Scroll to top on load
     window.scrollTo(0, 0);
 
-    // Preload hero illustration
     const img = new Image();
     img.src = "/images/hero-illustration.png";
     img.onload = () => {
@@ -99,38 +86,47 @@ export default function Home() {
 
       <div className={`min-h-screen bg-background font-sans selection:bg-accent selection:text-white transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <Navbar />
-      <main>
-        <MotionSection variant={sectionVariants[0]}>
+        <main>
+          {/* Hero always loads immediately — it's the first thing the user sees */}
           <Hero />
-        </MotionSection>
-        <MotionSection variant={sectionVariants[1]}>
-          <CorePillars />
-        </MotionSection>
-        <MotionSection variant={sectionVariants[2]}>
-          <AllServices />
-        </MotionSection>
-        <MotionSection variant={sectionVariants[3]}>
-          <WhyChooseUs />
-        </MotionSection>
-        <MotionSection variant={sectionVariants[4]}>
-          <Process />
-        </MotionSection>
-        <MotionSection variant={sectionVariants[5]}>
-          <Academy />
-        </MotionSection>
-        <MotionSection variant={sectionVariants[6]}>
-          <Testimonials />
-        </MotionSection>
-        <MotionSection variant={sectionVariants[7]}>
-          <NewsletterSection />
-        </MotionSection>
-        <MotionSection variant={sectionVariants[8]}>
-          <FinalCta />
-        </MotionSection>
-      </main>
-      <Footer />
+
+          {/* All subsequent sections lazy-load just before they scroll into view */}
+          <LazySection minHeight="80vh">
+            <CorePillars />
+          </LazySection>
+
+          <LazySection minHeight="80vh">
+            <AllServices />
+          </LazySection>
+
+          <LazySection minHeight="70vh">
+            <WhyChooseUs />
+          </LazySection>
+
+          <LazySection minHeight="60vh">
+            <Process />
+          </LazySection>
+
+          <LazySection minHeight="70vh">
+            <Academy />
+          </LazySection>
+
+          <LazySection minHeight="60vh">
+            <Testimonials />
+          </LazySection>
+
+          <LazySection minHeight="50vh">
+            <NewsletterSection />
+          </LazySection>
+
+          <LazySection minHeight="50vh">
+            <FinalCta />
+          </LazySection>
+        </main>
+        <Footer />
       </div>
     </>
   );
 }
+
 

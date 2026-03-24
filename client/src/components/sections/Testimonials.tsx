@@ -40,14 +40,20 @@ export function Testimonials() {
       <div className="absolute top-0 right-0 -mr-40 -mt-40 w-96 h-96 bg-primary/20 blur-[100px] rounded-full pointer-events-none" />
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-2xl mx-auto mb-16"
+        >
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
             Trusted by <span className="text-accent">Ambitious Minds</span>
           </h2>
           <p className="text-muted-foreground text-lg">
             Join the growing network of individuals relying on Swiftscale.
           </p>
-        </div>
+        </motion.div>
       </div>
 
       <div className="relative w-full flex overflow-hidden">

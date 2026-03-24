@@ -29,13 +29,68 @@ const messageSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['new', 'read', 'replied', 'archived'],
+    enum: ['new', 'read', 'replied', 'archived', 'deleted', 'draft'],
     default: 'new'
   },
   isUrgent: {
     type: Boolean,
     default: false
-  }
+  },
+  fromEmail: {
+    type: String,
+    trim: true
+  },
+  smtpMessageId: {
+    type: String,
+    trim: true
+  },
+  draft: {
+    body: String,
+    to: [String],
+    cc: [String],
+    bcc: [String],
+    subject: String,
+    senderAlias: String,
+    attachments: [{
+      url: String,
+      publicId: String,
+      filename: String,
+      size: Number,
+      resourceType: String
+    }],
+    updatedAt: {
+      type: Date,
+      default: Date.now
+    }
+  },
+  replies: [{
+    body: String,
+    senderAlias: String,
+    fromEmail: String,
+    smtpMessageId: String,
+    sentAt: {
+      type: Date,
+      default: Date.now
+    },
+    cc: [String],
+    bcc: [String],
+    attachments: [{
+      url: String,
+      publicId: String,
+      filename: String,
+      size: Number,
+      resourceType: String
+    }]
+  }],
+  cc: [String],
+  bcc: [String],
+  attachments: [{
+    url: String,
+    publicId: String,
+    filename: String,
+    size: Number,
+    resourceType: String
+  }]
 }, {
   timestamps: true
 });

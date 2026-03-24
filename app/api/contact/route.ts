@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import Message from '@/models/Message';
-import {
-  transporter,
-  buildUserConfirmationEmail,
-  buildAdminNotificationEmail,
-} from '@/lib/mailer';
+import { sendContactNotification, sendAutoReply } from '@/lib/mailer';
 
 function generateTicketId(): string {
   const now = new Date();
@@ -29,11 +25,6 @@ export async function POST(req: NextRequest) {
     }
 
     const ticketId = generateTicketId();
-    const receivedAt = new Date().toLocaleString('en-IN', {
-      timeZone: 'Asia/Kolkata',
-      dateStyle: 'medium',
-      timeStyle: 'short',
-    });
 
     // ── Save to database ───────────────────────────────────────────────────────
     const message = await Message.create({
@@ -46,23 +37,17 @@ export async function POST(req: NextRequest) {
 
     const emailPayload = { firstName, lastName, email, service, details, ticketId };
 
-    // ── 1. Send confirmation email to the user ─────────────────────────────────
-    await transporter.sendMail({
-      from: process.env.EMAIL_FROM,
-      to: email,
-      subject: `We received your message — Ticket ${ticketId}`,
-      html: buildUserConfirmationEmail(emailPayload),
-    });
+    // ── 1. Send confirmation email to the user (Auto-Reply) ─────────────────────
+    const autoReplyInfo = await sendAutoReply(emailPayload);
+
+    // Save the SMTP message ID so we can thread future replies to it
+    if (autoReplyInfo && autoReplyInfo.messageId) {
+      message.smtpMessageId = autoReplyInfo.messageId;
+      await message.save();
+    }
 
     // ── 2. Send internal notification to the SwiftScale team ──────────────────
-    const adminEmail = 'connect@swiftscaleinc.com';
-    await transporter.sendMail({
-      from: process.env.EMAIL_FROM,
-      to: adminEmail,
-      replyTo: email,
-      subject: `[New Query] ${firstName} ${lastName} — ${service} — ${ticketId}`,
-      html: buildAdminNotificationEmail({ ...emailPayload, receivedAt }),
-    });
+    await sendContactNotification(emailPayload);
 
     return NextResponse.json(
       { success: true, message: 'Message sent successfully', data: message },

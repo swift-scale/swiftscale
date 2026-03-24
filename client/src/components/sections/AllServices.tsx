@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { GraduationCap, ShoppingCart, Monitor, Briefcase, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
@@ -47,6 +48,25 @@ const serviceCategories = [
   }
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { type: "spring" as const, stiffness: 100, damping: 15 } 
+  },
+};
+
 export function AllServices() {
   return (
     <section className="py-32 bg-[#020205] relative z-20 overflow-hidden">
@@ -55,7 +75,13 @@ export function AllServices() {
       <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-20 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-20"
+        >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel text-primary text-xs font-black tracking-[0.2em] uppercase mb-6 border border-white/10 shadow-2xl">
             Our Ecosystem
           </div>
@@ -68,14 +94,20 @@ export function AllServices() {
           <p className="text-white/50 text-lg md:text-xl font-medium max-w-2xl mx-auto">
             Everything you need to build, scale, and manage your business across all domains, engineered for infinite growth.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
           {serviceCategories.map((category, i) => (
-            <div 
+            <motion.div 
               key={i} 
+              variants={itemVariants}
               className="relative p-[1px] rounded-[2rem] bg-gradient-to-br from-white/10 to-white/0 group hover:-translate-y-3 transition-all duration-500 overflow-hidden shadow-2xl hover:shadow-[0_20px_40px_-15px_rgba(36,27,235,0.3)]"
-              style={{ animationDelay: `${i * 100}ms` }}
             >
               {/* Card Glow background on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -114,9 +146,9 @@ export function AllServices() {
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

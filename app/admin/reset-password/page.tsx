@@ -7,29 +7,66 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Lock, ShieldAlert, CheckCircle2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useSearchParams } from "next/navigation";
+import { toast } from "sonner";
+import { Suspense } from "react";
 
-export default function AdminResetPassword() {
+function ResetPasswordForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const router = useRouter();
-  const { toast } = useToast();
+  const searchParams = useSearchParams();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    
-    // Mock reset delay
-    setTimeout(() => {
-      setIsLoading(false);
-      setIsSuccess(true);
-      toast({
-        title: "Key Updated",
-        description: "Your security credentials have been successfully reset.",
+    if (password !== confirmPassword) {
+      toast.error("Validation Error", {
+        description: "Security keys do not match.",
       });
-    }, 1500);
+      return;
+    }
+
+    const token = searchParams.get("token");
+
+    if (!token) {
+      toast.error("Invalid Request", {
+        description: "No security token found in URL. Please use the original link from your email.",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/auth/reset-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, password }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setIsSuccess(true);
+        toast.success("Key Updated", {
+          description: "Your security credentials have been successfully reset.",
+        });
+      } else {
+        toast.error("Protocol Error", {
+          description: data.message || "Unable to update credentials.",
+        });
+      }
+    } catch (err) {
+      console.error("Reset failed:", err);
+      toast.error("System Error", {
+        description: "An unexpected error occurred. Please try again.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isSuccess) {
@@ -90,7 +127,7 @@ export default function AdminResetPassword() {
             <div className="space-y-4 pt-12 border-t border-border">
               <p className="text-[10px] text-foreground/40 uppercase font-black tracking-widest">Protocol Requirements</p>
               <ul className="space-y-3">
-                {["12+ Characters", "Special Symbols", "High Entropy"].map((rule, i) => (
+                {["12+ Characters", "Special Symbols", "Unique New Key", "No Re-use"].map((rule, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-foreground/70 font-bold">
                     <div className="w-1 h-1 rounded-full bg-primary" /> {rule}
                   </li>
@@ -120,6 +157,8 @@ export default function AdminResetPassword() {
                     type={showPassword ? "text" : "password"} 
                     placeholder="••••••••" 
                     className="pl-12 pr-12 h-14 bg-muted/30 border-border text-foreground focus:border-primary focus:ring-primary/10 rounded-2xl transition-all"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                   />
                   <button
@@ -141,6 +180,8 @@ export default function AdminResetPassword() {
                     type={showConfirmPassword ? "text" : "password"} 
                     placeholder="••••••••" 
                     className="pl-12 pr-12 h-14 bg-muted/30 border-border text-foreground focus:border-primary focus:ring-primary/10 rounded-2xl transition-all"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                   />
                   <button
@@ -167,3 +208,19 @@ export default function AdminResetPassword() {
     </div>
   );
 }
+
+export default function AdminResetPassword() {
+  return (
+    <Suspense fallback={
+      <div className="admin-theme min-h-screen flex items-center justify-center bg-background text-foreground">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">Loading Security Protocol...</p>
+        </div>
+      </div>
+    }>
+      <ResetPasswordForm />
+    </Suspense>
+  );
+}
+

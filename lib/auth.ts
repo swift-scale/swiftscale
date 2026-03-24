@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-for-dev-only';
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
+const JWT_EXPIRES_IN = '1d'; // Enforce 24h session timeout
 
 export const signToken = (id: string) => {
   return jwt.sign({ id }, JWT_SECRET, {

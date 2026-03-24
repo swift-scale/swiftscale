@@ -6,18 +6,44 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Mail, ArrowLeft, ShieldCheck, KeyRound } from "lucide-react";
+import { toast } from "sonner";
 
 export default function AdminForgotPassword() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [messageEmail, setMessageEmail] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      
+      if (res.ok) {
+        setMessageEmail(email);
+        setIsSubmitted(true);
+        toast.success("Verification Initiated", {
+          description: "Instructions have been dispatched to your email."
+        });
+      } else {
+        toast.error("Process Halted", {
+          description: data.message || "We could not verify this identity."
+        });
+      }
+    } catch (err) {
+      console.error("Recovery failed:", err);
+      toast.error("System Error", {
+        description: "Communication failure. Please try again later."
+      });
+    } finally {
       setIsLoading(false);
-      setIsSubmitted(true);
-    }, 1500);
+    }
   };
 
   return (
@@ -84,6 +110,8 @@ export default function AdminForgotPassword() {
                       type="email" 
                       placeholder="admin@swiftscale.com" 
                       className="pl-12 h-14 bg-muted/30 border-border text-foreground focus:border-primary focus:ring-primary/10 rounded-2xl transition-all"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       required
                     />
                   </div>
@@ -106,14 +134,14 @@ export default function AdminForgotPassword() {
               <div className="space-y-4">
                 <h2 className="text-3xl font-display font-black text-foreground tracking-tight">Instructions Dispatched</h2>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  If <span className="text-foreground font-bold">admin@swiftscale.com</span> matches our records, you will receive a security key shortly. Check your encrypted inbox.
+                  If <span className="text-foreground font-bold">{messageEmail}</span> matches our records, you will receive a security key shortly. Check your encrypted inbox.
                 </p>
               </div>
               <Button asChild variant="outline" className="w-full h-14 rounded-2xl border-border hover:bg-muted/50 text-foreground font-bold">
                 <Link href="/admin/login">Return to Login</Link>
               </Button>
-              <p className="text-sm text-muted-foreground pt-4">
-                Haven't received anything? <button className="text-primary hover:underline font-bold">Try another email</button>
+               <p className="text-sm text-muted-foreground pt-4">
+                Haven't received anything? <button type="button" onClick={() => setIsSubmitted(false)} className="text-primary hover:underline font-bold">Try another email</button>
               </p>
             </div>
           )}

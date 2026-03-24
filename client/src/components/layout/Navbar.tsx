@@ -154,14 +154,16 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed left-0 right-0 z-50 flex justify-center px-4 md:px-6 pointer-events-none transition-all duration-500",
-        isScrolled ? "top-2 md:top-6" : "top-4 md:top-8",
+        "sticky top-0 z-50 flex bg-transparent justify-center w-full px-4 md:px-6 pointer-events-none transition-all duration-500",
+        isScrolled
+          ? "pt-2 backdrop-blur-xl bg-[#020205]/60 bg-transparent"
+          : "pt-0 ",
       )}
     >
       <div
         className={cn(
-          "w-full max-w-7xl glass-panel rounded-full border border-white/10 shadow-2xl pointer-events-auto flex items-center justify-between px-4 md:px-8 bg-[#020205]/40 backdrop-blur-2xl transition-all duration-500 relative",
-          isScrolled ? "h-14 md:h-18" : "h-16 md:h-20",
+          "w-full max-w-7xl glass-panel bg-transparent rounded-full border border-white/10 shadow-2xl pointer-events-auto flex items-center justify-between px-4 md:px-8 bg-[#020205]/40 backdrop-blur-2xl transition-all duration-500 relative",
+          isScrolled ? "h-15 md:h-20" : "h-16 md:h-20 pt-2",
         )}
       >
         {/* Logo */}
@@ -368,7 +370,10 @@ export function Navbar() {
                 </nav>
 
                 <div className="p-8 border-t border-white/10 bg-white/5 backdrop-blur-xl">
-                  <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Link
+                    href="/contact"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
                     <Button className="w-full bg-white text-primary py-8 rounded-2xl font-black text-xl shadow-2xl transition-all active:scale-95">
                       START EXPANSION
                     </Button>

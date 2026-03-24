@@ -3,14 +3,29 @@ import nodemailer from "nodemailer";
 export const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
   port: Number(process.env.EMAIL_PORT) || 465,
-  secure: true, // true for port 465
+  secure: Number(process.env.EMAIL_PORT) === 465, // true for 465, false for 587
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD,
   },
+  tls: {
+    // Necessary for some SMTP servers
+    rejectUnauthorized: true,
+  }
 });
 
+export type SenderAlias = "contact" | "support" | "hr" | "info" | "business";
+
+export const SENDER_ALIASES: Record<SenderAlias, string> = {
+  contact: process.env.EMAIL_ALIAS_CONTACT || "contact@swiftscaleinc.com",
+  support: process.env.EMAIL_ALIAS_SUPPORT || "support@swiftscaleinc.com",
+  hr: process.env.EMAIL_ALIAS_HR || "hr@swiftscaleinc.com",
+  info: process.env.EMAIL_ALIAS_INFO || "info@swiftscaleinc.com",
+  business: process.env.EMAIL_ALIAS_BUSINESS || "business@swiftscaleinc.com",
+};
+
 export function buildWelcomeEmail(email: string): string {
+  // ... (existing buildWelcomeEmail logic)
   return `<!doctype html>
 <html>
   <head>
@@ -159,7 +174,7 @@ export function buildUserConfirmationEmail({
                   </tr>
                   <tr>
                     <td style="padding:16px 28px 28px 28px;border-top:1px solid #1e2a4a;color:#7a8da8;font-size:12px;line-height:1.5;">
-                      Reply directly to this email if you have more details to add. Need help? Contact us at support@swiftscale.tech
+                      Reply directly to this email if you have more details to add. Need help? Contact us at contact@swiftscaleinc.com
                     </td>
                   </tr>
                 </table>
@@ -255,7 +270,7 @@ export function buildAdminNotificationEmail({
                         ${details}
                       </div>
                       <div style="margin-top:18px;">
-                        <a href="https://swiftscale.tech/admin" style="display:inline-block;background:#f59e0b;color:#0b1220;text-decoration:none;padding:10px 16px;border-radius:10px;font-weight:700;font-size:13px;">
+                        <a href="https://swiftscaleinc.com/admin" style="display:inline-block;background:#f59e0b;color:#0b1220;text-decoration:none;padding:10px 16px;border-radius:10px;font-weight:700;font-size:13px;">
                           Open in Admin
                         </a>
                       </div>
@@ -270,7 +285,7 @@ export function buildAdminNotificationEmail({
               </td>
             </tr>
           </table>
-          <div style="margin-top:16px;color:#5b6b85;font-size:12px;">© 2026 SwiftScale.</div>
+          <div style="margin-top:16px;color:#5b6b85;font-size:12px;">© 2026 SwiftScale. All rights reserved.</div>
         </td>
       </tr>
     </table>
@@ -284,17 +299,78 @@ export default async function sendEmail({
   subject,
   message,
   html,
+  senderAlias = "contact",
+  inReplyTo,
+  references,
+  attachments,
+  cc,
+  bcc,
 }: {
   email: string;
   subject: string;
   message?: string;
   html?: string;
+  senderAlias?: SenderAlias;
+  inReplyTo?: string;
+  references?: string | string[];
+  attachments?: Array<{ filename: string; path: string }>;
+  cc?: string;
+  bcc?: string;
 }) {
+  const fromEmail = SENDER_ALIASES[senderAlias] || SENDER_ALIASES.contact;
+  const fromName = "Swiftscale" + (senderAlias !== "contact" ? ` ${senderAlias.charAt(0).toUpperCase() + senderAlias.slice(1)}` : " Contact");
+
   return await transporter.sendMail({
-    from: process.env.EMAIL_FROM || '"Swiftscale" <connect@swiftscaleinc.com>',
+    from: `"${fromName}" <${fromEmail}>`,
     to: email,
+    replyTo: fromEmail,
     subject: subject,
     text: message,
     html: html,
+    ...(cc && { cc }),
+    ...(bcc && { bcc }),
+    ...(inReplyTo && { inReplyTo }),
+    ...(references && { references }),
+    ...(attachments && attachments.length > 0 && { attachments }),
+  });
+}
+
+// ─── Contact Form Emails ──────────────────────────────────────────────────
+export async function sendContactNotification(data: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  service: string;
+  details: string;
+  ticketId: string;
+}) {
+  const html = buildAdminNotificationEmail({
+    ...data,
+    receivedAt: new Date().toLocaleString("en-IN"),
+  });
+
+  return await sendEmail({
+    email: process.env.EMAIL_USER || "abhijith@swiftscaleinc.com",
+    subject: `New Contact Form Submission - ${data.ticketId}`,
+    html,
+    senderAlias: "contact",
+  });
+}
+
+export async function sendAutoReply(data: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  service: string;
+  details: string;
+  ticketId: string;
+}) {
+  const html = buildUserConfirmationEmail(data);
+
+  return await sendEmail({
+    email: data.email,
+    subject: `We've received your inquiry - SwiftScale [${data.ticketId}]`,
+    html,
+    senderAlias: "contact",
   });
 }

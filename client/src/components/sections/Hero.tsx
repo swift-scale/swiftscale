@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-[#020205]">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-[#020205] -mt-16 md:-mt-20">
       {/* Background Image Container */}
       <div className="absolute inset-0 z-0">
         <img
@@ -21,7 +21,7 @@ export function Hero() {
       {/* Grid pattern overlay */}
       <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6 relative z-10 pt-24 md:pt-28">
         <div className="max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel text-accent text-xs font-medium mb-6 border border-white/10 shadow-2xl backdrop-blur-md">
             <Sparkles className="w-3 h-3" />
@@ -33,14 +33,13 @@ export function Hero() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-secondary">
               Digital Commerce
             </span>{" "}
-            <br className="hidden md:block"/>
-            & IT Infrastructure
+            <br className="hidden md:block" />& IT Infrastructure
           </h1>
 
           <p className="text-base md:text-lg text-white/80 mb-8 leading-relaxed max-w-xl font-medium drop-shadow-lg">
-            We empower brands and enterprises to build, launch, and dominate
-            in the digital economy through end-to-end marketplace management
-            and scalable technology solutions.
+            We empower brands and enterprises to build, launch, and dominate in
+            the digital economy through end-to-end marketplace management and
+            scalable technology solutions.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-4">

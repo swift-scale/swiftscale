@@ -5,6 +5,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Quote, Star, ArrowRight, Building2, TrendingUp, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { LazySection } from "@/components/ui/lazy-section";
 
 import avatar1 from "@/assets/images/avatar-1.png";
 import avatar2 from "@/assets/images/avatar-2.png";
@@ -114,7 +116,7 @@ export default function Partners() {
         <Navbar />
       
       {/* Hero Section */}
-      <section className="pt-40 pb-20 relative overflow-hidden bg-background">
+      <section className="pt-40 pb-20 relative overflow-hidden bg-background -mt-16 md:-mt-20">
         <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
         
         <div className="container mx-auto px-6 relative z-10 text-center">
@@ -133,60 +135,102 @@ export default function Partners() {
       </section>
 
       {/* Metrics Section */}
+      <LazySection minHeight="30vh">
       <section className="py-12 border-y border-white/5 bg-white/[0.02]">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-white/10 text-center">
+          <motion.div 
+             className="grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-white/10 text-center"
+             initial="hidden"
+             whileInView="visible"
+             viewport={{ once: true }}
+             variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
+          >
             {METRICS.map((metric, i) => (
-              <div key={i} className="py-6 md:py-0 flex flex-col items-center justify-center">
+              <motion.div 
+                key={i} 
+                className="py-6 md:py-0 flex flex-col items-center justify-center"
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } } }}
+              >
                 <div className="w-12 h-12 rounded-full bg-accent/10 text-accent flex items-center justify-center mb-4">
                   {metric.icon}
                 </div>
                 <h3 className="text-4xl font-display font-bold text-white mb-2">{metric.value}</h3>
                 <p className="text-muted-foreground font-medium uppercase tracking-wider text-sm">{metric.label}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
+      </LazySection>
 
       {/* Partner Logos */}
+      <LazySection minHeight="40vh">
       <section className="py-24 overflow-hidden relative">
         <div className="container mx-auto px-6 mb-12 text-center">
           <h2 className="text-2xl font-display font-bold text-white/80">Our Strategic Partners</h2>
         </div>
         
-        {/* Scrolling Logo Carousel Mockup */}
-        <div className="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
-          <ul className="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll">
+        {/* Scrolling Logo Carousel */}
+        <div className="w-full relative overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
+          <motion.ul 
+            className="flex flex-nowrap w-max py-8"
+            animate={{ x: ["0%", "-33.333333%"] }}
+            transition={{
+              x: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 15,
+                ease: "linear",
+              },
+            }}
+          >
             {[...PARTNERS, ...PARTNERS, ...PARTNERS].map((partner, i) => (
-              <li key={i} className="flex items-center justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-                <div className="h-16 px-8 rounded-xl border border-white/10 glass-panel flex items-center justify-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center font-bold text-white">
+              <li key={i} className="flex-shrink-0 flex items-center justify-center px-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <div className="h-16 px-8 rounded-xl border border-white/10 glass-panel flex items-center justify-center gap-4">
+                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center font-bold text-white text-xl">
                     {partner.logo}
                   </div>
-                  <span className="font-display font-bold text-xl text-white">{partner.name}</span>
+                  <span className="font-display font-bold text-2xl text-white whitespace-nowrap">{partner.name}</span>
                 </div>
               </li>
             ))}
-          </ul>
+          </motion.ul>
         </div>
       </section>
+      </LazySection>
 
       {/* Detailed Testimonials / Case Studies */}
+      <LazySection minHeight="80vh">
       <section className="py-24 relative z-20">
         <div className="container mx-auto px-6">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <motion.div 
+            className="text-center max-w-2xl mx-auto mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-white">
               Client Stories
             </h2>
             <p className="text-muted-foreground text-lg">
               Read how we've partnered with visionary teams to solve complex challenges and drive measurable growth.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <motion.div 
+            className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{ visible: { transition: { staggerChildren: 0.2 } } }}
+          >
             {DETAILED_TESTIMONIALS.map((t, i) => (
-              <div key={i} className="glass-panel p-8 md:p-10 rounded-3xl relative group border border-white/5 hover:border-accent/30 transition-all duration-500 hover:-translate-y-2 flex flex-col">
+              <motion.div 
+                key={i} 
+                className="glass-panel p-8 md:p-10 rounded-3xl relative group border border-white/5 hover:border-accent/30 transition-all duration-500 flex flex-col"
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } } }}
+              >
                 <div className="absolute -top-5 right-8 w-10 h-10 rounded-full bg-accent text-white flex items-center justify-center shadow-lg shadow-accent/20">
                   <Quote className="w-5 h-5 fill-current" />
                 </div>
@@ -214,16 +258,24 @@ export default function Partners() {
                     <p className="text-accent text-xs font-medium uppercase tracking-wider mt-0.5">{t.company}</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
+      </LazySection>
 
       {/* CTA */}
+      <LazySection minHeight="40vh">
       <section className="py-24 bg-card border-t border-white/5 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-accent/5 to-transparent pointer-events-none" />
-        <div className="container mx-auto px-6 text-center relative z-10">
+        <motion.div 
+          className="container mx-auto px-6 text-center relative z-10"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-6 text-white">Join our network of innovators</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
             Ready to become our next success story? Let's discuss how we can accelerate your business.
@@ -232,8 +284,9 @@ export default function Partners() {
             Start the Conversation
             <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Button>
-        </div>
+        </motion.div>
       </section>
+      </LazySection>
 
       <Footer />
       </div>

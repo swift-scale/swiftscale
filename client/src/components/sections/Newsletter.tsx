@@ -118,7 +118,13 @@ export function NewsletterSection() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(36,27,235,0.08)_0%,_transparent_70%)] pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-2xl mx-auto text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-2xl mx-auto text-center"
+        >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-white/10 text-accent text-xs font-medium mb-6">
             <Sparkles className="w-3 h-3" />
             Stay in the loop
@@ -142,7 +148,7 @@ export function NewsletterSection() {
           <p className="text-white/20 text-xs mt-4">
             No spam. Unsubscribe anytime. We respect your privacy.
           </p>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

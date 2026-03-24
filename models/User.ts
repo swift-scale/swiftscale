@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide a name']
   },
+  firstName: String,
+  lastName: String,
+  department: String,
+  title: String,
+  avatar: String,
   role: {
     type: String,
     enum: ['admin', 'user'],
@@ -29,9 +34,12 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  verificationToken: String,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
+  otp: String,
+  otpExpires: Date,
+  otpRequestCount: { type: Number, default: 0 },
+  otpResetTime: Date,
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
 }, {
   timestamps: true
 });

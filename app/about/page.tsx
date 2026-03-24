@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
+import { LazySection } from "@/components/ui/lazy-section";
 
 export default function About() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -82,7 +83,7 @@ export default function About() {
         </div>
       )}
 
-      <div className={`min-h-screen bg-[#020205] text-white selection:bg-primary selection:text-white overflow-x-hidden font-sans transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <div className={`min-h-screen bg-[#020205] text-white selection:bg-primary selection:text-white font-sans transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <Navbar />
       
       {/* SECTION 1: THE MANIFESTO (Midnight Black) */}
@@ -91,7 +92,7 @@ export default function About() {
         whileInView="visible"
         viewport={{ once: true }}
         variants={staggerContainer}
-        className="relative pt-52 pb-32 overflow-hidden bg-[#020205] border-b border-white/5"
+        className="relative pt-52 pb-32 overflow-hidden bg-[#020205] border-b border-white/5 -mt-16 md:-mt-20"
       >
         {/* Architectural Backdrop */}
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
@@ -167,13 +168,14 @@ export default function About() {
       </motion.section>
 
       {/* SECTION 2: IDENTITY & VISION (Deep Navy: #080B16) */}
-      <motion.section 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={staggerContainer}
-        className="relative py-40 overflow-hidden bg-[#080B16] border-y border-white/5"
-      >
+      <LazySection minHeight="100vh">
+        <motion.section 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="relative py-40 overflow-hidden bg-[#080B16] border-y border-white/5"
+        >
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
             <div className="order-2 lg:order-1 relative">
@@ -229,24 +231,25 @@ export default function About() {
             </div>
           </div>
         </div>
-      </motion.section>
+        </motion.section>
+      </LazySection>
 
-      {/* SECTION 3: ENGINEERING STUDIO (Silver-Slate: #F1F5F9) */}
-      <motion.section 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={staggerContainer}
-        className="relative py-40 overflow-hidden bg-[#F1F5F9] text-slate-900 shadow-[0_-20px_50px_rgba(0,0,0,0.02)]"
-      >
+      <LazySection minHeight="80vh">
+        <motion.section 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="relative py-40 overflow-hidden bg-[#0B0B14] text-white border-y border-white/5"
+        >
         <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
         
         <div className="container mx-auto px-6 relative z-10 max-w-7xl">
           <div className="text-center mb-32 space-y-6">
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-200 text-slate-500 text-[10px] font-black uppercase tracking-[0.4em]">
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-primary text-[10px] font-black uppercase tracking-[0.4em]">
               <Cpu className="w-3.5 h-3.5" /> High-Accuracy Methods
             </motion.div>
-            <motion.h2 variants={itemVariants} className="text-5xl md:text-8xl font-display font-black text-slate-950 tracking-tighter">
+            <motion.h2 variants={itemVariants} className="text-5xl md:text-8xl font-display font-black text-white tracking-tighter">
               Precision <span className="text-primary italic">Architecture</span>.
             </motion.h2>
           </div>
@@ -261,33 +264,34 @@ export default function About() {
                 key={i} 
                 variants={itemVariants}
                 whileHover={{ y: -10 }}
-                className="p-12 rounded-[3.5rem] bg-white border border-slate-200 shadow-xl shadow-slate-200/40 group hover:border-primary/30 transition-all duration-500"
+                className="p-12 rounded-[3.5rem] bg-white/5 border border-white/10 group hover:border-primary/30 transition-all duration-500 backdrop-blur-xl"
               >
-                <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center text-primary mb-10 group-hover:scale-110 transition-transform">
+                <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-primary mb-10 group-hover:scale-110 transition-transform">
                   {box.icon}
                 </div>
-                <h3 className="text-2xl font-black mb-4 text-slate-950">{box.title}</h3>
-                <p className="text-slate-500 font-medium leading-relaxed">{box.desc}</p>
+                <h3 className="text-2xl font-black mb-4 text-white">{box.title}</h3>
+                <p className="text-white/40 font-medium leading-relaxed">{box.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
-      </motion.section>
+        </motion.section>
+      </LazySection>
 
-      {/* SECTION 4: THE PROTOCOL (White: #FFFFFF) */}
-      <motion.section 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={staggerContainer}
-        className="relative py-40 overflow-hidden bg-white text-slate-900 border-t border-slate-100"
-      >
+      <LazySection minHeight="80vh">
+        <motion.section 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="relative py-40 overflow-hidden bg-[#05050A] text-white border-y border-white/5"
+        >
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
             <div className="space-y-16">
               <div className="space-y-6">
                  <motion.p variants={itemVariants} className="text-primary font-black text-[10px] uppercase tracking-[0.5em]">The Execution Engine</motion.p>
-                 <motion.h2 variants={itemVariants} className="text-5xl md:text-7xl font-display font-black text-slate-950 leading-tight tracking-tight">
+                 <motion.h2 variants={itemVariants} className="text-5xl md:text-7xl font-display font-black text-white leading-tight tracking-tight">
                     Phase-Based <br/>
                     <span className="text-primary italic">Deployment</span>.
                  </motion.h2>
@@ -303,12 +307,12 @@ export default function About() {
                   <motion.div 
                     key={i} 
                     variants={itemVariants}
-                    className="p-8 rounded-3xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-200 group flex gap-8 items-start"
+                    className="p-8 rounded-3xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/10 group flex gap-8 items-start"
                   >
-                    <div className="text-3xl font-display font-black text-slate-200 group-hover:text-primary transition-colors">{step.id}</div>
+                    <div className="text-3xl font-display font-black text-white/10 group-hover:text-primary transition-colors">{step.id}</div>
                     <div>
-                       <h4 className="text-xl font-bold text-slate-950 mb-1">{step.title}</h4>
-                       <p className="text-slate-400 font-medium">{step.desc}</p>
+                       <h4 className="text-xl font-bold text-white mb-1">{step.title}</h4>
+                       <p className="text-white/40 font-medium">{step.desc}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -317,9 +321,9 @@ export default function About() {
 
             <motion.div variants={itemVariants} className="relative">
               <div className="absolute -inset-10 bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
-              <div className="relative p-12 rounded-[4rem] bg-slate-50 border border-slate-200 shadow-inner group">
-                <Workflow className="w-full h-full text-slate-200 group-hover:text-primary/20 transition-all duration-1000" strokeWidth={0.5} />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-white rounded-full shadow-2xl flex items-center justify-center">
+              <div className="relative p-12 rounded-[4rem] bg-white/5 border border-white/10 shadow-inner group overflow-hidden">
+                <Workflow className="w-full h-full text-white/5 group-hover:text-primary/20 transition-all duration-1000" strokeWidth={0.5} />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[#05050A] rounded-full shadow-2xl flex items-center justify-center border border-white/10">
                    <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center text-white shadow-xl animate-pulse">
                       <Rocket className="w-8 h-8" />
                    </div>
@@ -328,16 +332,18 @@ export default function About() {
             </motion.div>
           </div>
         </div>
-      </motion.section>
+        </motion.section>
+      </LazySection>
 
       {/* SECTION 5: FINAL STRATEGY (Radiant Dark Gradient) */}
-      <motion.section 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={staggerContainer}
-        className="relative py-48 overflow-hidden bg-gradient-to-b from-[#020205] to-[#0A0A1F]"
-      >
+      <LazySection minHeight="70vh">
+        <motion.section 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+          className="relative py-48 overflow-hidden bg-gradient-to-b from-[#020205] to-[#0A0A1F]"
+        >
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] pointer-events-none" />
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
         
@@ -368,6 +374,7 @@ export default function About() {
           </motion.div>
         </div>
       </motion.section>
+      </LazySection>
 
       <Footer />
       </div>
